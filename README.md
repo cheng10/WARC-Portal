@@ -4,5 +4,6 @@ The University of Alberta and it's researchers have a collection of Web Archives
 ## Installation
 > $ virtualenv venv  
 > $ source venv/bin/activate  
-> $ pip install -r requirements.txt  
+> $ pip install -r requirements.txt 
+
 Django superuser: admin:testadmin

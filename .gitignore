@@ -1,5 +1,8 @@
 # ignore temporal files
-~*
+~* *~
 
 # ignore python virtual environment folder
 venv 
+
+# ignore ide setting files
+.idea

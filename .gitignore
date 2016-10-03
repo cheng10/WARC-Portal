@@ -1,8 +1,12 @@
 # ignore temporal files
 ~* *~
+*.pyc
 
 # ignore python virtual environment folder
 venv 
 
 # ignore ide setting files
 .idea
+
+# ignore developmental sqlite file
+*.sqlite3

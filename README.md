@@ -11,3 +11,13 @@ Django superuser: admin:testadmin
 to test the api:  
 > python manage.py runserver  
 > curl -H 'Accept: application/json; indent=4' -u admin:testadmin http://127.0.0.1:8000/api/users/
+
+
+### Front end:
+Requirements:
+* Node 4.0.0 or above
+
+> npm install
+> npm start
+
+then visit localhost:8080 when bundle is built.

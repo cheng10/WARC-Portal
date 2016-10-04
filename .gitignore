@@ -10,3 +10,8 @@ venv
 
 # ignore developmental sqlite file
 *.sqlite3
+
+# ignore modules and build folder
+node_modules/
+public/js/
+public/css/

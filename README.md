@@ -15,9 +15,10 @@ to test the api:
 
 ### Front end:
 Requirements:
-* Node 4.0.0 or above
+* NodeJS 4.0.0 or above
 
-> npm install
-> npm start
+In the terminal run:
+> npm install  
+> npm start  
 
 then visit localhost:8080 when bundle is built.

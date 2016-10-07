@@ -13,5 +13,5 @@ venv
 
 # ignore modules and build folder
 node_modules/
-public/js/
-public/css/
+#public/js/
+#public/css/

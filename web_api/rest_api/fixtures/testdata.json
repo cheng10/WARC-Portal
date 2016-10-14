@@ -1,0 +1,20 @@
+[
+  {
+    "model": "rest_api.snippet",
+    "pk": 1,
+    "fields": {
+      "created": "2014-01-01",
+      "title": "snippet 1",
+      "content": "foobar"
+    }
+  },
+  {
+    "model": "rest_api.snippet",
+    "pk": 2,
+    "fields": {
+      "created": "2014-01-01",
+      "title": "snippet 2",
+      "content": "hello world"
+    }
+  }
+]

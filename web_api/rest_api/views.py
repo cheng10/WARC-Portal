@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from serializers import *
 from models import Snippet
 
@@ -21,6 +21,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    filter_backends = (filters.OrderingFilter,)
+    ordering_fields = ('url',)
 
 
 class WarcFileViewSet(viewsets.ModelViewSet):

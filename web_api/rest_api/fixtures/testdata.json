@@ -16,5 +16,25 @@
       "title": "snippet 2",
       "content": "hello world"
     }
+  },
+  {
+    "model": "rest_api.document",
+    "pk": 1,
+    "fields": {
+      "crawl_date": "2014-01-01",
+      "title": "test document",
+      "type": "html",
+      "detail": "null",
+      "link": "some fake link",
+      "file": 1,
+      "content": "hello world"
+    }
+  },
+  {
+    "model": "rest_api.warcfile",
+    "pk": 1,
+    "fields": {
+      "name": "file1"
+    }
   }
 ]

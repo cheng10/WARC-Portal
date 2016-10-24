@@ -38,7 +38,7 @@ class Document(models.Model):
     detail = models.TextField(blank=True, default='')  # detail description
     link = models.TextField(blank=True, default='')  # way back server link
     file = models.ForeignKey(WarcFile, on_delete=models.CASCADE, related_name='document')
-    # content = models.TextField(blank=True, default='')
+    content = models.TextField(blank=True, default='')
 
     def __unicode__(self):
         return self.link

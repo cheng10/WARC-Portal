@@ -14,13 +14,14 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
 
+
 class DocumentSerializer(serializers.ModelSerializer):
 
     file = serializers.CharField(source='file.name')
 
     class Meta:
         model = Document
-        fields = ('file', 'crawl_date', 'type', 'link', 'detail')
+        fields = ('file', 'crawl_date', 'type', 'link', 'detail', 'content')
 
 # class SnippetSerializer(serializers.Serializer):
 #     pk = serializers.IntegerField(read_only=True)

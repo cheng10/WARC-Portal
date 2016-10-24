@@ -9,7 +9,6 @@ DIR = "rest_api/parse/"
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for filename in os.listdir(DIR):
-            if filename.startswith('part'):
                 print "Parsing..." + filename
                 f = open(DIR+filename)
                 warc = WarcFile.objects.create(name="dummy"+filename)
@@ -26,6 +25,6 @@ class Command(BaseCommand):
                         file=warc,
                         crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                         link=data[1],
-                        # content=data[2],
+                        content=data[2].encode('unicode_escape'),
                         type='html'
                     )

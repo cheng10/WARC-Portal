@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from models import Snippet, Document
+from models import Snippet, Document, WarcFile
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,7 +21,15 @@ class DocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Document
-        fields = ('file', 'crawl_date', 'type', 'link', 'detail', 'content')
+        fields = ('url', 'file', 'crawl_date', 'type', 'link', 'detail', 'content')
+
+
+class WarcFileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WarcFile
+        fields = ('url', 'name')
+
 
 # class SnippetSerializer(serializers.Serializer):
 #     pk = serializers.IntegerField(read_only=True)

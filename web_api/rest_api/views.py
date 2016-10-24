@@ -23,6 +23,11 @@ class DocumentViewSet(viewsets.ModelViewSet):
     serializer_class = DocumentSerializer
 
 
+class WarcFileViewSet(viewsets.ModelViewSet):
+    queryset = WarcFile.objects.all()
+    serializer_class = WarcFileSerializer
+
+
 class JSONResponse(HttpResponse):
     """
     An HttpResponse that renders its content into JSON.

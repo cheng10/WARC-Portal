@@ -4,7 +4,7 @@ import StringUtils._
 import org.warcbase.spark.matchbox.TupleFormatter._
 import org.warcbase.spark.utils.JsonUtil
 
-val r = RecordLoader.loadArchives("/home/ubuntu/warcbase/warcbase-core/src/test/resources/arc/example.arc.gz", sc)
+val r = RecordLoader.loadArchives("/home/ubuntu/files/umar.warc.gz", sc)
 .keepValidPages()
 .map(r => (r.getCrawlDate, r.getUrl, RemoveHTML(r.getContentString), ExtractImageLinks(r.getUrl, r.getContentString)))
 .map(r => JsonUtil.toJson(r))

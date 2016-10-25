@@ -22,7 +22,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     filter_backends = (filters.OrderingFilter,)
-    ordering_fields = ('url',)
+    ordering_fields = ('id', 'pub_date_confident', 'pub_date')
 
 
 class WarcFileViewSet(viewsets.ModelViewSet):

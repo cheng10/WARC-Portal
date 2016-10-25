@@ -34,6 +34,7 @@ class Document(models.Model):
     )
     crawl_date = models.DateTimeField()
     pub_date = models.DateTimeField()
+    pub_date_confident = models.BooleanField(default='False')
     title = models.CharField(max_length=100, blank=True, default='')
     type = models.CharField(max_length=50, choices=DOC_TYPE, default='other')
     detail = models.TextField(blank=True, default='')  # detail description

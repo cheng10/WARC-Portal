@@ -33,7 +33,7 @@ class Document(models.Model):
         ('other', 'other file type'),
     )
     crawl_date = models.DateTimeField()
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField()
     title = models.CharField(max_length=100, blank=True, default='')
     type = models.CharField(max_length=50, choices=DOC_TYPE, default='other')
     detail = models.TextField(blank=True, default='')  # detail description

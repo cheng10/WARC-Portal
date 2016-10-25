@@ -23,11 +23,14 @@ class Command(BaseCommand):
                     except:
                         print "Error parsing JSON"
 
-                    Document.objects.create(
-                        title='fake tile',
-                        file=warc,
-                        crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-                        link=data[1],
-                        content=data[2].encode('unicode_escape'),
-                        type='html'
-                    )
+                    # only when the content is valid, push them to DB
+                    # if data[2].startswith('HTTP/1.1 200') or data[2].startswith('HTTP/1.0 200'):
+                    if data[2].split()[1] == '200':
+                        Document.objects.create(
+                            title='fake tile',
+                            file=warc,
+                            crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
+                            link=data[1],
+                            content=data[2].encode('unicode_escape'),
+                            type='html'
+                        )

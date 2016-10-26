@@ -41,7 +41,10 @@ class Command(BaseCommand):
                         print r.url
                         # pprint(r.json())
                         if r.json()['status'] == 'OK':
-                            date = r.json()['publicationDate']['date'].replace('T', '')
+                            try:
+                                date = r.json()['publicationDate']['date'].replace('T', '')
+                            except KeyError:
+                                date = '19700101000000'
                             try:
                                 conf_str = r.json()['publicationDate']['confident']
                             except KeyError:

@@ -4,8 +4,10 @@ import StringUtils._
 import org.warcbase.spark.matchbox.TupleFormatter._
 import org.warcbase.spark.utils.JsonUtil
 
-val r = RecordLoader.loadArchives("/home/ubuntu/files/umar.warc.gz", sc)
+var warc="/mnt/md0/warc_tmp/"
+val r = RecordLoader.loadArchives(warc, sc)
 .keepValidPages()
-.map(r => (r.getCrawlDate, r.getUrl, RemoveHTML(r.getContentString), ExtractImageLinks(r.getUrl, r.getContentString)))
+.map(r => (r.getCrawlDate, r.getUrl, r.getMimeType, RemoveHTML(r.getContentString), ExtractImageLinks(r.getUrl, r.getContentString)))
 .map(r => JsonUtil.toJson(r))
-.saveAsTextFile("/home/ubuntu/spark_out")
+.saveAsTextFile("/mnt/md0/spark_out")
+exit()

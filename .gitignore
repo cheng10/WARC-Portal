@@ -16,3 +16,10 @@ web_api/db.sqlite3
 node_modules/
 #public/js/
 #public/css/
+
+# ignore log
+*.log
+nohup.out
+
+# ignore tmp files
+metastore_db

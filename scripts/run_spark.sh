@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PROGNAME=$(basename $0)
+dir='/mnt/md0/warc_tmp'
 
 function error_exit
 {
@@ -14,6 +15,15 @@ function info_print
 }
 
 info_print '	run_spark.sh started'
+
+if [ "$(ls $dir)" ]
+then   
+	info_print '	dir not clean, running spark'
+else
+	info_print '	dir clean, exit'
+	exit 0
+fi
+
 
 source ~/.bashrc
 rm -rf /mnt/md0/spark_out

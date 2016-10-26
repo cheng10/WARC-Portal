@@ -20,4 +20,5 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-0 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./run_spark.sh &>> /home/ubuntu/WARC-Portal/scripts/job.log 
+
+0 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./run_spark.sh >> /home/ubuntu/WARC-Portal/scripts/job.log 2>&1

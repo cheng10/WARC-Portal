@@ -7,6 +7,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'documents', views.DocumentViewSet)
 router.register(r'warcfile', views.WarcFileViewSet)
+router.register(r'collection', views.CollectionViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

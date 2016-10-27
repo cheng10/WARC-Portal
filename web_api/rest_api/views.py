@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters
 from serializers import *
 from models import Snippet
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 
@@ -36,6 +36,20 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
 class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WarcFile.objects.all()
     serializer_class = WarcFileSerializer
+
+
+@permission_classes((IsAuthenticated, ))
+class CollectionViewSet(viewsets.ModelViewSet):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the collections
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Collection.objects.filter(warcuser=user)
 
 
 class JSONResponse(HttpResponse):

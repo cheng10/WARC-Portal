@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from models import Snippet, Document, WarcFile
+import json, ast
+
+from models import Snippet, Document, WarcFile, Collection
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,12 +18,12 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-
     file = serializers.CharField(source='file.name')
 
     class Meta:
         model = Document
-        fields = ('url', 'title', 'file', 'crawl_date', 'pub_date', 'pub_date_confident', 'type', 'link', 'detail', 'content')
+        fields = ('url', 'title', 'file', 'crawl_date', 'pub_date', 'pub_date_confident',
+                  'type', 'link', 'detail', 'content')
 
 
 class WarcFileSerializer(serializers.ModelSerializer):
@@ -29,6 +31,32 @@ class WarcFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = WarcFile
         fields = ('url', 'name')
+
+
+class CollectionSerializer(serializers.ModelSerializer):
+    file = WarcFileSerializer(many=True)
+    warcuser = serializers.StringRelatedField()
+
+    class Meta:
+        model = Collection
+        fields = ('url', 'warcuser', 'name', 'detail', 'file')
+
+    def create(self, validated_data):
+        validated_data = ast.literal_eval(json.dumps(validated_data))
+
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+
+        files_data = validated_data.pop('file')
+        collection = Collection.objects.create(warcuser=user, **validated_data)
+        collection.save()
+        for file_data in files_data:
+            collection.file.add(WarcFile.objects.create(**file_data))
+            collection.save()
+
+        return collection
 
 
 # class SnippetSerializer(serializers.Serializer):

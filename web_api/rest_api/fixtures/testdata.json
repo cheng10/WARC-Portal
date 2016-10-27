@@ -1,27 +1,9 @@
 [
   {
-    "model": "rest_api.snippet",
-    "pk": 1,
-    "fields": {
-      "created": "2014-01-01",
-      "title": "snippet 1",
-      "content": "foobar"
-    }
-  },
-  {
-    "model": "rest_api.snippet",
-    "pk": 2,
-    "fields": {
-      "created": "2014-01-01",
-      "title": "snippet 2",
-      "content": "hello world"
-    }
-  },
-  {
     "model": "rest_api.document",
-    "pk": 1,
     "fields": {
       "crawl_date": "2014-01-01",
+      "pub_date": "2014-01-01",
       "title": "test document",
       "type": "html",
       "detail": "null",
@@ -32,9 +14,23 @@
   },
   {
     "model": "rest_api.warcfile",
-    "pk": 1,
     "fields": {
       "name": "file1"
+    }
+  },
+    {
+    "model": "rest_api.warcfile",
+    "fields": {
+      "name": "file2"
+    }
+  },
+  {
+    "model": "rest_api.collection",
+    "fields": {
+      "name": "collection1",
+      "warcuser": 1,
+      "detail": "",
+      "file": [1, 2]
     }
   }
 ]

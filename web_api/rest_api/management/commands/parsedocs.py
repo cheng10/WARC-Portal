@@ -1,4 +1,4 @@
-import os, json, requests
+import os, json, requests, re
 from bs4 import BeautifulSoup
 from pprint import pprint
 from datetime import datetime
@@ -31,8 +31,16 @@ class Command(BaseCommand):
                         # fetch webpage title
                         domain = data[1]
                         soup = BeautifulSoup(data[3], "html.parser")
-                        title = soup.title
+                        try:
+                            title = soup.title.string
+                            title = title.replace("<title>", "")
+                        except AttributeError:
+                            title = ''
+                        title = title[:254]
                         text = soup.get_text()
+                        text = re.sub(' +', ' ', text)  # remove spaces
+                        text = text.replace('\n', ' ').replace('\r', '')
+                        # print title
                         if title == '':
                             title = domain
                         if title == '':
@@ -48,7 +56,7 @@ class Command(BaseCommand):
                         api_url = "http://gateway-a.watsonplatform.net/calls/url/URLGetPubDate"
                         r = requests.get(api_url, params=payload)
 
-                        print r.url
+                        # print r.url
                         # pprint(r.json())
                         if r.json()['status'] == 'OK':
                             try:
@@ -80,5 +88,5 @@ class Command(BaseCommand):
                             crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                             link=data[2],
                             content=text.encode('unicode_escape'),
-                            type='html',
+                            type='html', # document type, to do
                         )

@@ -30,7 +30,7 @@ class Command(BaseCommand):
                     if 1:
                         # fetch webpage title
                         domain = data[1]
-                        soup = BeautifulSoup(data[3])
+                        soup = BeautifulSoup(data[3], "html.parser")
                         title = soup.title
                         text = soup.get_text()
                         if title == '':
@@ -74,11 +74,11 @@ class Command(BaseCommand):
                         Document.objects.create(
                             title=title,
                             domain=domain,
-                            file=warc,
+                            file=warc,  # file name, to do
                             pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                             pub_date_confident=confident,
                             crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                             link=data[2],
                             content=text.encode('unicode_escape'),
-                            type='html'  # to do
+                            type='html',
                         )

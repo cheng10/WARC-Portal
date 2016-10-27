@@ -15,14 +15,16 @@
   },
   {
     "model": "rest_api.warcfile",
+    "pk": 1,
     "fields": {
       "name": "file1"
     }
   },
     {
     "model": "rest_api.warcfile",
+    "pk": 2,
     "fields": {
-      "name": "file2"
+      "name": "file1"
     }
   },
   {

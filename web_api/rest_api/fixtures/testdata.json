@@ -9,6 +9,7 @@
       "detail": "null",
       "link": "some fake link",
       "file": 1,
+      "domain": "www.cheng10.cc",
       "content": "hello world"
     }
   },

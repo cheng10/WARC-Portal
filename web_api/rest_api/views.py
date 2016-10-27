@@ -29,7 +29,7 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
     ordering_fields = ('id', 'pub_date_confident', 'pub_date')
     search_fields = ('title', 'content')
-    filter_fields = ('type', 'file')
+    filter_fields = ('type', 'file',  'domain')
 
 
 @permission_classes((AllowAny, ))

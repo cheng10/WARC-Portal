@@ -39,6 +39,7 @@ class Document(models.Model):
     type = models.CharField(max_length=50, choices=DOC_TYPE, default='other')
     detail = models.TextField(blank=True, default='')  # detail description
     link = models.TextField(blank=True, default='')  # way back server link
+    domain = models.TextField(blank=True, default='')
     file = models.ForeignKey(WarcFile, on_delete=models.CASCADE, related_name='document')
     content = models.TextField(blank=True, default='')
 

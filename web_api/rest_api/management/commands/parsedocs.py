@@ -1,4 +1,5 @@
 import os, json, requests
+from bs4 import BeautifulSoup
 from pprint import pprint
 from datetime import datetime
 from django.core.management.base import BaseCommand, CommandError
@@ -27,6 +28,15 @@ class Command(BaseCommand):
                     # if data[2].startswith('HTTP/1.1 200') or data[2].startswith('HTTP/1.0 200'):
                     # if data[2].split()[1] == '200':
                     if 1:
+                        # fetch webpage title
+                        domain = data[1]
+                        soup = BeautifulSoup(data[3])
+                        title = soup.title
+                        text = soup.get_text()
+                        if title == '':
+                            title = domain
+                        if title == '':
+                            title = 'none'
 
                         # fetch publication date using alchemyapi
                         url = data[2]
@@ -62,12 +72,13 @@ class Command(BaseCommand):
                             confident = False
 
                         Document.objects.create(
-                            title='fake tile',
+                            title=title,
+                            domain=domain,
                             file=warc,
                             pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                             pub_date_confident=confident,
                             crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                             link=data[2],
-                            content=data[3].encode('unicode_escape'),
-                            type='html'
+                            content=text.encode('unicode_escape'),
+                            type='html'  # to do
                         )

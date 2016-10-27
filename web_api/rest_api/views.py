@@ -6,19 +6,24 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters
 from serializers import *
 from models import Snippet
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 
+@permission_classes((IsAdminUser, ))
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
 
+@permission_classes((IsAdminUser, ))
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
-class DocumentViewSet(viewsets.ModelViewSet):
+@permission_classes((AllowAny, ))
+class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
@@ -27,7 +32,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
     filter_fields = ('type', 'file')
 
 
-class WarcFileViewSet(viewsets.ModelViewSet):
+@permission_classes((AllowAny, ))
+class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WarcFile.objects.all()
     serializer_class = WarcFileSerializer
 

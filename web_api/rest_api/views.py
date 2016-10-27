@@ -21,8 +21,9 @@ class GroupViewSet(viewsets.ModelViewSet):
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
-    filter_backends = (filters.OrderingFilter,)
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter)
     ordering_fields = ('id', 'pub_date_confident', 'pub_date')
+    search_fields = ('title', 'content')
 
 
 class WarcFileViewSet(viewsets.ModelViewSet):

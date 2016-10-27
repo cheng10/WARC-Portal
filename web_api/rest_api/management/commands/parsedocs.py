@@ -13,12 +13,12 @@ class Command(BaseCommand):
             if filename.startswith('part'):
                 print "Parsing..." + filename
                 f = open(DIR+filename)
-                warc = WarcFile.objects.create(name="dummy"+filename)
+                warc = WarcFile.objects.create(name="dummy_"+filename)
                 for line in f:
                     try:
                         data = json.loads(line)
-                        if len(data) != 4:
-                            print "Did not parse %s" % data[2]
+                        if len(data) != 5:
+                            print "Did not parse %s" % data[3]
                             raise 
                     except:
                         print "Error parsing JSON"
@@ -29,7 +29,7 @@ class Command(BaseCommand):
                     if 1:
 
                         # fetch publication date using alchemyapi
-                        url = data[1]
+                        url = data[2]
                         payload = {
                             'url': url,
                             'apikey': '7f9faed9fb0243ad50831864294e108fe5d49529',
@@ -67,7 +67,7 @@ class Command(BaseCommand):
                             pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                             pub_date_confident=confident,
                             crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-                            link=data[1],
-                            content=data[2].encode('unicode_escape'),
+                            link=data[2],
+                            content=data[3].encode('unicode_escape'),
                             type='html'
                         )

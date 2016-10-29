@@ -44,7 +44,7 @@ export class DocumentList extends React.Component
         // render
         if (!this.props.loading) {
             // show the list of users
-            return(
+            return (
                 <div className="doc-list">
                     <ListGroup>
                         {this.props.documents.map((document, index) => {

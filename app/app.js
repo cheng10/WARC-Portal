@@ -13,6 +13,7 @@ import App from './components/App.jsx';
 import Home from './pages/Home.jsx';
 import UserEdit from './pages/UserEdit.jsx';
 import NotFound from './pages/NotFound.jsx';
+import DocumentList from './components/DocumentList.jsx'
 
 
 // create the store
@@ -32,7 +33,7 @@ ReactDOM.render(
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home}/>
-                <Route path="user-edit(/:id)" component={UserEdit}/>
+                <Route path="search" component={Home} />
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

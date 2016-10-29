@@ -5,3 +5,4 @@ django-filter==0.15.3
 djangorestframework==3.4.7
 MySQL-python==1.2.5
 requests==2.11.1
+django-cors-headers  

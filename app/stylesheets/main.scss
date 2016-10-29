@@ -1,21 +1,15 @@
-.footer {
-  text-align: center;
+@import "./DocElementList.scss";
+@import "./Menu.scss";
+
+.app-container {
+    margin-top: 51px;
+  }
+
+.app-body {
+    display: flex;
+    justify-content: center;
 }
 
-.nav {
-  margin: 30px 0 20px 0;
-}
-
-.users-pagination {
-  margin-top: 0;
-}
-
-.page-user-edit form {
-  width: 500px;
-  margin-top: 40px;
-}
-
-.progress {
-  margin: 10px auto;
-  width: 300px;
+.page-home {
+    width: 80%;
 }

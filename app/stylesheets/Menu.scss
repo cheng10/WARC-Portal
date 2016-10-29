@@ -1,0 +1,16 @@
+.header-logo {
+    font-size: 1.25em;
+    color: white;
+    transition: all .2s ease-in;
+    font-style: bold;
+}
+
+.header-logo:hover {
+    color: grey;
+}
+
+.text {
+    margin-top: 7px;
+    height: 36px;
+    width: 500px;
+}

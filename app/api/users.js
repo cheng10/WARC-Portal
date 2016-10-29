@@ -3,9 +3,9 @@
  */
 export default class ApiUsers
 {
-    static getList(action)
-    {
+    static getDocs(action) {
         let users = [];
+        console.log("getDocs");
         return fetch('http://rest.learncode.academy/api/learncode/friends').then((res) => {
             return res.json();
         }).then((list) => {
@@ -22,30 +22,5 @@ export default class ApiUsers
             console.log(users)
             return users;
         });
-    }
-
-    static addUser(action) {
-        const encode= (params) => {
-            let formBody = []
-            for (var property in params) {
-                let encodedKey = encodeURIComponent(property);
-                let encodedValue = encodeURIComponent(params[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-            return formBody;
-        }
-        
-        let users = [];
-        return fetch('http://rest.learncode.academy/api/learncode/friends', ({
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: encode({
-                username: action.username,
-                drink: action.drink
-            })
-        })
-        )
     }
 }

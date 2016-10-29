@@ -4,14 +4,13 @@ import Menu from './Menu.jsx';
 
 export default class App extends React.Component
 {
-    render()
-    {
+    render() {
         return (
-            <div className="container">
+            <div className="app-container">
                 <div className="row">
                     <Menu/>
                 </div>
-                <div className="row">
+                <div className="app-body">
                     {this.props.children}
                 </div>
             </div>

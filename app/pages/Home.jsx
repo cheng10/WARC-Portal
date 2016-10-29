@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UserList from '../components/UserList.jsx';
+import DocumentList from '../components/DocumentList.jsx';
 
 export default class Home extends React.Component
 {
@@ -8,7 +8,7 @@ export default class Home extends React.Component
     {
         return(
             <div className="page-home">
-                <UserList/>
+                <DocumentList />
             </div>
         );
     }

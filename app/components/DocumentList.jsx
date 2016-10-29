@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
+import _ from 'lodash';
 import DocElementList from './DocElementList.jsx';
 
 export class DocumentList extends React.Component
@@ -9,14 +10,13 @@ export class DocumentList extends React.Component
     constructor(props)
     {
         super(props);
-        console.log("construct")
         this.state = {
             loading: true
         }
         // when we don't have any users, update the state with the users list taken from the api
         if (0 === this.props.documents.length) {
             console.log("here", this.props)
-            this.props.dispatch({type: 'docsFetchList', page: this.props.page || 1});
+            this.props.dispatch({type: 'docsFetchList', query: this.props.queryParams});
         }
 
         // bind <this> to the event method
@@ -26,11 +26,12 @@ export class DocumentList extends React.Component
 
     componentWillUpdate(newprops) {
         console.log("willupdate", this.props, newprops);
-        // if (newprops.page != this.props.page) {
-        //     console.log("updating");
-        //     this.onChange();
-        //     this.props.dispatch({type: 'docsFetchList', page: newprops.page});
-        // }
+        console.log(_.isEqual(newprops.queryParams, this.props.queryParams));
+        if (!_.isEqual(newprops.queryParams, this.props.queryParams)) {
+            console.log("updating");
+            this.onChange();
+            this.props.dispatch({type: 'docsFetchList', query: newprops.queryParams});
+        }
     }
 
     render() {
@@ -41,7 +42,7 @@ export class DocumentList extends React.Component
         let start_count = 0;
 
         // render
-        if (this.props.documents.length && !this.props.loading) {
+        if (!this.props.loading) {
             // show the list of users
             return(
                 <div className="doc-list">
@@ -69,9 +70,10 @@ export class DocumentList extends React.Component
      */
     changePage(page) {
         console.log("changing page");
-        this.props.dispatch(push('/?page=' + page));
+        const search = this.props.queryParams.search;
+        let url = search ? `/?search=${search}&page=${page}`: `/?page=${page}`;
+        this.props.dispatch(push(url));
         this.onChange();
-        this.props.dispatch({type: 'docsFetchList', page});
     }
 
     onChange() {
@@ -85,8 +87,9 @@ function mapStateToProps(state) {
     return {
         documents: state.docs.documents || [],
         count: state.docs.count || 0,
-        loading: state.docs.loading,
+        loading: state.docs.loading && true,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
+        queryParams: state.routing.locationBeforeTransitions.query || ''
     };
 }
 export default connect(mapStateToProps)(DocumentList);

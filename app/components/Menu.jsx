@@ -1,36 +1,63 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { replace } from 'react-router-redux';
+import { FormGroup, FormControl, Button, Glyphicon, InputGroup } from 'react-bootstrap';
 
-import { Nav, NavItem, Glyphicon, Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
-import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
+export class Menu extends React.Component {
 
-export default class Menu extends React.Component {
+    constructor() {
+        super();
+        this.onClick = this.onClick.bind(this);
+    }
+
+    componentDidMount() {
+        // Spending too much time making it fancy, might come back later to create drop down menu
+        // const input = document.getElementsByClassName("form-control form-control-search-header-field")[0];
+        // const searchForm = document.getElementsByClassName("search-form")[0];
+        // const menu = document.createElement("div");
+        // console.log(searchForm, "searchForm");
+        // menu.className = "drop-down-header";
+        // input.addEventListener("keydown", () => {
+        //     searchForm.appendChild(menu);
+        // })
+    }
+
+
+    onClick(e) {
+        e.preventDefault();
+        const value = document.getElementsByClassName("form-control form-control-search-header-field")[0].value;
+        this.props.dispatch(replace('/?search=' + value));
+        return false;
+    }
+
     render() {
         return (
-            <div className="header">
-                <Navbar inverse fixedTop>
-                    <Nav bsStyle="pills">
-                        <NavItem className="nav-item">
-                            <div className="header-logo"> WARC-Portal </div>
-                        </NavItem>
-                        <Nav>
-                            <Navbar.Form pullLeft>
-                                <FormGroup>
-                                    <FormControl type="text" placeholder="Search">
-                                    </FormControl>
-                                </FormGroup>
-                                {' '}
-                                <Button type="submit">Submit</Button>
-                            </Navbar.Form>
-                        </Nav>
-                    </Nav>
-                    <Nav pullRight>
-                        <NavItem className="nav-item float-right" eventKey={"logIn"}>
-                            Log In
-                            <Glyphicon glyph="log-in"/>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
-            </div>
-        );
+            <nav>
+                <div className="navbar">
+                    <span className="header-logo">
+                        WARC-Portal
+                    </span>
+                    <div className="search-form">
+                        <form onSubmit={this.onClick}>
+                            <FormGroup>
+                                <InputGroup>
+                                        <FormControl type="text" placeholder="Search" bsStyle="search-header-field"/>
+                                    <InputGroup.Button>
+                                        <Button type="submit" bsStyle="primary" onClick={this.onClick}><Glyphicon glyph="search" /></Button>
+                                    </InputGroup.Button>
+                                    </InputGroup>
+                            </FormGroup>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        loading: state.docs.loading,
+    };
+}
+export default connect(mapStateToProps)(Menu);

@@ -61,7 +61,7 @@ class Image(models.Model):
     file = models.ForeignKey(WarcFile, on_delete=models.CASCADE, related_name='image')
 
     def __unicode__(self):
-        return self.title
+        return self.name
 
     class Meta:
         ordering = ('crawl_date',)

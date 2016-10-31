@@ -14,6 +14,16 @@
     }
   },
   {
+    "model": "rest_api.image",
+    "fields": {
+      "crawl_date": "2014-01-01",
+      "name": "cool-bear.jpg",
+      "detail": "fire, tesla",
+      "link": "https://sites.google.com/site/8bearsforever/_/rsrc/1438386364712/shop-cool-bear-stuff/amex.jpg",
+      "file": 1
+    }
+  },
+  {
     "model": "rest_api.warcfile",
     "pk": 1,
     "fields": {

@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'documents', views.DocumentViewSet)
+router.register(r'image', views.ImageViewSet)
 router.register(r'warcfile', views.WarcFileViewSet)
 router.register(r'collection', views.CollectionViewSet)
 

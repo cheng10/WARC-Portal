@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters
 from serializers import *
-from models import Snippet
+from models import *
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
@@ -30,6 +30,16 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ('id', 'pub_date_confident', 'pub_date')
     search_fields = ('title', 'content')
     filter_fields = ('type', 'file',  'domain')
+
+
+@permission_classes((AllowAny, ))
+class ImageViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
+    ordering_fields = ('id', 'crawl_date')
+    search_fields = ('name', 'detail')
+    filter_fields = ('file',)
 
 
 @permission_classes((AllowAny, ))

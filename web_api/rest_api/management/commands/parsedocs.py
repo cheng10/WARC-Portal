@@ -83,7 +83,7 @@ class Command(BaseCommand):
                             Document.objects.create(
                                 title=title,
                                 domain=domain,
-                                file=warc,  # file name, to do
+                                file=warc,
                                 pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                                 pub_date_confident=confident,
                                 crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),

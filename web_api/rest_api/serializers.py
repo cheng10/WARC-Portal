@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-import json, ast
-
-from models import Snippet, Document, WarcFile, Collection
+import json
+import ast
+from models import *
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -57,6 +57,14 @@ class CollectionSerializer(serializers.ModelSerializer):
             collection.save()
 
         return collection
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    file = serializers.CharField(source='file.name')
+
+    class Meta:
+        model = Image
+        fields = ('url', 'name', 'crawl_date', 'detail', 'link', 'file')
 
 
 # class SnippetSerializer(serializers.Serializer):

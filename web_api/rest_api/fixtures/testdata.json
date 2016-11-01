@@ -18,6 +18,20 @@
     }
   },
   {
+    "model": "rest_api.warcfile",
+    "pk": 1,
+    "fields": {
+      "name": "file1"
+    }
+  },
+  {
+    "model": "rest_api.warcfile",
+    "pk": 2,
+    "fields": {
+      "name": "file2"
+    }
+  },
+  {
     "model": "rest_api.document",
     "fields": {
       "crawl_date": "2014-01-01",
@@ -31,6 +45,20 @@
       "content": "hello world"
     }
   },
+    {
+    "model": "rest_api.document",
+    "fields": {
+      "crawl_date": "2015-01-01",
+      "pub_date": "2015-01-01",
+      "title": "test doc 2",
+      "type": "other",
+      "detail": "null",
+      "link": "some fake link",
+      "file": 2,
+      "domain": "www.cheng10.cc",
+      "content": "hi nothing here"
+    }
+  },
   {
     "model": "rest_api.image",
     "fields": {
@@ -42,17 +70,13 @@
     }
   },
   {
-    "model": "rest_api.warcfile",
-    "pk": 1,
+    "model": "rest_api.image",
     "fields": {
-      "name": "file1"
-    }
-  },
-    {
-    "model": "rest_api.warcfile",
-    "pk": 2,
-    "fields": {
-      "name": "file1"
+      "crawl_date": "2016-01-01",
+      "name": "cool-bear2.jpg",
+      "detail": "alberta",
+      "link": "https://c1.staticflickr.com/1/602/21499139611_b7b1d53ca0_b.jpg",
+      "file": 2
     }
   },
   {

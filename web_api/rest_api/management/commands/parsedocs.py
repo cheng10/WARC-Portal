@@ -26,9 +26,6 @@ class Command(BaseCommand):
                         except:
                             print "Error parsing JSON"
 
-                        # parse crawl date
-                        crawl_date = datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-
                         # fetch domain
                         domain = data[1]
 
@@ -85,7 +82,7 @@ class Command(BaseCommand):
                             for link in data[4]:
                                 name = link.split('/')[-1]
                                 Image.objects.create(
-                                    crawl_date=crawl_date,
+                                    crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                                     name=name,
                                     detail='',
                                     link=link,
@@ -99,7 +96,7 @@ class Command(BaseCommand):
                             file=warc,
                             pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                             pub_date_confident=confident,
-                            crawl_date=crawl_date,
+                            crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                             link=data[2],
                             content=text.encode('unicode_escape'),
                             type='html',  # document type, to do

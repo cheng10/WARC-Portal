@@ -23,7 +23,7 @@ http://127.0.0.1:8000/admin/doc/
 
 
 ### Rest API Doc
-http://127.0.0.1:8000/doc
+http://127.0.0.1:8000/docs
 
 
 ## Front end:

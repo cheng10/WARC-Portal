@@ -80,10 +80,11 @@ class Command(BaseCommand):
                         # parse and store images
                         if data[4]:
                             for link in data[4]:
-                                name = link.split('/')[-1]
+                                # print link
+                                name = link.split('?')[0].split('/')[-1]
                                 Image.objects.create(
                                     crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-                                    name=name,
+                                    name=name[:99],
                                     detail='',
                                     link=link,
                                     file=warc,

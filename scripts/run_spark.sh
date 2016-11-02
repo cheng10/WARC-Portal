@@ -16,7 +16,7 @@ function info_print
 
 info_print '	run_spark.sh started'
 
-if [ "$(ls $dir)" ]
+if [ "$(ls ${dir})" ]
 then   
 	info_print '	dir not clean, running spark'
 else
@@ -29,7 +29,7 @@ source ~/.bashrc
 rm -rf /mnt/md0/spark_out
 /opt/spark-1.6.1-bin-hadoop2.6/bin/spark-shell --driver-memory 4G --jars ~/warcbase/warcbase-core/target/warcbase-core-0.1.0-SNAPSHOT-fatjar.jar -i job.scala || error_exit "$LINENO: could not run spark, aborting"
 
-info_print '	spark job finisehd'
+info_print '	spark job finished'
 
 mv /mnt/md0/warc_tmp/* /mnt/md0/warc_store || error_exit "$LINENO Could not move processed files, aborting"
 

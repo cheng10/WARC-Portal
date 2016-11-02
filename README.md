@@ -3,16 +3,16 @@ The University of Alberta and it's researchers have a collection of Web Archives
 
 ## Rest API
 
-###Installation:
+### Installation:
 > virtualenv venv  
 > source venv/bin/activate  
 > pip install -r requirements.txt  
-###To test the api:  
+### To test the api:  
 > ./manage.py loaddata testdata.json
 > ./manage.py runserver  
 > curl -H 'Accept: application/json; indent=4' -u admin:adminadmin http://127.0.0.1:8000  
 or just go to http://127.0.0.1:8000/, user:  admin:adminadmin
-###Django Doc
+### Django Doc
 http://127.0.0.1:8000/admin/doc/
 
 

@@ -12,18 +12,34 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 @permission_classes((IsAdminUser, ))
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be **viewed** or **edited** by **admin**.
+
+    Returns a list of all users in the system.
+    """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
 
 @permission_classes((IsAdminUser, ))
 class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be **viewed** or **edited** by **admin**.
+
+    Returns a list of all groups in the system.
+    """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
 @permission_classes((AllowAny, ))
 class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows documents to be **viewed** by **anyone**,
+    with the functionality of **ordering**, **searching** and **filtering**.
+
+    Returns a list of all documents in the system.
+    """
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
@@ -34,6 +50,12 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
 
 @permission_classes((AllowAny, ))
 class ImageViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows images to be **viewed** by **anyone**,
+    with the functionality of **ordering**, **searching** and **filtering**.
+
+    Returns a list of all images in the system.
+    """
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
@@ -44,22 +66,33 @@ class ImageViewSet(viewsets.ReadOnlyModelViewSet):
 
 @permission_classes((AllowAny, ))
 class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows WarcFiles to be **viewed** by **anyone**.
+
+    Returns a list of all warc files in the system.
+    """
     queryset = WarcFile.objects.all()
     serializer_class = WarcFileSerializer
 
 
 @permission_classes((IsAuthenticated, ))
 class CollectionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows collations to be **viewed** only by by **authenticated user**,
+    or to be **created** by the **current user**.
+
+    Returns a list of all collection in the system.
+    """
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
 
-    def get_queryset(self):
-        """
-        This view should return a list of all the collections
-        for the currently authenticated user.
-        """
-        user = self.request.user
-        return Collection.objects.filter(warcuser=user)
+    # def get_queryset(self):
+    #     """
+    #     This view should return a list of all the collections
+    #     for the currently authenticated user.
+    #     """
+    #     user = self.request.user
+    #     return Collection.objects.filter(warcuser=user)
 
 
 class JSONResponse(HttpResponse):

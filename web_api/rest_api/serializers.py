@@ -6,18 +6,27 @@ from models import *
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    The serializer for user.
+    """
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'groups')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    The serializer for group.
+    """
     class Meta:
         model = Group
         fields = ('url', 'name')
 
 
 class DocumentSerializer(serializers.ModelSerializer):
+    """
+    The serializer for document.
+    """
     file = serializers.CharField(source='file.name')
 
     class Meta:
@@ -27,13 +36,18 @@ class DocumentSerializer(serializers.ModelSerializer):
 
 
 class WarcFileSerializer(serializers.ModelSerializer):
-
+    """
+    The serializer for warc file.
+    """
     class Meta:
         model = WarcFile
         fields = ('url', 'name')
 
 
 class CollectionSerializer(serializers.ModelSerializer):
+    """
+    The serializer for collection.
+    """
     file = WarcFileSerializer(many=True)
     warcuser = serializers.StringRelatedField()
 
@@ -42,6 +56,11 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ('url', 'warcuser', 'name', 'detail', 'file')
 
     def create(self, validated_data):
+        """
+        Create a new collection for the current authenticated user.
+        :param validated_data:
+        :return: collation instant
+        """
         validated_data = ast.literal_eval(json.dumps(validated_data))
 
         user = None
@@ -60,6 +79,9 @@ class CollectionSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    """
+    The serializer for image.
+    """
     file = serializers.CharField(source='file.name')
 
     class Meta:

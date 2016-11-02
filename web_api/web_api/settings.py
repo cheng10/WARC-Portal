@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     'rest_framework',
+    'rest_framework_docs',
     'corsheaders',
     'rest_api',
     'crispy_forms',

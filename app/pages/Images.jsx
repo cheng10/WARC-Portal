@@ -56,7 +56,12 @@ export class Images extends React.Component {
         console.log("images", props)
         props.dispatch({type: 'imgFetchList'});
     }
-
+    
+    /**
+     * This function adds one to its input.
+     * @param {number} input any number
+     * @returns {number} that number, plus one.
+     */
     createSet() {
         console.log("fetched images", this.props.images);
         if (this.props.images.length === 0) {

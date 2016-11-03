@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="1">
+
+  <testsuite name="testPage"
+    errors="1" failures="0" hostname="" id="" package="testPage" skipped="0"
+    tests="1" time="0.005000" timestamp="Thu, 03 Nov 2016 10:15:44 GMT">
+  
+    <testcase name="User Logs in" time="0.005000" assertions="0">
+    </testcase>
+      <system-err>
+          Error while running [Test Page / User Logs in]:
+
+  TypeError: Cannot read property &#39;loginPage&#39; of undefined
+    at Object.module.exports.User Logs in (D:\dev\WARC-Portal\selenium-tests\testPage.js:3:34)
+    at Module.call (C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\lib\runner\module.js:62:34)
+    at C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\lib\runner\testcase.js:70:29
+    at _fulfilled (C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\node_modules\q\q.js:834:54)
+    at self.promiseDispatch.done (C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\node_modules\q\q.js:863:30)
+    at Promise.promise.promiseDispatch (C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\node_modules\q\q.js:796:13)
+    at C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\node_modules\q\q.js:556:49
+    at runSingle (C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\node_modules\q\q.js:137:13)
+    at flush (C:\Users\Kevin\AppData\Roaming\npm\node_modules\nightwatch\node_modules\q\q.js:125:13)
+    at nextTickCallbackWith0Args (node.js:420:9)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

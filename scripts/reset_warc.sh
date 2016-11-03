@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir='/mnt/md0'
-rm -rf ${dir}/spark_out/
+rm -rf ${dir}/spark_*/
 mv ${dir}/warc_store/* ${dir}/warc_tmp/
 tree ${dir}
 

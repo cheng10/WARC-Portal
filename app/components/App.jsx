@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import Menu from './Menu.jsx';
 
-export class App extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
 
@@ -63,4 +63,6 @@ function mapStateToProps(state) {
         loading: state.docs.loading,
     };
 }
-export default connect(mapStateToProps)(App);
+const hoc = (Component) => connect(mapStateToProps)(Component)
+
+export default hoc(App);

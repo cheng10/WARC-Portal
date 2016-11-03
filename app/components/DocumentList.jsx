@@ -5,7 +5,7 @@ import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
 import DocElementList from './DocElementList.jsx';
 
-export class DocumentList extends React.Component
+class DocumentList extends React.Component
 {
     constructor(props)
     {
@@ -96,4 +96,7 @@ function mapStateToProps(state) {
         queryParams: state.routing.locationBeforeTransitions.query || ''
     };
 }
-export default connect(mapStateToProps)(DocumentList);
+
+const hoc = (Component) => connect(mapStateToProps)(Component)
+
+export default hoc(DocumentList);

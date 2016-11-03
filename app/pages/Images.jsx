@@ -47,6 +47,10 @@ const PHOTO_SET = [
 ];
 
 export class Images extends React.Component {
+    /**
+   * @param {number} param this is param.
+   * @return {number} this is return.
+   */
     constructor(props) {
         super(props);
         console.log("images", props)
@@ -79,7 +83,7 @@ export class Images extends React.Component {
             <div className="page-home">
                 <div className="page-main">
                     <div className="gallery-list-view">
-                        <Gallery disableLightbox={true} photos={this.createSet()} />
+                        <Gallery disableLightbox={true} photos={PHOTO_SET} />
                     </div>
                 </div>
             </div>

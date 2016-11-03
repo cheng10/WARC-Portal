@@ -30,6 +30,8 @@ class Command(BaseCommand):
 
                         # parse and store images
                         if data[0]:
+                            if data[0] == '':
+                                continue
                             print data[0]
                             link = data[0]
                             # fetch classification data using IBM Watson

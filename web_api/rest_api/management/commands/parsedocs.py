@@ -20,7 +20,10 @@ class Command(BaseCommand):
                     # record warc file name
                     warc = WarcFile.objects.create(name=warc_file_name)
                     for line in f:
-                        data = line
+                        try:
+                            data = json.loads(line)
+                        except:
+                            print "Error parsing JSON"
                         # parse and store images
                         if data[0]:
                             if data[0] == '':

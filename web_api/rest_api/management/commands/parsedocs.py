@@ -81,11 +81,25 @@ class Command(BaseCommand):
                         if data[4]:
                             for link in data[4]:
                                 # print link
+
+                                # fetch classification data using IBM Watson
+                                payload = {
+                                    'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
+                                    'version': '016-05-20',
+                                    'url': link,
+                                }
+                                api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
+                                r = requests.get(api_url, params=payload)
+                                detail=''
+                                if r.json()['images'][0]['classifiers'][0]['classes']:
+                                    for cls in r.json()['images'][0]['classifiers'][0]['classes']:
+                                        detail = detail + cls['class'] + ', '
+
                                 name = link.split('?')[0].split('/')[-1]
                                 Image.objects.create(
                                     crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                                     name=name[:99],
-                                    detail='',
+                                    detail=detail,
                                     link=link,
                                     file=warc,
                                 )

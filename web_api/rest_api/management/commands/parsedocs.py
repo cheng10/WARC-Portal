@@ -90,10 +90,13 @@ class Command(BaseCommand):
                                 }
                                 api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
                                 r = requests.get(api_url, params=payload)
-                                detail=''
-                                if r.json()['images'][0]['classifiers'][0]['classes']:
+                                detail = ''
+                                print r.json()
+                                try:
                                     for cls in r.json()['images'][0]['classifiers'][0]['classes']:
                                         detail = detail + cls['class'] + ', '
+                                except KeyError:
+                                    detail = ''
 
                                 name = link.split('?')[0].split('/')[-1]
                                 Image.objects.create(

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="2">
+
+  <testsuite name="testPage"
+    errors="0" failures="1" hostname="" id="" package="testPage" skipped="0"
+    tests="2" time="5.575" timestamp="Thu, 03 Nov 2016 10:33:31 GMT">
+  
+    <testcase name="demo test google" time="4.202" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="part two" time="1.373" assertions="1">  <failure message="Testing if element &lt;#main&gt; contains text: &quot;Night Watch&quot;.">    at Object.module.exports.part two (/home/kevin/School/WARC-Portal/selenium-tests/testPage.js:19:15)</failure>
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

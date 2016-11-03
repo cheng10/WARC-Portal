@@ -11,7 +11,7 @@
       "start_process":true,
       "server_path":"./node_modules/selenium-standalone/.selenium/selenium-server/2.53.1-server.jar",
       "cli_args":{  
-         "webdriver.chrome.driver":"./chromedriver.exe"
+         "webdriver.chrome.driver":"./node_modules/selenium-standalone/.selenium/chromedriver/2.25-x64-chromedriver"
       }
    },
    "test_settings":{  

@@ -18,16 +18,9 @@ class Command(BaseCommand):
                     print "Parsing..." + warc_file_name
                     f = open(IMG_DIR+warc_file_name+'/'+outfile)
                     # record warc file name
-                    warc = WarcFile.objects.get_or_create(name=warc_file_name)
+                    warc = WarcFile.objects.create(name=warc_file_name)
                     for line in f:
-                        try:
-                            data = json.loads(line)
-                            if len(data) != 5:
-                                print "Did not parse %s" % data[3]
-                                raise
-                        except:
-                            print "Error parsing JSON"
-
+                        data = line
                         # parse and store images
                         if data[0]:
                             if data[0] == '':

@@ -39,12 +39,12 @@ class App extends React.Component {
                 <div className="subnav">
                     <ul className="links">
                         <li className={this.state.tab === "search" ? "link selected": "link"} data-id="photos">
-                            <a href="" onClick={this.onClick}>
+                            <a href="" onClick={this.onClick} id="search">
                                 <div className="title">Archives</div>
                             </a>
                         </li>
                         <li className={this.state.tab === "images" ? "link selected": "link"} data-id="people">
-                            <a href="" onClick={this.onClick}>
+                            <a href="" onClick={this.onClick} id="images">
                                 <div className="title">Images</div>
                             </a>
                         </li>

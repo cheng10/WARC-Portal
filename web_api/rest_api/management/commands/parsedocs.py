@@ -6,17 +6,65 @@ from django.core.management.base import BaseCommand, CommandError
 from ...models import Document, WarcFile, Image
 
 DIR = "/mnt/md0/spark_out/"
+IMG_DIR = "/mnt/md0/spark_image/"
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        # parse IMG_DIR
+        for warc_file_name in os.listdir(IMG_DIR):
+            for outfile in os.listdir(IMG_DIR+warc_file_name):
+                if outfile.startswith('part'):
+                    print "Parsing..." + warc_file_name
+                    f = open(IMG_DIR+warc_file_name+'/'+outfile)
+                    # record warc file name
+                    warc = WarcFile.objects.get_or_create(name=warc_file_name)
+                    for line in f:
+                        try:
+                            data = json.loads(line)
+                            if len(data) != 5:
+                                print "Did not parse %s" % data[3]
+                                raise
+                        except:
+                            print "Error parsing JSON"
+
+                        # parse and store images
+                        if data[0]:
+                            print data[0]
+                            link = data[0]
+                            # fetch classification data using IBM Watson
+                            payload = {
+                                'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
+                                'version': '016-05-20',
+                                'url': link,
+                            }
+                            api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
+                            r = requests.get(api_url, params=payload)
+                            detail = ''
+                            # print r.json()
+                            try:
+                                for cls in r.json()['images'][0]['classifiers'][0]['classes']:
+                                    detail = detail + cls['class'] + ', '
+                            except KeyError:
+                                detail = ''
+
+                            name = link.split('?')[0].split('/')[-1]
+                            Image.objects.create(
+                                crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
+                                name=name[:99],
+                                detail=detail,
+                                link=link,
+                                file=warc,
+                            )
+
+        # parse DIR
         for warc_file_name in os.listdir(DIR):
             for outfile in os.listdir(DIR+warc_file_name):
                 if outfile.startswith('part'):
                     print "Parsing..." + warc_file_name
                     f = open(DIR+warc_file_name+'/'+outfile)
                     # record warc file name
-                    warc = WarcFile.objects.create(name=warc_file_name)
+                    warc = WarcFile.objects.get_or_create(name=warc_file_name)
                     for line in f:
                         try:
                             data = json.loads(line)
@@ -76,36 +124,6 @@ class Command(BaseCommand):
                         else:
                             date = '19700101000000'
                             confident = False
-
-                        # parse and store images
-                        if data[4]:
-                            for link in data[4]:
-                                # print link
-
-                                # fetch classification data using IBM Watson
-                                payload = {
-                                    'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
-                                    'version': '016-05-20',
-                                    'url': link,
-                                }
-                                api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
-                                r = requests.get(api_url, params=payload)
-                                detail = ''
-                                print r.json()
-                                try:
-                                    for cls in r.json()['images'][0]['classifiers'][0]['classes']:
-                                        detail = detail + cls['class'] + ', '
-                                except KeyError:
-                                    detail = ''
-
-                                name = link.split('?')[0].split('/')[-1]
-                                Image.objects.create(
-                                    crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-                                    name=name[:99],
-                                    detail=detail,
-                                    link=link,
-                                    file=warc,
-                                )
 
                         # store documents
                         Document.objects.create(

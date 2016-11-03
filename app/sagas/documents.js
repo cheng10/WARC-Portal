@@ -12,3 +12,14 @@ export function* docsFetchList(action) {
         docs: docs,
     });
 }
+
+export function* imgFetchList(action) {
+    // call the api to get the users list
+    console.log("users fetch list", action)
+    const img = yield call(ApiDocs.getImages, action.query);
+    // dispatch the success action with the users attached
+    yield put({
+        type: 'docs.fetchImgSuccess',
+        img: img,
+    });
+}

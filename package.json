@@ -8,7 +8,7 @@
     "url": "https://github.com/cheng10/WARC-Portal"
   },
   "scripts": {
-    "start": "webpack-dev-server -d --inline --hot --history-api-fallback ",
+    "start": "webpack-dev-server -d --inline --hot --history-api-fallback --host 127.0.0.1 --port 8080 ",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
     "test": "mocha --compilers js:babel-register --recursive",
@@ -28,10 +28,14 @@
   "author": "Kevin Tang",
   "license": "",
   "dependencies": {
+    "aphrodite": "^1.0.0",
     "connect": "3.5.0",
+    "lodash": "4.16.4",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.2",
+    "react-images": "^0.5.1",
+    "react-photo-gallery": "^4.2.14",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "react-router-bootstrap": "^0.23.1",
@@ -39,7 +43,6 @@
     "redux": "^3.5.2",
     "redux-form": "^6.0.2",
     "redux-saga": "^0.11.1",
-    "lodash": "4.16.4",
     "serve-static": "1.11.1"
   },
   "devDependencies": {

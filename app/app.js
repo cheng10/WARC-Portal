@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, IndexRedirect } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 
@@ -31,9 +31,9 @@ sagaMiddleware.run(sagas);
 ReactDOM.render (
     <Provider store={store}>
         <Router history={history}>
-            <Route path="/" component={App}>
-                <IndexRoute component={Home}/>
-                <Route path="search" component={Images} />
+            <Route path ="/" component={App}>
+                <IndexRedirect to="search" />
+                <Route path="search" component={DocumentList} />
                 <Route path="images" component={Images} />
                 <Route path="*" component={NotFound}/>
             </Route>

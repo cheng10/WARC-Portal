@@ -6,7 +6,7 @@ module.exports = {
     app_root: app_root, // the app root folder, needed by the other webpack configs
     entry: [
         // http://gaearon.github.io/react-hot-loader/getstarted/
-        'webpack-dev-server/client?http://localhost:8080',
+        'webpack-dev-server/client?http://127.0.0.1:8080',
         'webpack/hot/only-dev-server',
         __dirname + '/' + app_root + '/app.js',
     ],

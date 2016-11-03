@@ -16,4 +16,17 @@ export default class ApiDocs {
             return list;
         });
     }
+
+    static getImages(action) {
+        console.log("action", action);
+        const url = URLBuilder(action);
+
+        let list = [];
+        return fetch(`http://warc.tech:8000/image/`).then((res) => {
+            return res.json();
+        }).then((list) => {
+            console.log(list)
+            return list;
+        });
+    }
 }

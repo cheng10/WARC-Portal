@@ -1,15 +1,21 @@
 @import "./DocElementList.scss";
 @import "./Menu.scss";
 @import "./Home.scss";
+html{
+  height: 100%;
+}
+body {
+  background-color: #f3f5f6;
+}
+
+.subnav {
+  background-color: white;
+}
 
 .app-container {
     margin-top: 51px;
+    overflow-y: hidden;
   }
-
-.app-body {
-    display: flex;
-    justify-content: center;
-}
 
 .page-home {
     width: 100%;

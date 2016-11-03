@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga';
 import { fork } from 'redux-saga/effects';
-import { docsFetchList } from './documents'
+import { docsFetchList, imgFetchList } from './documents'
 
 /**
  * Main saga generator
@@ -8,5 +8,6 @@ import { docsFetchList } from './documents'
 export function* sagas() {
     yield [
         fork(takeLatest, 'docsFetchList', docsFetchList),
+        fork(takeLatest, 'imgFetchList', imgFetchList )
     ];
 }

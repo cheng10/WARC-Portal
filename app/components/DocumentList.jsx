@@ -45,16 +45,20 @@ export class DocumentList extends React.Component
         if (!this.props.loading) {
             // show the list of users
             return (
-                <div className="doc-list">
-                    <ListGroup>
-                        {this.props.documents.map((document, index) => {
-                            start_count++;
-                            return (<DocElementList key={start_count} id={start_count} document={document}/>);
-                        
-                        })}
-                    </ListGroup>
-                    <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
-                        boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
+                <div className="page-main">
+                    <div className="doc-list-view">
+                        <div className="doc-list">
+                            <ListGroup>
+                                {this.props.documents.map((document, index) => {
+                                    start_count++;
+                                    return (<DocElementList key={start_count} id={start_count} document={document}/>);
+
+                                })}
+                            </ListGroup>
+                            <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
+                                boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
+                        </div>
+                    </div>
                 </div>
             );
         } else {

@@ -14,6 +14,13 @@ class reducerClass {
         return new_state;
     }
 
+    static fetchImgSuccess(new_state, action) {
+        console.log("fetch images success", action.img);
+        new_state.images = action.img.results;
+        console.dir(new_state);
+        return new_state;
+    }
+
     static onLoad(new_state, action) {
         console.log("onload");
         new_state.loading = true;

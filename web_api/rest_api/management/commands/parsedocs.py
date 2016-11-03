@@ -51,8 +51,9 @@ class Command(BaseCommand):
                                 detail = ''
 
                             name = link.split('?')[0].split('/')[-1]
+                            date = '19700101000000'
                             Image.objects.create(
-                                crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
+                                crawl_date=datetime.strptime(date, '%Y%m%d').strftime("%Y-%m-%d"),
                                 name=name[:99],
                                 detail=detail,
                                 link=link,

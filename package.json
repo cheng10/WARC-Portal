@@ -28,6 +28,7 @@
   "author": "Kevin Tang",
   "license": "",
   "dependencies": {
+    "connect": "3.5.0",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.2",
@@ -38,7 +39,8 @@
     "redux": "^3.5.2",
     "redux-form": "^6.0.2",
     "redux-saga": "^0.11.1",
-    "lodash": "4.16.4"
+    "lodash": "4.16.4",
+    "serve-static": "1.11.1"
   },
   "devDependencies": {
     "babel-core": "^6.16.0",

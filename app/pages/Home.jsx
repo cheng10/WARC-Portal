@@ -25,12 +25,12 @@ export class Home extends React.Component {
                 <div className="subnav">
                     <ul className="links">
                         <li className="link selected" data-id="photos">
-                            <a href="#" onClick={this.onClick}>
+                            <a href="" onClick={this.onClick}>
                                 <div className="title">Archives</div>
                             </a>
                         </li>
                         <li className="link" data-id="people">
-                            <a href="/search/" data-rapid_p="26">
+                            <a href="" data-rapid_p="26">
                                 <div className="title">Images</div>
                             </a>
                         </li>

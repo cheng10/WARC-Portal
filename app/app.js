@@ -11,7 +11,7 @@ import { reducers } from './reducers/index';
 import { sagas } from './sagas/index';
 import App from './components/App.jsx';
 import Home from './pages/Home.jsx';
-import UserEdit from './pages/UserEdit.jsx';
+import Images from './pages/Images.jsx'
 import NotFound from './pages/NotFound.jsx';
 import DocumentList from './components/DocumentList.jsx'
 
@@ -28,12 +28,13 @@ sagaMiddleware.run(sagas);
 
 
 // render the main component
-ReactDOM.render(
+ReactDOM.render (
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home}/>
-                <Route path="search" component={Home} />
+                <Route path="search" component={Images} />
+                <Route path="images" component={Images} />
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

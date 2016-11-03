@@ -19,7 +19,7 @@ for (file <- fileList) {
 for (file <- fileList) {
     val r = RecordLoader.loadArchives(warc+file, sc)
     .keepValidPages()
-    .map(r => ExtractImageLinks(r.getUrl, r.getContentString))
+    .flatMap(r => ExtractImageLinks(r.getUrl, r.getContentString))
     .countItems()
     .map(r => JsonUtil.toJson(r))
     .saveAsTextFile("/mnt/md0/spark_image/"+file)

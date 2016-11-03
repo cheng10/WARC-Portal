@@ -1,0 +1,39 @@
+===============
+  WARC PORTAL
+===============
+
+WARC Portal is a web-based service that allows for the browsing and indexing
+of ISO-Standard WARC (or ARC) web archive files. WARC Portal provides features
+such as:
+
+- Searching through archived webpages
+- Searching through archived images
+- Displaying webpages in original format
+- Text and Image analysis
+
+System Requirements
+-------------------
+OS: Linux
+Storage: 500GB+ free space
+
+Dependencies
+------------
+- MySQL
+- Scala Language Support
+- Oracle Java JDK
+- WARCBASE (see warcbase.readme)
+- Apache Spark
+- Pywb (see pywb.readme)
+- npm
+- node
+- Apache Maven
+
+ELEMENTS
+--------
+- Django back end
+- MySQL Database
+- React.js front end
+
+BINDINGS
+--------
+- Port 8080: Pywb

@@ -1,0 +1,58 @@
+========
+  Pywb
+========
+
+pywb is an open-source library used by WARC Portal to display the webpages
+located in WARC files.
+
+" || > " indicates a command to be inputted in a bash shell.
+
+SETUP
+-----
+The best time to complete this would be after you have installed WARC Portal.
+
+1) > sudo apt-get install build-essential libssl-dev libffi-dev python-dev
+
+** APT-GET is exclusive to Ubuntu. If you are using a different linux flavor,
+please search for and install these packages through alternate means **
+
+2) || > git clone https://github.com/ikreymer/pywb.git
+
+3) || > cd pywb
+
+4) || > python setup.py install
+
+
+INITIAL SETTINGS
+----------------
+After PYWB has successfully installed, basic configuration is needed to allow
+it to function.
+
+1) change directory into the area where you prefer to store files
+
+2) || > mkdir wayback_collection
+
+3) || > cd wayback_collection
+
+4) || > wb-manager init warc_portal
+
+5) || > wb-manager add warc_portal /path/to/warcs/*.warc.gz
+
+6) || > nohup wayback &
+
+** (Ensure you are running Wayback in the wayback_collection top folder) **
+
+After this, you can navigate to www.yoururl.com:8080 to search through the
+elements located in the WARC archives.
+
+ADDING WARCs TO WAYBACK
+-----------------------
+While WARC Portal will automatically index files into the search engine,
+the display functionality needs an extra step to allow it to display the
+webpages properly.
+
+1) || > cd into wayback_collection
+
+2) || > wb-manager add warc_portal /path/to/warc/warcfile.warc.gz
+
+3) || > wb-manager reindex warc_portal

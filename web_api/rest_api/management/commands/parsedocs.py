@@ -63,7 +63,7 @@ class Command(BaseCommand):
                     print "Parsing..." + warc_file_name
                     f = open(DIR+warc_file_name+'/'+outfile)
                     # record warc file name
-                    warc = WarcFile.objects.get_or_create(name=warc_file_name)
+                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
                     for line in f:
                         try:
                             data = json.loads(line)

@@ -1,3 +1,42 @@
 =======================
   WARC Portal Scripts
 =======================
+
+** All files not listed here are temporary or backup files **
+
+cron.bak
+--------
+The configuration file for jobs to be run with cron.
+
+Each task to run is defined through a single line
+indicating with different fields when the task will be run
+and what command to run for the task.
+
+WARC Portal uses cron to continuously cycle run_spark.sh.
+
+image_ranking.scala
+-------------------
+image_ranking uses warcbase's built in analytics to rank the top
+images from a file.
+
+job.scala
+---------
+Goes through all of the files in a WARC, and obtains:
+  - URL
+  - Crawl Date
+  - Content
+  - A list of images related to a URL
+and outputs this information to a parsable file.
+
+reset_warc.sh
+-------------
+Clears out all temporary files and re-makes the directory for continued
+operation.
+
+run_spark.sh
+------------
+Shell script, called by the cron job, to perform the following tasks:
+
+  - Run job.scala (process files in the warc_store directory)
+  - Parse the output of the job
+  - Intake all of that data into the database

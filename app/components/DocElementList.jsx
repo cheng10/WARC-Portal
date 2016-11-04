@@ -3,6 +3,11 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {Button, Glyphicon, ListGroupItem} from 'react-bootstrap';
 
+/*
+* React component for the individual elements of the list on homepage.
+*
+*/
+
 export default class DocElementList extends React.Component {
     render() {
         const doc = this.props.document;

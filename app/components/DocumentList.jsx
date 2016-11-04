@@ -5,6 +5,16 @@ import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
 import DocElementList from './DocElementList.jsx';
 
+/*
+*
+* React component for the feature of a document list.
+*
+* Allows updating of the list based on search queries.
+* Enables pagination of results.
+* Sets design and properties of the entire list.
+*
+*/
+
 class DocumentList extends React.Component
 {
     constructor(props)

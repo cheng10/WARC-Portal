@@ -1,3 +1,39 @@
 ============
   WARCBASE
 ============
+
+Warcbase is an open-source platform for managing web archives built on
+Hadoop and HBase. The platform provides a flexible data model for storing
+and managing raw content as well as metadata and extracted knowledge.
+Tight integration with Hadoop provides powerful tools for analytics and
+data processing via Spark.
+
+The first and most common is to analyze web archives using Spark:
+these functionalities are contained in the warcbase-core module, and what
+WARC Portal uses as its analysis basis.
+
+Steps to Installation
+---------------------
+|| > git clone http://github.com/lintool/warcbase.git
+|| > cd warcbase
+|| > mvn clean package
+
+BUILD SUCCESS indicates you are now able to use warcbase.
+
+|| > wget http://archive.apache.org/dist/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz
+|| > tar xzf spark-1.6.1-bin-hadoop2.6.tgz
+
+|| > cd spark-1.6.1-bin-hadoop2.6.tgz
+
+You can then run Spark Shell with the (recommended) command:
+
+|| > ./bin/spark-shell --driver-memory 4G --jars ~/warcbase/warcbase-core/target/warcbase-0.1.0-SNAPSHOT-fatjar.jar
+
+(Assuming you cloned warcbase in ~/  -- If not, replace the directory in the above command)
+
+Once this is complete, you can do fun analytics in spark shell if you wish.
+
+WARC Portal needs Warcbase (and spark shell) to perform analytics, so ensure that all of the scripts (see: scripts.readme)
+point to the correct location of spark shell.
+
+If you would like to read more about things warcbase can do: http://lintool.github.io/warcbase-docs/Getting-Started/

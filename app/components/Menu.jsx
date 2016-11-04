@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { FormGroup, FormControl, Button, Glyphicon, InputGroup } from 'react-bootstrap';
 
+/*
+*
+* React component for the top menu bar of the homepage which includes
+* the search box, and navigation buttons.
+*
+*/
+
 export class Menu extends React.Component {
 
     constructor() {

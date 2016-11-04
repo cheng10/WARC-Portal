@@ -5,6 +5,10 @@ import _ from 'lodash';
 
 import Menu from './Menu.jsx';
 
+/*
+* The react component of the main page that allows for tabbed browsing.
+*/
+
 class App extends React.Component {
     constructor(props) {
         super(props);

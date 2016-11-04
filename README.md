@@ -26,9 +26,11 @@ Mate Verunica: verunica@ualberta.ca
 **Port Bindings:**
 * :8080 - pywb
 * :8000 - Django / REST API
-
+* :5000 - Front end interface
 ## Dependencies
 
+* [Front End](https://github.com/cheng10/WARC-Portal/blob/master/package.json)
+* [Web server](https://github.com/cheng10/WARC-Portal/blob/master/web_api/requirements.txt)
 * MySQL
 * Scala Language Support
 * Oracle Java JDK

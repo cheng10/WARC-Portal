@@ -31,8 +31,9 @@ class Command(BaseCommand):
                             data = json.loads(line)
                             crawl_date, mime, domain, url = data
                             filename = url.split('?')[0].split('/')[-1]
-                            w_url = 'http://www.warc.tech:8080/warc_portal/'+crawl_date+'/'+url
-                            urllib.urlretrieve(w_url, PDF_STORE+filename)
+                            # w_url = 'http://www.warc.tech:8080/warc_portal/'+crawl_date+'/'+url
+                            # print w_url
+                            urllib.urlretrieve(url, PDF_STORE+filename)
                             fp = open(PDF_STORE+filename, 'rb')
                             parser = PDFParser(fp)
                             doc = PDFDocument(parser)

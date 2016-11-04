@@ -4,17 +4,21 @@ from pprint import pprint
 from datetime import datetime
 from django.core.management.base import BaseCommand, CommandError
 from ...models import Document, WarcFile, Image
+import urllib
+from pdfminer.pdfparser import PDFParser
+from pdfminer.pdfdocument import PDFDocument
 
 DIR = "/mnt/md0/spark_out/"
 IMG_DIR = "/mnt/md0/spark_image/"
 PDF_DIR = "/mnt/md0/spark_pdf/"
 LINK_DIR = "/mnt/md0/spark_sitelink/"
-PDF_STORE = "/mnt/md0/pdf_store"
+PDF_STORE = "/mnt/md0/pdf_store/"
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         # parse PDF_DIR
+        print 'parsing '+PDF_DIR
         for warc_file_name in os.listdir(PDF_DIR):
             for outfile in os.listdir(PDF_DIR+warc_file_name):
                 if outfile.startswith('part'):
@@ -25,23 +29,54 @@ class Command(BaseCommand):
                     for line in f:
                         try:
                             data = json.loads(line)
-                        except:
-                            print "Error parsing JSON"
+                            crawl_date, mime, domain, url = data
+                            filename = url.split('?')[0].split('/')[-1]
+                            urllib.urlretrieve(url, PDF_STORE+filename)
+                            fp = open(PDF_STORE+filename, 'rb')
+                            parser = PDFParser(fp)
+                            doc = PDFDocument(parser)
+                        except Exception, e:
+                            print e
+                            continue
 
-                        # # store pdf documents
-                        # Document.objects.create(
-                        #     title=title,
-                        #     domain=domain,
-                        #     file=warc,
-                        #     pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
-                        #     pub_date_confident=confident,
-                        #     crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-                        #     link=data[2],
-                        #     content=text.encode('unicode_escape'),
-                        #     type='pdf',
-                        # )
+                        try:
+                            pub_date = doc.info[0]['ModDate'][2:16]
+                            confident = True
+                            _ = datetime.strptime(pub_date, '%Y%m%d%H%M%S')
+                        except Exception, e:
+                            print e
+                            pub_date = '19700101000000'
+                            confident = False
+
+                        try:
+                            title = doc.info[0]['Title']
+                        except Exception, e:
+                            print e
+                            title = 'could not parse title'
+
+                        try:
+                            title = title.encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            title = 'invalid coding, probably CJK'
+
+                        print title
+
+                        # store pdf documents
+                        Document.objects.create(
+                            title=title,
+                            domain=domain,
+                            file=warc,
+                            pub_date=datetime.strptime(pub_date, '%Y%m%d%H%M%S'),
+                            pub_date_confident=confident,
+                            crawl_date=datetime.strptime(crawl_date, '%Y%m%d').strftime("%Y-%m-%d"),
+                            link=url,
+                            content='',
+                            type='pdf',
+                        )
 
         # parse IMG_DIR
+        print 'parsing ' + IMG_DIR
         for warc_file_name in os.listdir(IMG_DIR):
             for outfile in os.listdir(IMG_DIR+warc_file_name):
                 if outfile.startswith('part'):
@@ -87,6 +122,7 @@ class Command(BaseCommand):
                             )
 
         # parse DIR
+        print 'parsing ' + DIR
         for warc_file_name in os.listdir(DIR):
             for outfile in os.listdir(DIR+warc_file_name):
                 if outfile.startswith('part'):

@@ -7,10 +7,40 @@ from ...models import Document, WarcFile, Image
 
 DIR = "/mnt/md0/spark_out/"
 IMG_DIR = "/mnt/md0/spark_image/"
+PDF_DIR = "/mnt/md0/spark_pdf/"
+LINK_DIR = "/mnt/md0/spark_sitelink/"
+PDF_STORE = "/mnt/md0/pdf_store"
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        # parse PDF_DIR
+        for warc_file_name in os.listdir(PDF_DIR):
+            for outfile in os.listdir(PDF_DIR+warc_file_name):
+                if outfile.startswith('part'):
+                    print "Parsing..." + warc_file_name
+                    f = open(PDF_DIR+warc_file_name+'/'+outfile)
+                    # record warc file name
+                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
+                    for line in f:
+                        try:
+                            data = json.loads(line)
+                        except:
+                            print "Error parsing JSON"
+
+                        # # store pdf documents
+                        # Document.objects.create(
+                        #     title=title,
+                        #     domain=domain,
+                        #     file=warc,
+                        #     pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
+                        #     pub_date_confident=confident,
+                        #     crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
+                        #     link=data[2],
+                        #     content=text.encode('unicode_escape'),
+                        #     type='pdf',
+                        # )
+
         # parse IMG_DIR
         for warc_file_name in os.listdir(IMG_DIR):
             for outfile in os.listdir(IMG_DIR+warc_file_name):
@@ -18,7 +48,7 @@ class Command(BaseCommand):
                     print "Parsing..." + warc_file_name
                     f = open(IMG_DIR+warc_file_name+'/'+outfile)
                     # record warc file name
-                    warc = WarcFile.objects.create(name=warc_file_name)
+                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
                     for line in f:
                         try:
                             data = json.loads(line)
@@ -134,5 +164,5 @@ class Command(BaseCommand):
                             crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
                             link=data[2],
                             content=text.encode('unicode_escape'),
-                            type='html',  # document type, to do
+                            type='html',
                         )

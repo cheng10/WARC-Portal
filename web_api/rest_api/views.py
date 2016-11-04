@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters
 from serializers import *
 from models import *
-from .pagination import ImageResultsPagination
+from pagination import *
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
@@ -59,6 +59,7 @@ class ImageViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+    pagination_class = ImageResultsPagination
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
     ordering_fields = ('id', 'crawl_date')
     search_fields = ('name', 'detail')

@@ -1,3 +1,6 @@
+from rest_framework.pagination import PageNumberPagination
+
+
 class ImageResultsPagination(PageNumberPagination):
     """
         Pagination class for displaying image results

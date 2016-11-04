@@ -31,7 +31,8 @@ class Command(BaseCommand):
                             data = json.loads(line)
                             crawl_date, mime, domain, url = data
                             filename = url.split('?')[0].split('/')[-1]
-                            urllib.urlretrieve(url, PDF_STORE+filename)
+                            w_url = 'http://www.warc.tech:8080/warc_portal/'+crawl_date+'/'+url
+                            urllib.urlretrieve(w_url, PDF_STORE+filename)
                             fp = open(PDF_STORE+filename, 'rb')
                             parser = PDFParser(fp)
                             doc = PDFDocument(parser)
@@ -58,7 +59,7 @@ class Command(BaseCommand):
                             title = title.encode('unicode_escape')
                         except Exception, e:
                             print e
-                            title = 'invalid coding, probably CJK'
+                            title = 'invalid encoding'
 
                         print title
 
@@ -113,6 +114,15 @@ class Command(BaseCommand):
 
                             name = link.split('?')[0].split('/')[-1]
                             date = '19700101000000'
+
+                            try:
+                                name = name.encode('unicode_escape')
+                                link = link.encode('unicode_escape')
+                            except Exception, e:
+                                print e
+                                name = 'invalid_encoding'
+                                link = 'invalid_encoding'
+
                             Image.objects.create(
                                 crawl_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                                 name=name[:99],
@@ -190,6 +200,30 @@ class Command(BaseCommand):
                             date = '19700101000000'
                             confident = False
 
+                        try:
+                            title = title.encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            title = 'invalid_encoding'
+
+                        try:
+                            _ = datetime.strptime(date, '%Y%m%d%H%M%S'),
+                        except Exception, e:
+                            print e
+                            date = '19700101000000'
+
+                        try:
+                            link = data[2].encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            link = 'invalid_encoding'
+
+                        try:
+                            text = text.encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            text = 'invalid_encoding'
+
                         # store documents
                         Document.objects.create(
                             title=title,
@@ -198,7 +232,7 @@ class Command(BaseCommand):
                             pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
                             pub_date_confident=confident,
                             crawl_date=datetime.strptime(data[0], '%Y%m%d').strftime("%Y-%m-%d"),
-                            link=data[2],
-                            content=text.encode('unicode_escape'),
+                            link=link,
+                            content=text,
                             type='html',
                         )

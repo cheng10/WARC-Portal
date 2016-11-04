@@ -96,61 +96,6 @@ class Command(BaseCommand):
                             type='pdf',
                         )
 
-        # parse IMG_DIR
-        print 'parsing ' + IMG_DIR
-        for warc_file_name in os.listdir(IMG_DIR):
-            for outfile in os.listdir(IMG_DIR+warc_file_name):
-                if outfile.startswith('part'):
-                    print "Parsing..." + warc_file_name
-                    f = open(IMG_DIR+warc_file_name+'/'+outfile)
-                    # record warc file name
-                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
-                    for line in f:
-                        try:
-                            data = json.loads(line)
-                        except:
-                            print "Error parsing JSON"
-                        # parse and store images
-                        if data[0]:
-                            if data[0] == '':
-                                continue
-                            print data[0]
-                            link = data[0]
-                            # fetch classification data using IBM Watson
-                            payload = {
-                                'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
-                                'version': '016-05-20',
-                                'url': link,
-                            }
-                            api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
-                            r = requests.get(api_url, params=payload)
-                            detail = ''
-                            # print r.json()
-                            try:
-                                for cls in r.json()['images'][0]['classifiers'][0]['classes']:
-                                    detail = detail + cls['class'] + ', '
-                            except KeyError:
-                                detail = ''
-
-                            name = link.split('?')[0].split('/')[-1]
-                            date = '19700101000000'
-
-                            try:
-                                name = name.encode('unicode_escape')
-                                link = link.encode('unicode_escape')
-                            except Exception, e:
-                                print e
-                                name = 'invalid_encoding'
-                                link = 'invalid_encoding'
-
-                            Image.objects.create(
-                                crawl_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
-                                name=name[:99],
-                                detail=detail,
-                                link=link,
-                                file=warc,
-                            )
-
         # parse DIR
         print 'parsing ' + DIR
         for warc_file_name in os.listdir(DIR):
@@ -256,3 +201,58 @@ class Command(BaseCommand):
                             content=text,
                             type='html',
                         )
+
+        # parse IMG_DIR
+        print 'parsing ' + IMG_DIR
+        for warc_file_name in os.listdir(IMG_DIR):
+            for outfile in os.listdir(IMG_DIR+warc_file_name):
+                if outfile.startswith('part'):
+                    print "Parsing..." + warc_file_name
+                    f = open(IMG_DIR+warc_file_name+'/'+outfile)
+                    # record warc file name
+                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
+                    for line in f:
+                        try:
+                            data = json.loads(line)
+                        except:
+                            print "Error parsing JSON"
+                        # parse and store images
+                        if data[0]:
+                            if data[0] == '':
+                                continue
+                            print data[0]
+                            link = data[0]
+                            # fetch classification data using IBM Watson
+                            payload = {
+                                'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
+                                'version': '016-05-20',
+                                'url': link,
+                            }
+                            api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
+                            r = requests.get(api_url, params=payload)
+                            detail = ''
+                            # print r.json()
+                            try:
+                                for cls in r.json()['images'][0]['classifiers'][0]['classes']:
+                                    detail = detail + cls['class'] + ', '
+                            except KeyError:
+                                detail = ''
+
+                            name = link.split('?')[0].split('/')[-1]
+                            date = '19700101000000'
+
+                            try:
+                                name = name.encode('unicode_escape')
+                                link = link.encode('unicode_escape')
+                            except Exception, e:
+                                print e
+                                name = 'invalid_encoding'
+                                link = 'invalid_encoding'
+
+                            Image.objects.create(
+                                crawl_date=datetime.strptime(date, '%Y%m%d%H%M%S'),
+                                name=name[:99],
+                                detail=detail,
+                                link=link,
+                                file=warc,
+                            )

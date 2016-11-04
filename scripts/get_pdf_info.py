@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import urllib
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument

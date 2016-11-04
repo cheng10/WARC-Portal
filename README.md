@@ -96,18 +96,18 @@ Scripts use CRON to run. In order to prepare scripts:
   - Set up cron to execute the job (see above websites)
 
 ### Selected Dependencies
-* WARCBASE: Link to warcbase.readme
-* pywb: Link to pywb.readme
+* WARCBASE: <https://github.com/cheng10/WARC-Portal/blob/master/_doc/_readme/warcbase.readme>
+* pywb: <https://github.com/cheng10/WARC-Portal/blob/master/_doc/_readme/pywb.readme>
 
 ## Documentation
 
 ### React User Interface
 
-||> Link to webapp.md
+<https://github.com/cheng10/WARC-Portal/blob/master/_doc/_readme/webapp.md>
 
 ### Scripts
 
-||> LINK TO scripts.readme
+<https://github.com/cheng10/WARC-Portal/blob/master/_doc/_readme/scripts.readme>
 
 ### Django
 

@@ -28,8 +28,11 @@ fi
 source ~/.bashrc
 rm -rf /mnt/md0/spark_out
 /opt/spark-1.6.1-bin-hadoop2.6/bin/spark-shell --driver-memory 4G --jars ~/warcbase/warcbase-core/target/warcbase-core-0.1.0-SNAPSHOT-fatjar.jar -i job.scala || error_exit "$LINENO: could not run spark, aborting"
-
 info_print '	spark job finished'
+
+cd /mnt/md0/wayback_collection || error_exit "$LINENO Could not cd to wayback dir, aborting"
+wb-manager add warc_portal /mnt/md0/warc_tmp/* || error_exit "$LINENO Could not load warc files to wayback, aborting"
+info_print '	loaded data into wayback'
 
 mv /mnt/md0/warc_tmp/* /mnt/md0/warc_store || error_exit "$LINENO Could not move processed files, aborting"
 
@@ -38,6 +41,5 @@ cd /home/ubuntu/WARC-Portal/web_api || error_exit "$LINENO: could not cd to the 
 ./manage.py parsedocs || error_exit "$LINENO: could not parse doc, aborting"
 
 info_print '	loaded data into Django'
-
 info_print '	run_spark.sh finished'
 

@@ -4,10 +4,10 @@ The University of Alberta and it's researchers have a collection of Web Archives
 
 **Features of WARC Portal:**
 
-- Searching through archived webpages
-- Searching through archived images
-- Displaying webpages in original format
-- Text and Image analysis
+* Searching through archived webpages
+* Searching through archived images
+* Displaying webpages in original format
+* Text and Image analysis
 
 ### Authors:
 
@@ -24,8 +24,8 @@ Mate Verunica: verunica@ualberta.ca
 **OS**: Linux  |  **Storage**: 500GB+ free space
 
 **Port Bindings:**
-- :8080 - pywb
-- :8000 - Django / REST API
+* :8080 - pywb
+* :8000 - Django / REST API
 
 ## Dependencies
 
@@ -59,22 +59,30 @@ In addition to:
 Installation:
 
 1) || > virtualenv venv
+
 2) || > source venv/bin/activate
+
 3) || > pip install -r requirements.txt
 
 Testing the API (in folder):
 
 1) || > ./manage.py loaddata testdata.json
+
 2) || > ./manage.py runserver
+
 3) || > curl -H 'Accept: application/json; indent=4' -u admin:adminadmin <http://127.0.0.1:8000>
+
 4) || > or just go to <http://127.0.0.1:8000/>, user:  admin:adminadmin
 
 ### React User Interface
 **In order to run the interface permanantly, consider installing an Apache server
 on your server, and copying the created 'public' folder into it's 'www' directory
 for public service**
+
 1) > npm install
+
 2) > npm start
+
 **If you choose the above method, npm will run the interface in the foreground,
 accessible at localhost:5000**
 

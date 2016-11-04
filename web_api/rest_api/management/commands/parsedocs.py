@@ -42,6 +42,7 @@ class Command(BaseCommand):
                         try:
                             pub_date = doc.info[0]['ModDate'][2:16]
                             confident = True
+                            _ = datetime.strptime(pub_date, '%Y%m%d%H%M%S')
                         except Exception, e:
                             print e
                             pub_date = '19700101000000'

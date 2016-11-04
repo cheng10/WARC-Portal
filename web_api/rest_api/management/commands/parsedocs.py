@@ -30,15 +30,34 @@ class Command(BaseCommand):
                         try:
                             data = json.loads(line)
                             crawl_date, mime, domain, url = data
-                            filename = url.split('?')[0].split('/')[-1]
-                            # w_url = 'http://www.warc.tech:8080/warc_portal/'+crawl_date+'/'+url
-                            # print w_url
+                            filename = url.split('?')[0].split('/')[-1].encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            continue
+
+                        try:
                             urllib.urlretrieve(url, PDF_STORE+filename)
                             fp = open(PDF_STORE+filename, 'rb')
                             parser = PDFParser(fp)
                             doc = PDFDocument(parser)
                         except Exception, e:
                             print e
+                            title = filename
+                            pub_date = '19700101000000'
+                            confident = False
+                            print 'using filename as title:' + filename
+                            # store pdf documents
+                            Document.objects.create(
+                                title=title,
+                                domain=domain,
+                                file=warc,
+                                pub_date=datetime.strptime(pub_date, '%Y%m%d%H%M%S'),
+                                pub_date_confident=confident,
+                                crawl_date=datetime.strptime(crawl_date, '%Y%m%d').strftime("%Y-%m-%d"),
+                                link=url,
+                                content='',
+                                type='pdf',
+                            )
                             continue
 
                         try:

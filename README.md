@@ -56,7 +56,7 @@ In addition to:
 ## Installation
 ### Django / REST API
 
-Installation:
+**Installation:**
 
 1) || > virtualenv venv
 
@@ -64,7 +64,7 @@ Installation:
 
 3) || > pip install -r requirements.txt
 
-Testing the API (in folder):
+**Testing the API (in folder):**
 
 1) || > ./manage.py loaddata testdata.json
 
@@ -88,6 +88,7 @@ accessible at localhost:5000**
 
 ### Scripts
 <https://www.freebsd.org/cgi/man.cgi?query=cron&sektion=8&apropos=0&manpath=FreeBSD+10.3-RELEASE+and+Ports>
+
 <http://askubuntu.com/questions/2368/how-do-i-set-up-a-cron-job>
 
 Scripts use CRON to run. In order to prepare scripts:

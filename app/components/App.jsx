@@ -5,11 +5,17 @@ import _ from 'lodash';
 
 import Menu from './Menu.jsx';
 
-/*
-* The react component of the main page that allows for tabbed browsing.
-*/
-
+/**
+ * Root component that is rendered
+ * 
+ * App
+ * @extends {React.Component}
+ */
 class App extends React.Component {
+    /**
+     * Constructor for app component. Initializes state and bind eventlisteners.
+     * @param {object} props passed down from parent
+     */
     constructor(props) {
         super(props);
 
@@ -20,6 +26,10 @@ class App extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
+    /**
+     * click event for switching between tabs
+     * @param {object} e event from clicklistener
+     */
     onClick(e) {
         e.preventDefault();
         if (e.target.textContent === 'Images') {
@@ -31,9 +41,10 @@ class App extends React.Component {
         }
     }
 
-    getTabClass(tab) {
-
-    }
+    /**
+     * render method rendering App
+     * 
+     */
     render() {
         return (
             <div className="app-container">
@@ -43,12 +54,12 @@ class App extends React.Component {
                 <div className="subnav">
                     <ul className="links">
                         <li className={this.state.tab === "search" ? "link selected": "link"} data-id="photos">
-                            <a href="" onClick={this.onClick} id="search">
+                            <a href="" onClick={this.onClick}>
                                 <div className="title">Archives</div>
                             </a>
                         </li>
                         <li className={this.state.tab === "images" ? "link selected": "link"} data-id="people">
-                            <a href="" onClick={this.onClick} id="images">
+                            <a href="" onClick={this.onClick}>
                                 <div className="title">Images</div>
                             </a>
                         </li>
@@ -62,6 +73,9 @@ class App extends React.Component {
     }
 }
 
+/**
+ * Mapping props from state received from store
+ */
 function mapStateToProps(state) {
     return {
         loading: state.docs.loading,

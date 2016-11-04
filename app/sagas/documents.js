@@ -1,7 +1,10 @@
 import { call, put } from 'redux-saga/effects';
 
 import ApiDocs from '../api/document';
-
+/**
+ * Handles the action of fetching documents
+ * @param {action} action being dispatched containig the query
+ */
 export function* docsFetchList(action) {
     // call the api to get the users list
     console.log("users fetch list", action)
@@ -13,6 +16,10 @@ export function* docsFetchList(action) {
     });
 }
 
+/**
+ * Handles the action of fetching images
+ * @param {action} action being dispatched containing the query
+ */
 export function* imgFetchList(action) {
     // call the api to get the users list
     console.log("users fetch list", action)

@@ -3,33 +3,41 @@ import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { FormGroup, FormControl, Button, Glyphicon, InputGroup } from 'react-bootstrap';
 
-/*
-*
-* React component for the top menu bar of the homepage which includes
-* the search box, and navigation buttons.
-*
-*/
+
+/**
+ * Menu class responsible for search the
+ * top navbar containing search bar 
+ * 
+ * Menu
+ * @extends {React.Component}
+ */
 
 export class Menu extends React.Component {
-
+    /**
+     * Constructor for Menu component. Initializes state and bind eventlisteners.
+     * 
+     */
     constructor() {
         super();
         this.onClick = this.onClick.bind(this);
     }
 
-    componentDidMount() {
-        // Spending too much time making it fancy, might come back later to create drop down menu
-        // const input = document.getElementsByClassName("form-control form-control-search-header-field")[0];
-        // const searchForm = document.getElementsByClassName("search-form")[0];
-        // const menu = document.createElement("div");
-        // console.log(searchForm, "searchForm");
-        // menu.className = "drop-down-header";
-        // input.addEventListener("keydown", () => {
-        //     searchForm.appendChild(menu);
-        // })
-    }
+    // componentDidMount() {
+    //     Spending too much time making it fancy, might come back later to create drop down menu
+    //     const input = document.getElementsByClassName("form-control form-control-search-header-field")[0];
+    //     const searchForm = document.getElementsByClassName("search-form")[0];
+    //     const menu = document.createElement("div");
+    //     console.log(searchForm, "searchForm");
+    //     menu.className = "drop-down-header";
+    //     input.addEventListener("keydown", () => {
+    //         searchForm.appendChild(menu);
+    //     })
+    // }
 
-
+   /**
+     * click event for search bar
+     * @param {object} e event from clicklistener
+     */
     onClick(e) {
         e.preventDefault();
         const value = document.getElementsByClassName("form-control form-control-search-header-field")[0].value;
@@ -37,6 +45,10 @@ export class Menu extends React.Component {
         return false;
     }
 
+   /**
+     * render method rendering Menu
+     * 
+     */
     render() {
         return (
             <nav>
@@ -62,6 +74,9 @@ export class Menu extends React.Component {
     }
 }
 
+/**
+ * Mapping props from state received from store
+ */
 function mapStateToProps(state) {
     return {
         loading: state.docs.loading,

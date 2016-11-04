@@ -48,9 +48,10 @@ const PHOTO_SET = [
 
 export class Images extends React.Component {
     /**
-   * @param {number} param this is param.
-   * @return {number} this is return.
-   */
+     * Constructor for app component. Initializes state and bind eventlisteners.
+     * Fetches image list on construction
+     * @param {object} props passed down from parent
+     */
     constructor(props) {
         super(props);
         console.log("images", props)
@@ -58,9 +59,8 @@ export class Images extends React.Component {
     }
     
     /**
-     * This function adds one to its input.
-     * @param {number} input any number
-     * @returns {number} that number, plus one.
+     * Creates set of images to be read by gallery
+     * @returns {object} image object containing link, dimensions, ratio
      */
     createSet() {
         console.log("fetched images", this.props.images);
@@ -82,13 +82,16 @@ export class Images extends React.Component {
         });
     }
 
+    /**
+     * render method rendering Images
+     * 
+     */
     render() {
-        console.log("set", this.createSet());
         return (
             <div className="page-home">
                 <div className="page-main">
                     <div className="gallery-list-view">
-                        <Gallery disableLightbox={true} photos={PHOTO_SET} />
+                        <Gallery disableLightbox={true} photos={this.createSet()} />
                     </div>
                 </div>
             </div>
@@ -96,6 +99,9 @@ export class Images extends React.Component {
     }
 }
 
+/**
+ * Mapping props from state received from store
+ */
 function mapStateToProps(state) {
     console.log("Image state", state);
     return {

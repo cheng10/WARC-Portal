@@ -8,7 +8,7 @@
     "url": "https://github.com/cheng10/WARC-Portal"
   },
   "scripts": {
-    "start": "webpack-dev-server -d --inline --hot --history-api-fallback --host 127.0.0.1 --port 8080 ",
+    "start": "webpack-dev-server -d --inline --hot --history-api-fallback --host 127.0.0.1 --port 5000 ",
     "build-dev": "webpack --config webpack.dev.config.js",
     "build-prod": "webpack -p --config webpack.prod.config.js",
     "test": "mocha --compilers js:babel-register --recursive",

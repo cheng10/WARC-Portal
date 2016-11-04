@@ -10,13 +10,11 @@ import './stylesheets/main.scss';
 import { reducers } from './reducers/index';
 import { sagas } from './sagas/index';
 import App from './components/App.jsx';
-import Home from './pages/Home.jsx';
 import Images from './pages/Images.jsx'
 import NotFound from './pages/NotFound.jsx';
 import DocumentList from './components/DocumentList.jsx'
 
 
-// create the store
 const sagaMiddleware = createSagaMiddleware();
 let middleware = applyMiddleware(routerMiddleware(browserHistory), sagaMiddleware);
 if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
@@ -27,7 +25,10 @@ const history = syncHistoryWithStore(browserHistory, store);
 sagaMiddleware.run(sagas);
 
 
-// render the main component
+/**
+ * Root of everything. Given to index.html to 
+ * render our app
+ */
 ReactDOM.render (
     <Provider store={store}>
         <Router history={history}>

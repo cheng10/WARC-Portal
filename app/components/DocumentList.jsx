@@ -5,18 +5,19 @@ import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
 import DocElementList from './DocElementList.jsx';
 
-/*
-*
-* React component for the feature of a document list.
-*
-* Allows updating of the list based on search queries.
-* Enables pagination of results.
-* Sets design and properties of the entire list.
-*
-*/
-
+/**
+ * Class that renders the list of documents
+ * 
+ * DocumentList
+ * @extends {React.Component}
+ */
 class DocumentList extends React.Component
 {
+    /**
+     * Constructor for DocumentList component. Initializes state and bind eventlisteners.
+     * Sets current page of the document list and fetches them
+     * @param {object} props passed down from parent
+     */
     constructor(props)
     {
         super(props);
@@ -33,7 +34,11 @@ class DocumentList extends React.Component
         this.changePage = this.changePage.bind(this);
         this.onChange = this.onChange.bind(this);
     }
-
+   /**
+     * Life cycle method of React that is called before receiving new props
+     * 
+     * @param {object} newprops passed down from parent to check if page needs to retrieve new data 
+     */
     componentWillUpdate(newprops) {
         console.log("willupdate", this.props, newprops);
         console.log(_.isEqual(newprops.queryParams, this.props.queryParams));
@@ -44,6 +49,10 @@ class DocumentList extends React.Component
         }
     }
 
+    /**
+     * render method rendering App
+     * 
+     */
     render() {
         console.log("Render", this.props);
         // pagination
@@ -80,7 +89,8 @@ class DocumentList extends React.Component
     }
 
     /**
-     * Change the user lists' current page
+     * eventhandler to change the user lists' current page
+     * @param {number} page number changing to
      */
     changePage(page) {
         console.log("changing page");
@@ -90,14 +100,20 @@ class DocumentList extends React.Component
         this.onChange();
     }
 
+    /**
+     * eventhandler to change the user lists' current page
+     * 
+     */
     onChange() {
         this.props.dispatch({type: 'docs.onLoad'});
     }
 }
 
-// export the connected class
+/**
+ * Mapping props from state received from store
+ */
 function mapStateToProps(state) {
-    console.log('mapstate', state);
+    // console.log('mapstate', state);
     return {
         documents: state.docs.documents || [],
         count: state.docs.count || 0,

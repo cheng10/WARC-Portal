@@ -4,12 +4,25 @@ import { reducer as formReducer } from 'redux-form';
 
 import docs from './docs';
 
+/**
+ * function used to combine reducers into a single reducer
+ * See: http://redux.js.org/docs/recipes/reducers/UsingCombineReducers.html
+ */
 export const reducers = combineReducers({
     routing: routerReducer,
     form: formReducer,
     docs: docs,
 });
 
+/**
+ * function that is wrapping reducer calls
+ * to ensure that reducers remain pure
+ * See: http://redux.js.org/docs/basics/Reducers.html for more details
+ * 
+ * @param {object} current state
+ * @param {object} action sent to the reducer
+ * @param {object} reducer being called
+ */
 export function reducerCall(state, action, reducerClass) {
     // get the action class method
     const [, method] = action.type.split('.');

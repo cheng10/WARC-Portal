@@ -1,14 +1,17 @@
 import _ from 'lodash';
 import URLBuilder from '../helpers/URLBuilder.js';
 /**
- * @author: Kevin Tang
- *
- * Classes for retrieving documents from the back end server
- *
- * getDocs works with types of documents
- * getImages works on images.
+ * Interface for xhr requests to retrieve documents
+ * from server
+ * 
+ * @class ApiDocs
  */
 export default class ApiDocs {
+
+    /**
+     * Retrieve documents
+     * @param {object} action contains keywords/page properties 
+     */
     static getDocs(action) {
         console.log("action", action);
         const url = URLBuilder(action);
@@ -22,6 +25,10 @@ export default class ApiDocs {
         });
     }
 
+    /**
+     * Retrieve documents
+     * @param {object} action retrieve pictures
+     */
     static getImages(action) {
         console.log("action", action);
         const url = URLBuilder(action);

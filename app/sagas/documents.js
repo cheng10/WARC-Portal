@@ -22,7 +22,7 @@ export function* docsFetchList(action) {
  */
 export function* imgFetchList(action) {
     // call the api to get the users list
-    console.log("users fetch list", action)
+    console.log("image fetch list", action)
     const img = yield call(ApiDocs.getImages, action.query);
     // dispatch the success action with the users attached
     yield put({

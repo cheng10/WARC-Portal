@@ -10,6 +10,10 @@ import {Button, Glyphicon, ListGroupItem} from 'react-bootstrap';
  * @extends {React.Component}
  */
 export default class DocElementList extends React.Component {
+
+    /**
+     * Render method rendering single document of a document list
+     */
     render() {
         const doc = this.props.document;
 

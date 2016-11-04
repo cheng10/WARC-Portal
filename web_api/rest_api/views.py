@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters
 from serializers import *
 from models import *
+from .pagination import ImageResultsPagination
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 

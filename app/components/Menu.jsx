@@ -41,7 +41,8 @@ export class Menu extends React.Component {
     onClick(e) {
         e.preventDefault();
         const value = document.getElementsByClassName("form-control form-control-search-header-field")[0].value;
-        this.props.dispatch(replace('/?search=' + value));
+        console.log(this.props.location);
+        this.props.dispatch(replace(`${this.props.location}?search=${value}`));
         return false;
     }
 
@@ -80,6 +81,7 @@ export class Menu extends React.Component {
 function mapStateToProps(state) {
     return {
         loading: state.docs.loading,
+        location: state.routing.locationBeforeTransitions.pathname
     };
 }
 export default connect(mapStateToProps)(Menu);

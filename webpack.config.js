@@ -38,7 +38,7 @@ module.exports = {
         ],
     },
     devServer: {
-        contentBase: __dirname + '/public',
+        contentBase:  __dirname + '/' + app_root + '/public',
     },
     devTool: "#source-map",
     plugins: []

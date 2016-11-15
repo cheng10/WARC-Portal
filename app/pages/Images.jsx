@@ -55,7 +55,7 @@ export class Images extends React.Component {
      */
     constructor(props) {
         super(props);
-        console.log("inside images", props)
+        console.log("inside images", props);
         props.dispatch({type: 'imgFetchList', query: this.props.page});
 
         this.changePage = this.changePage.bind(this);
@@ -70,8 +70,8 @@ export class Images extends React.Component {
     componentWillUpdate(newprops) {
         console.log("willupdate", this.props, newprops);
         console.log(_.isEqual(newprops.page, this.props.page));
-        if (!_.isEqual(newprops.page, this.props.page)) {
-            console.log("updating");
+        if (!_.isEqual(newprops.queryParams, this.props.queryParams)) {
+            console.log("updating images", newprops.queryParams);
             this.onChange();
             this.props.dispatch({type: 'imgFetchList', query: newprops.page});
         }
@@ -143,7 +143,8 @@ function mapStateToProps(state) {
     return {
         loading: state.docs.loading,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
-        images: state.docs.images || []
+        images: state.docs.images || [],
+        queryParams: state.routing.locationBeforeTransitions.query || ''
     };
 }
 export default connect(mapStateToProps)(Images);

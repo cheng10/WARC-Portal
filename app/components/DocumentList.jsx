@@ -26,7 +26,7 @@ class DocumentList extends React.Component
         }
         // when we don't have any users, update the state with the users list taken from the api
         if (0 === this.props.documents.length) {
-            console.log("here", this.props)
+            // console.log("here", this.props)
             this.props.dispatch({type: 'docsFetchList', query: this.props.queryParams});
         }
 
@@ -40,10 +40,10 @@ class DocumentList extends React.Component
      * @param {object} newprops passed down from parent to check if page needs to retrieve new data 
      */
     componentWillUpdate(newprops) {
-        console.log("willupdate", this.props, newprops);
-        console.log(_.isEqual(newprops.queryParams, this.props.queryParams));
+        // console.log("willupdate", this.props, newprops);
+        // console.log(_.isEqual(newprops.queryParams, this.props.queryParams));
         if (!_.isEqual(newprops.queryParams, this.props.queryParams)) {
-            console.log("updating");
+            // console.log("updating");
             this.onChange();
             this.props.dispatch({type: 'docsFetchList', query: newprops.queryParams});
         }

@@ -27,6 +27,7 @@ Mate Verunica: verunica@ualberta.ca
 * :8080 - pywb
 * :8000 - Django / REST API
 * :5000 - Front end interface
+
 ## Dependencies
 
 * [Front End](https://github.com/cheng10/WARC-Portal/blob/master/package.json)
@@ -61,7 +62,6 @@ In addition to:
 **Installation:**
 
 1) || > virtualenv venv
-
 2) || > source venv/bin/activate
 
 3) || > pip install -r requirements.txt
@@ -87,6 +87,16 @@ for public service**
 
 **If you choose the above method, npm will run the interface in the foreground,
 accessible at localhost:5000**
+
+### E2E Testing
+You can run our E2E tests using Nightwatch and Selenium through this way.
+> npm install -g nightwatch  
+
+Alternatively, if you've already ran npm install, you can access the nightwatch binary through the node_modules.
+Next you must update your webdrivers for selenium and chrome before running the tests found in selenium_tests.
+
+> npm run e2e-setup  
+> nightwatch  
 
 ### Scripts
 <https://www.freebsd.org/cgi/man.cgi?query=cron&sektion=8&apropos=0&manpath=FreeBSD+10.3-RELEASE+and+Ports>

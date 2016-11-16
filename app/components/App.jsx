@@ -4,6 +4,7 @@ import { push } from 'react-router-redux';
 import _ from 'lodash';
 
 import Menu from './Menu.jsx';
+import Toolbar from './Toolbar.jsx';
 
 /**
  * Root component that is rendered
@@ -65,6 +66,7 @@ class App extends React.Component {
                         </li>
                     </ul>
                 </div>
+                <Toolbar />
                 <div className="app-body">
                     {this.props.children}
                 </div>

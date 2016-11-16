@@ -2,33 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
 import _ from 'lodash';
 
-const TYPE_CHOICES = ["HTML", "PDF", "OTHER"]
+const CATEGORIES = ["HTML", "PDF", "OTHER"]
 const DOMAINS = ["web.ca, ca.ca, .com"]
 export class Toolbar extends React.Component {
     /**
-     * Constructor for FilterOptions component. Initializes state and bind eventlisteners.
-     * Fetches image list on construction
+     * Constructor for Toolbar component. Initializes state and bind eventlisteners.
+     *
      * @param {object} props passed down from parent
      */
     constructor(props) {
         super(props);
 
-        this.filterClick = this.filterClick.bind(this)
     }
 
     /**
-     * render method rendering Images
+     * render method rendering toolbar
      * 
      */
     render() {
         return (
             <div className="toolbar">
-                <ul>
-                    <li> Search </li>
-                    <li> Date </li>
+                <ul className="toolbar-list">
+                    <li> Category </li>
+                    <li> Crawl Date </li>
+                    <li> Publish Date </li>
                 </ul>
+                <span> Advanced Search </span>
             </div>
         );
     }
@@ -41,10 +43,8 @@ function mapStateToProps(state) {
     console.log("Image state", state);
     return {
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
-        typeFilters: ["HTML", "PDF", "OTHER"],
-        domainFilters: ["web.ca, ca.ca, .com"],
-        yearFilters: ["1991, 1992, 2016"],
+        categories: ["HTML", "PDF", "OTHER"],
         queryParams: state.routing.locationBeforeTransitions.query || ''
     };
 }
-export default connect(mapStateToProps)(FilterOptions);
+export default connect(mapStateToProps)(Toolbar);

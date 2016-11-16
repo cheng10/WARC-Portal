@@ -9,6 +9,8 @@ from models import *
 from pagination import *
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from django_filters import Filter, FilterSet
+from django_filters.filters import Lookup
 
 
 @permission_classes((IsAdminUser, ))
@@ -33,6 +35,22 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
+class ListFilter(Filter):
+    def filter(self, qs, value):
+        value_list = value.split(u',')
+        return super(ListFilter, self).filter(qs, Lookup(value_list, 'in'))
+
+
+class DocumentFilter(FilterSet):
+    type = ListFilter(name='type')
+    file = ListFilter(name='file')
+    domain = ListFilter(name='domain')
+
+    class Meta:
+        model = Document
+        fields = ['type', 'file', 'domain']
+
+
 @permission_classes((AllowAny, ))
 class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -46,10 +64,7 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
     ordering_fields = ('id', 'pub_date_confident', 'pub_date', 'crawl_date')
     search_fields = ('title', 'content')
-    filter_fields = ('type', 'file', 'domain')
-    
-    def list(self, request):
-        return queryset
+    filter_class = DocumentFilter
 
 
 @permission_classes((AllowAny, ))

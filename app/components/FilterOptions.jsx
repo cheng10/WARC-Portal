@@ -26,7 +26,7 @@ export class FilterOptions extends React.Component {
     generateFilterList(filters) {
         return (
             <ul className="filter-list">
-                {filters.map((item) => <li> <a href={"#"} onClick={this.filterClick}> {item} </a> </li>)}
+                {filters.map((item) => <li> <a href={"#"} key={item} onClick={this.filterClick}> {item} </a> </li>)}
             </ul>
         );
     }

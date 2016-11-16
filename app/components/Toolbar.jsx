@@ -2,11 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
-import DateRangePicker from 'react-bootstrap-daterangepicker';
+// require('react-date-picker/index.css');
+require('react-datepicker/dist/react-datepicker.css');
+// import { DateField } from 'react-date-picker'
+import DatePicker from 'react-datepicker';
+
+import Select from 'react-select';
+import moment from 'moment';
 import _ from 'lodash';
 
 const CATEGORIES = ["HTML", "PDF", "OTHER"]
 const DOMAINS = ["web.ca, ca.ca, .com"]
+const options = [
+    { value: 'one', label: 'One' },
+    { value: 'two', label: 'Two' }
+];
 export class Toolbar extends React.Component {
     /**
      * Constructor for Toolbar component. Initializes state and bind eventlisteners.
@@ -18,6 +28,10 @@ export class Toolbar extends React.Component {
 
     }
 
+    logChange(val) {
+        console.log("Selected: " + val);
+    }
+
     /**
      * render method rendering toolbar
      * 
@@ -25,12 +39,23 @@ export class Toolbar extends React.Component {
     render() {
         return (
             <div className="toolbar">
-                <ul className="toolbar-list">
-                    <li> Category </li>
-                    <li> Crawl Date </li>
-                    <li> Publish Date </li>
-                </ul>
-                <span> Advanced Search </span>
+                <div className="toolbar-list">
+                    <div className="category-selector"> 
+                        Category 
+                        <Select
+                            name="form-field-name"
+                            value="one"
+                            options={options}
+                            onChange={this.logChange}
+                        />                    
+                    </div>
+                    <div className="publish-date-selector"> 
+                    Publish Date 
+<DatePicker selected={moment()} onChange={this.logChange} />
+
+                    </div>
+                    <span className="toolbar-title"> Advanced Search </span>
+                </div>
             </div>
         );
     }

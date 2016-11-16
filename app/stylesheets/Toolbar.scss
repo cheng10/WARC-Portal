@@ -1,3 +1,22 @@
-.toolbar-list {
+.toolbar {
     background-color: white;
+    border-bottom: 1px solid rgba(138, 138, 138, 0.3);
+    color: #898989;
+    padding-left: 2em;
+    height: 500px;
+    padding-right: 2em;
+
+    .category-selector {
+        width: 200px;
+        padding-right: 3em;
+    }
+
+    .toolbar-list {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .toolbar-list span:last-child {
+        margin-left: auto;
+    }
 }

@@ -4,6 +4,7 @@ import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
 import DocElementList from './DocElementList.jsx';
+import FilterOptions from './FilterOptions.jsx';
 
 /**
  * Class that renders the list of documents
@@ -66,6 +67,7 @@ class DocumentList extends React.Component
             return (
                 <div className="page-main">
                     <div className="doc-list-view">
+                        <FilterOptions />
                         <div className="doc-list">
                             <ListGroup>
                                 {this.props.documents.map((document, index) => {

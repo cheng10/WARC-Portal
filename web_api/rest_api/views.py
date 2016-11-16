@@ -44,9 +44,12 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
-    ordering_fields = ('id', 'pub_date_confident', 'pub_date')
+    ordering_fields = ('id', 'pub_date_confident', 'pub_date', 'crawl_date')
     search_fields = ('title', 'content')
-    filter_fields = ('type', 'file',  'domain')
+    filter_fields = ('type', 'file', 'domain')
+    
+    def list(self, request):
+        return queryset
 
 
 @permission_classes((AllowAny, ))

@@ -51,6 +51,15 @@ class DocumentFilter(FilterSet):
         fields = ['type', 'file', 'domain']
 
 
+class ImageFilter(FilterSet):
+    file = ListFilter(name='file')
+    domain = ListFilter(name='domain')
+
+    class Meta:
+        model = Document
+        fields = ['file', 'domain']
+
+
 @permission_classes((AllowAny, ))
 class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -81,7 +90,7 @@ class ImageViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
     ordering_fields = ('id', 'crawl_date')
     search_fields = ('name', 'detail')
-    filter_fields = ('file',)
+    filter_class = ImageFilter
 
 
 @permission_classes((AllowAny, ))

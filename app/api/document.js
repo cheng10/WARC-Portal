@@ -31,8 +31,10 @@ export default class ApiDocs {
      */
     static getImages(action) {
         console.log("image action", action);
+        const url = URLBuilder(action);
+        console.log(url);
         let list = [];
-        return fetch(`http://warc.tech:8000/image/?page=${action}&size=9`).then((res) => {
+        return fetch(`http://warc.tech:8000/image/${url}`).then((res) => {
             return res.json();
         }).then((list) => {
             console.log(list)

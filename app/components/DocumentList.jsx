@@ -95,7 +95,7 @@ class DocumentList extends React.Component
     changePage(page) {
         console.log("changing page");
         const search = this.props.queryParams.search;
-        let url = search ? `/?search=${search}&page=${page}`: `/?page=${page}`;
+        let url = search ? `/search/?search=${search}&page=${page}`: `/search/?page=${page}`;
         this.props.dispatch(push(url));
         this.onChange();
     }
@@ -113,7 +113,7 @@ class DocumentList extends React.Component
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
-    // console.log('mapstate', state);
+    console.log('docstate', state);
     return {
         documents: state.docs.documents || [],
         count: state.docs.count || 0,

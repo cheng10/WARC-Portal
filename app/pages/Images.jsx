@@ -68,12 +68,11 @@ export class Images extends React.Component {
      * @param {object} newprops passed down from parent to check if page needs to retrieve new data 
      */
     componentWillUpdate(newprops) {
-        console.log("willupdate", this.props, newprops);
-        console.log(_.isEqual(newprops.page, this.props.page));
+        console.log("willupdate", this.props, newprops.queryParams.queryParams);
+        console.log(_.isEqual(newprops.queryParams, this.props.queryParams));
         if (!_.isEqual(newprops.queryParams, this.props.queryParams)) {
-            console.log("updating images", newprops.queryParams);
             this.onChange();
-            this.props.dispatch({type: 'imgFetchList', query: newprops.page});
+            this.props.dispatch({type: 'imgFetchList', query: newprops.queryParams});
         }
     }
     /**
@@ -105,8 +104,10 @@ export class Images extends React.Component {
      * @param {number} page number changing to
      */
     changePage(page) {
-        console.log("changing page", page);
-        let url = `/images?page=${page}`;
+        console.log("changing page");
+        const search = this.props.queryParams.search;
+        console.log(search);
+        let url = search ? `/images/?search=${search}&page=${page}`: `/images/?page=${page}`;
         this.props.dispatch(push(url));
         this.onChange();
     }
@@ -121,13 +122,16 @@ export class Images extends React.Component {
      */
     render() {
         console.log("image rerender")
+        const per_page = 9;
+        const pages = Math.ceil(this.props.count / per_page);
+        let start_count = 0;
         return (
             <div className="page-home">
                 <div className="page-main">
                     <div className="gallery-list-view">
                         <Gallery disableLightbox={true} photos={this.createSet()} />
                         <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
-                            boundaryLinks items={30} activePage={this.props.page} onSelect={this.changePage}/>
+                            boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
                     </div>
                 </div>
             </div>
@@ -144,6 +148,7 @@ function mapStateToProps(state) {
         loading: state.docs.loading,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
         images: state.docs.images || [],
+        count: state.docs.img_count || 0,
         queryParams: state.routing.locationBeforeTransitions.query || ''
     };
 }

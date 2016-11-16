@@ -36,6 +36,7 @@ class reducerClass {
     static fetchImgSuccess(new_state, action) {
         console.log("fetch images success", action.img);
         new_state.images = action.img.results;
+        new_state.img_count = action.img.count;
         console.dir(new_state);
         return new_state;
     }

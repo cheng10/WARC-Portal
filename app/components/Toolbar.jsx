@@ -2,10 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
-// require('react-date-picker/index.css');
-require('react-datepicker/dist/react-datepicker.css');
-// import { DateField } from 'react-date-picker'
-import DatePicker from 'react-datepicker';
+import DateField from './DateField.jsx';
 
 import Select from 'react-select';
 import moment from 'moment';
@@ -14,8 +11,8 @@ import _ from 'lodash';
 const CATEGORIES = ["HTML", "PDF", "OTHER"]
 const DOMAINS = ["web.ca, ca.ca, .com"]
 const options = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' }
+    { value: 'one', label: 'Politics' },
+    { value: 'two', label: 'Canada' }
 ];
 export class Toolbar extends React.Component {
     /**
@@ -41,7 +38,7 @@ export class Toolbar extends React.Component {
             <div className="toolbar">
                 <div className="toolbar-list">
                     <div className="category-selector"> 
-                        Category 
+                        Collection 
                         <Select
                             name="form-field-name"
                             value="one"
@@ -51,8 +48,10 @@ export class Toolbar extends React.Component {
                     </div>
                     <div className="publish-date-selector"> 
                     Publish Date 
-<DatePicker selected={moment()} onChange={this.logChange} />
-
+                    <div className="date-inputs-container">
+                        <DateField placeholder="From"/>
+                        <DateField placeholder="To"/>
+                    </div>
                     </div>
                     <span className="toolbar-title"> Advanced Search </span>
                 </div>

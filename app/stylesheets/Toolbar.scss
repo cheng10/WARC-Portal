@@ -2,9 +2,7 @@
     background-color: white;
     border-bottom: 1px solid rgba(138, 138, 138, 0.3);
     color: #898989;
-    padding-left: 2em;
-    height: 500px;
-    padding-right: 2em;
+    padding: 1em 8em 1em 8em;
 
     .category-selector {
         width: 200px;
@@ -18,5 +16,26 @@
 
     .toolbar-list span:last-child {
         margin-left: auto;
+    }
+
+    .date-input {
+        height: 36px;
+        width: 130px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-right: 1em;
+    }
+
+    .date-inputs-container {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .DayPicker-Caption {
+        display: table-caption;
+        height: 1.5rem;
+        text-align: center;
     }
 }

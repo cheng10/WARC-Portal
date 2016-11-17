@@ -20,13 +20,25 @@ export class FilterOptions extends React.Component {
 
     filterClick(e) {
         e.preventDefault();
-        this.props.dispatch(push("/search/hi"));
+        // this.props.dispatch(push("/search/hi"));
+        console.log(this.props.queryParams);
+        console.log(e.target.getElementsByTagName("i")[0].className);
+
+        // Toggle checked class
+        if (e.target.getElementsByTagName("i")[0].classList.contains("selected")) {
+            e.target.getElementsByTagName("i")[0].className = "fa fa-check-circle";
+        } else {
+            e.target.getElementsByTagName("i")[0].className += " " + "selected";
+        }
+        
+        // TODO: Push new path
+        console.log(e.target.getElementsByTagName("i")[0].className);
     }
 
     generateFilterList(filters) {
         return (
             <ul className="filter-list">
-                {filters.map((item) => <li> <a href={"#"} key={item} onClick={this.filterClick}> {item} </a> </li>)}
+                {filters.map((item) => <li key={item}> <a href={"#"} onClick={this.filterClick}> <i className="fa fa-check-circle" aria-hidden="true" />{item} </a> </li>)}
             </ul>
         );
     }
@@ -43,7 +55,7 @@ export class FilterOptions extends React.Component {
                 </div>
                 <div className="filters">
                     <div className="type-filter">
-                        CATEGORY TYPE
+                        Categories
                         {this.generateFilterList(this.props.typeFilters)}
                     </div>
                     <div className="domain-filter">

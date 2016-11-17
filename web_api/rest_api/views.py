@@ -9,7 +9,7 @@ from models import *
 from pagination import *
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from django_filters import Filter, FilterSet
+from django_filters import Filter, FilterSet, DateFilter
 from django_filters.filters import Lookup
 
 
@@ -45,6 +45,10 @@ class DocumentFilter(FilterSet):
     type = ListFilter(name='type')
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
+    pub_start_date = DateFilter(name='pub_date',lookup_type=('gt')) 
+    pub_end_date = DateFilter(name='pub_date',lookup_type=('lt'))
+    crawl_start_date = DateFilter(name='crawl_date',lookup_type=('gt')) 
+    crawl_end_date = DateFilter(name='crawl_date',lookup_type=('lt'))
 
     class Meta:
         model = Document

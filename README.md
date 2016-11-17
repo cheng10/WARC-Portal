@@ -77,16 +77,21 @@ In addition to:
 4) || > or just go to <http://127.0.0.1:8000/>, user:  admin:adminadmin
 
 ### React User Interface
-**In order to run the interface permanantly, consider installing an Apache server
-on your server, and copying the created 'public' folder into it's 'www' directory
-for public service**
+**Development server**
 
 1) > npm install
 
 2) > npm start
 
-**If you choose the above method, npm will run the interface in the foreground,
-accessible at localhost:5000**
+**Production server**
+
+1) > npm install
+
+2) > npm run build-prod
+
+3) > node app/server.js
+
+**In both cases the client will be hosted on http://127.0.0.1:5000**
 
 ### E2E Testing
 You can run our E2E tests using Nightwatch and Selenium through this way.

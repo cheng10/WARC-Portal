@@ -14,31 +14,59 @@ export class FilterOptions extends React.Component {
      */
     constructor(props) {
         super(props);
+        console.log("FILTER OPTIONS", props.queryParams);
+        this.state = {
+            filterOptions: {
+                type: []
+            }
+        };
 
         this.filterClick = this.filterClick.bind(this)
+    }
+
+    buildQueryParams(query) {
+        _.reduce(query, (result, value, key) => {
+            
+            result += `?${key}=${value.type.join()}`
+        }, "");
     }
 
     filterClick(e) {
         e.preventDefault();
         // this.props.dispatch(push("/search/hi"));
-        console.log(this.props.queryParams);
-        console.log(e.target.getElementsByTagName("i")[0].className);
 
         // Toggle checked class
         if (e.target.getElementsByTagName("i")[0].classList.contains("selected")) {
             e.target.getElementsByTagName("i")[0].className = "fa fa-check-circle";
+            this.setState({
+                type: _.remove(this.state.filterOptions.type, (item) => item === e.target.parentNode.getAttribute("data-key"))
+            });
         } else {
             e.target.getElementsByTagName("i")[0].className += " " + "selected";
+            this.setState({
+                type: this.state.filterOptions.type.push(e.target.parentNode.getAttribute("data-key"))
+            });
+            console.log(this.buildQueryParams(this.state));
         }
-        
-        // TODO: Push new path
+
+        // TODO: Push new path(")
+        // this.props.dispatch({type})
         console.log(e.target.getElementsByTagName("i")[0].className);
     }
 
     generateFilterList(filters) {
+        let listItems = filters.map((item) => { 
+            return (<li data-key={item} key={item}> 
+                <a href={"#"} onClick={this.filterClick}> 
+                    <i className="fa fa-check-circle" aria-hidden="true" />
+                    {item} 
+                </a> 
+            </li>)
+        });
+
         return (
             <ul className="filter-list">
-                {filters.map((item) => <li key={item}> <a href={"#"} onClick={this.filterClick}> <i className="fa fa-check-circle" aria-hidden="true" />{item} </a> </li>)}
+                {listItems}
             </ul>
         );
     }
@@ -72,12 +100,12 @@ export class FilterOptions extends React.Component {
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
-    console.log("Image state", state);
+    console.log("Filter state", state);
     return {
-        page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
         typeFilters: ["HTML", "PDF", "OTHER"],
         domainFilters: ["web.ca, ca.ca, .com"],
         yearFilters: ["1991, 1992, 2016"],
+        location: state.routing.locationBeforeTransitions.pathname,
         queryParams: state.routing.locationBeforeTransitions.query || ''
     };
 }

@@ -14,6 +14,8 @@ module.exports = {
         path: __dirname + '/public/js',
         publicPath: 'js/',
         filename: 'bundle.js',
+        hotUpdateChunkFilename: 'hot/hot-update.js',
+        hotUpdateMainFilename: 'hot/hot-update.json'
     },
     module: {
         loaders: [

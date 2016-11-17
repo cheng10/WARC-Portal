@@ -47,11 +47,11 @@ export class Toolbar extends React.Component {
                         />                    
                     </div>
                     <div className="publish-date-selector"> 
-                    Publish Date 
-                    <div className="date-inputs-container">
-                        <DateField placeholder="From"/>
-                        <DateField placeholder="To"/>
-                    </div>
+                        Publish Date 
+                        <div className="date-inputs-container">
+                            <DateField placeholder="From"/>
+                            <DateField placeholder="To"/>
+                        </div>
                     </div>
                     <span className="toolbar-title"> Advanced Search </span>
                 </div>

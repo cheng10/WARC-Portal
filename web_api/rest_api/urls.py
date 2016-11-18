@@ -9,6 +9,8 @@ router.register(r'documents', views.DocumentViewSet)
 router.register(r'image', views.ImageViewSet)
 router.register(r'warcfile', views.WarcFileViewSet)
 router.register(r'collection', views.CollectionViewSet)
+# router.register(r'collection_docs', views.CollectionDocListViewSet)
+
 
 urlpatterns = [
     url(r'^', include(router.urls)),

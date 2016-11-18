@@ -56,7 +56,7 @@ class Document(models.Model):
     link = models.TextField(blank=True, default='',
                             help_text='URL link to the way back server.')
     domain = models.TextField(blank=True, default='')
-    file = models.ForeignKey(WarcFile, on_delete=models.CASCADE, related_name='document')
+    file = models.ForeignKey(WarcFile, on_delete=models.CASCADE)
     content = models.TextField(blank=True, default='',
                                help_text='The body of the web page, removed html tag.')
 

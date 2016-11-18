@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, status
 from serializers import *
 from models import *
 from pagination import *
@@ -11,6 +11,9 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import detail_route, list_route
 
 
 @permission_classes((IsAdminUser, ))
@@ -109,6 +112,40 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = WarcFile.objects.all()
     serializer_class = WarcFileSerializer
+
+    @detail_route(methods=['get'])
+    def doc_list(self, request, pk):
+        docs = WarcFile.objects.get(pk=pk).document_set.all()
+
+        page = self.paginate_queryset(docs)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(docs, many=True)
+        return Response(serializer.data)
+
+        # serializer = DocumentSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     warc_file = WarcFile.objects.get(pk=pk)
+        #     docs = warc_file.document_set.all()
+        #     serializer = DocumentSerializer(docs)
+        #     return Response(serializer.data)
+        # else:
+        #     return Response(serializer.errors,
+        #                     status=status.HTTP_400_BAD_REQUEST)
+
+    # @list_route()
+    # def docs(self, request):
+    #     docs = WarcFile.objects.get(pk=3).document_set.all()
+    #
+    #     page = self.paginate_queryset(docs)
+    #     if page is not None:
+    #         serializer = self.get_serializer(page, many=True)
+    #         return self.get_paginated_response(serializer.data)
+    #
+    #     serializer = self.get_serializer(docs, many=True)
+    #     return Response(serializer.data)
 
 
 @permission_classes((IsAuthenticated, ))

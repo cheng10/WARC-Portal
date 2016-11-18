@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import docs from './docs';
+import collections from './collections';
 
 /**
  * function used to combine reducers into a single reducer
@@ -12,6 +13,7 @@ export const reducers = combineReducers({
     routing: routerReducer,
     form: formReducer,
     docs: docs,
+    collections: collections,
 });
 
 /**

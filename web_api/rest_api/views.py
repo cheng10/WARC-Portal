@@ -8,7 +8,7 @@ from serializers import *
 from models import *
 from pagination import *
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly 
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
 
@@ -116,7 +116,7 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = WarcFileSerializer
 
 
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 class CollectionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows collations to be **viewed** only by by **authenticated user**,

@@ -13,6 +13,8 @@ import App from './components/App.jsx';
 import Images from './pages/Images.jsx'
 import NotFound from './pages/NotFound.jsx';
 import DocumentList from './components/DocumentList.jsx'
+import Collections from './pages/Collections.jsx';
+import Content from './components/Content.jsx'
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -34,8 +36,11 @@ ReactDOM.render (
         <Router history={history}>
             <Route path ="/" component={App}>
                 <IndexRedirect to="search" />
-                <Route path="search" component={DocumentList} />
-                <Route path="images" component={Images} />
+                <Route path="/" component={Content}>
+                    <Route path="search" component={DocumentList} />
+                    <Route path="images" component={Images} />
+                </Route>
+                <Route path="collections" component={Collections}/>
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

@@ -8,7 +8,7 @@ from serializers import *
 from models import *
 from pagination import *
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly 
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
 from rest_framework.response import Response
@@ -43,27 +43,31 @@ class ListFilter(Filter):
         value_list = value.split(u',')
         return super(ListFilter, self).filter(qs, Lookup(value_list, 'in'))
 
-
 class DocumentFilter(FilterSet):
     type = ListFilter(name='type')
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
-    pub_start_date = DateFilter(name='pub_date', lookup_expr='gt')
-    pub_end_date = DateFilter(name='pub_date', lookup_expr='lt')
-    pub_year = NumberFilter(name='pub_date', lookup_expr='year')
-    crawl_start_date = DateFilter(name='crawl_date', lookup_expr='gt')
-    crawl_end_date = DateFilter(name='crawl_date', lookup_expr='lt')
-    crawl_year = NumberFilter(name='crawl_date', lookup_expr='year')
+    pub_start_date = DateFilter(name='pub_date', lookup_type=('gt')) 
+    pub_end_date = DateFilter(name='pub_date' ,lookup_type=('lt'))
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type=('exact')) 
+    crawl_end_date = DateFilter(name='crawl_date', lookup_type=('lt'))
 
     class Meta:
         model = Document
-        fields = ['type', 'file', 'domain', 'pub_start_date', 'pub_end_date',
-                  'crawl_start_date', 'crawl_end_date', 'pub_year', 'crawl_year']
+        fields = {
+            'type': ['exact'], 
+            'file': ['exact'],  
+            'domain': ['exact'],
+            'crawl_date': ['exact', 'year'],
+            'pub_date': ['exact', 'year']
+        }
 
 
 class ImageFilter(FilterSet):
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
+    crawl_start_date = DateFilter(name='crawl_date',lookup_type=('gt')) 
+    crawl_end_date = DateFilter(name='crawl_date',lookup_type=('lt'))
 
     class Meta:
         model = Image
@@ -84,6 +88,7 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ('id', 'pub_date_confident', 'pub_date', 'crawl_date')
     search_fields = ('title', 'content')
     filter_class = DocumentFilter
+    pagination_class = DocumentsResultsPagination
 
 
 @permission_classes((AllowAny, ))
@@ -148,7 +153,7 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     #     return Response(serializer.data)
 
 
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 class CollectionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows collations to be **viewed** only by by **authenticated user**,

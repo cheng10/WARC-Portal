@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import moment from 'moment';
+import _ from 'lodash';
+import URLBuilder from '../helpers/URLBuilder.js';
 
 import 'react-day-picker/lib/style.css';
 
@@ -46,8 +50,7 @@ function YearMonthForm({ date, localeUtils, onChange }) {
   );
 }
 
-export default class DateField extends Component {
-
+class DateField extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -102,15 +105,17 @@ export default class DateField extends Component {
 
     handleInputChange(e) {
         const { value } = e.target;
-        const momentDay = moment(value, 'L', true);
+        const momentDay = moment(value, 'l', true);
         if (momentDay.isValid()) {
-            console.log("DATE TYPED", value);
             this.setState({
             selectedDay: momentDay.toDate(),
             value,
             }, () => {
-            this.daypicker.showMonth(this.state.selectedDay);
+                this.daypicker.showMonth(this.state.selectedDay);
             });
+            this.setQueryParams(momentDay);
+        } else if (value === "") {
+            this.setQueryParams("");
         } else {
             this.setState({ value, selectedDay: null });
         }
@@ -120,11 +125,32 @@ export default class DateField extends Component {
     handleDayClick(e, day) {
         console.log("DAY CHANGED", day);
         this.setState({
-            value: moment(day).format('L'),
+            value: moment(day).format('l'),
             selectedDay: day,
             showOverlay: false,
         });
+        this.setQueryParams(moment(day).format('l'));
         this.input.blur();
+    }
+
+    setQueryParams(date) {
+        let newquery = {};
+        newquery[this.props.param] = date || "";
+        console.log(date);
+        let url = _.merge({}, _.omit(this.props.queryParams, ['page']), newquery);
+        this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
+        this.onChange();
+    }
+
+    clearDate() {
+        this.setState({
+            selectedDay: "",
+            value: ""
+        });
+    }
+
+    onChange() {
+        this.props.dispatch({type: 'docs.onLoad'});
     }
 
     render() {
@@ -162,3 +188,14 @@ export default class DateField extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    console.log('docstate', state);
+    return {
+        page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
+        queryParams: state.routing.locationBeforeTransitions.query || '',
+        path: state.routing.locationBeforeTransitions || ''
+    };
+}
+
+export default connect(mapStateToProps)(DateField);

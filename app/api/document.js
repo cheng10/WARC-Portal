@@ -17,7 +17,7 @@ export default class ApiDocs {
         const url = URLBuilder(action);
         // TODO: UNHARDCODE URLS
         let list = [];
-        return fetch(`http://192.168.33.10:8000/documents/${url}`).then((res) => {
+        return fetch(`http://warc.tech:8000/documents/${url}`).then((res) => {
             return res.json();
         }).then((list) => {
             return list;
@@ -31,7 +31,7 @@ export default class ApiDocs {
     static getImages(action) {
         const url = URLBuilder(action);
         let list = [];
-        return fetch(`http://192.168.33.10:8000/image/${url}`).then((res) => {
+        return fetch(`http://warc.tech:8000/image/${url}`).then((res) => {
             return res.json();
         }).then((list) => {
             return list;

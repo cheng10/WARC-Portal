@@ -17,7 +17,7 @@ export default class ApiFilter {
         const url = URLBuilder(action);
         // TODO: UNHARDCODE URLS
         let list = [];
-        return fetch(`http://192.168.33.10:8000/filters/`).then((res) => {
+        return fetch(`http://warc.tech:8000/filters/`).then((res) => {
             return res.json();
         }).then((list) => {
             return list;

@@ -15,7 +15,7 @@ export default class ApiCol {
     static getCollections(action) {
         console.log("API get collections", action);
         let collections = [];
-        return fetch(`http://192.168.33.10:8000/collection/`).then((res) => {
+        return fetch(`http://warc.tech:8000/collection/`).then((res) => {
             console.log(res);
             return res.json();
         }).then((collections) => {

@@ -48,12 +48,12 @@ class CollectionDocListSerializer(serializers.ModelSerializer):
     """
     The serializer for list all documents in a collection.
     """
+    doc = DocumentSerializer(many=True)
     warcuser = serializers.StringRelatedField()
-    file = WarcFileSerializer(many=True)
 
     class Meta:
         model = Collection
-        fields = ('url', 'warcuser', 'name', 'detail', 'file')
+        fields = ('url', 'warcuser', 'name', 'detail', 'doc')
 
 
 class CollectionSerializer(serializers.ModelSerializer):

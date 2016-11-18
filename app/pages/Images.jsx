@@ -106,7 +106,8 @@ export class Images extends React.Component {
     changePage(page) {
         let newquery = {page: page};
         let url = _.merge({}, this.props.queryParams, newquery);
-        this.props.dispatch(push(URLBuilder(url)));
+        console.log(this.props.path);
+        this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
         this.onChange();
     }
 
@@ -147,7 +148,8 @@ function mapStateToProps(state) {
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
         images: state.docs.images || [],
         count: state.docs.img_count || 0,
-        queryParams: state.routing.locationBeforeTransitions.query || ''
+        queryParams: state.routing.locationBeforeTransitions.query || '',
+        path: state.routing.locationBeforeTransitions || ''
     };
 }
 export default connect(mapStateToProps)(Images);

@@ -99,7 +99,7 @@ class DocumentList extends React.Component
         console.log("changing page");
         let newquery = {page: page};
         let url = _.merge({}, this.props.queryParams, newquery);
-        this.props.dispatch(push(URLBuilder(url)));
+        this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
         this.onChange();
     }
 
@@ -123,7 +123,7 @@ function mapStateToProps(state) {
         loading: state.docs.loading && true,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
         queryParams: state.routing.locationBeforeTransitions.query || '',
-        location: state.routing.locationBeforeTransitions || ''
+        path: state.routing.locationBeforeTransitions || ''
     };
 }
 

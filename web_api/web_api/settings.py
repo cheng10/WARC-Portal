@@ -95,6 +95,7 @@ WSGI_APPLICATION = 'web_api.wsgi.application'
 #     }
 # }
 
+# use mysql database on warc.tech
 
 DATABASES = {
     'default': {

@@ -60,7 +60,7 @@ class ImageFilter(FilterSet):
     domain = ListFilter(name='domain')
 
     class Meta:
-        model = Document
+        model = Image
         fields = ['file', 'domain']
 
 

@@ -31,8 +31,29 @@
     }
 
     a {
-        text-decoration: none;
+        border: none;
+        outline:none;
+        text-decoration:none;
     }
+
+    a:hover {
+        text-decoration:none;
+        color: green;
+    }
+
+    a:focus {
+        border: none;
+        outline:none;
+        text-decoration:none;
+        color: #337ab7;
+    }
+
+    a:visited {
+        border: none;
+        outline:none;
+        text-decoration:none;
+    }
+
     .fa.fa-check-circle {
         padding-right: 0.5em;
         font-size: 1.2em;

@@ -5,6 +5,7 @@ import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
 import DocElementList from './DocElementList.jsx';
 import FilterOptions from './FilterOptions.jsx';
+import URLBuilder from '../helpers/URLBuilder.js';
 
 /**
  * Class that renders the list of documents
@@ -96,9 +97,9 @@ class DocumentList extends React.Component
      */
     changePage(page) {
         console.log("changing page");
-        const search = this.props.queryParams.search;
-        let url = search ? `/search/?search=${search}&page=${page}`: `/search/?page=${page}`;
-        this.props.dispatch(push(url));
+        let newquery = {page: page};
+        let url = _.merge({}, this.props.queryParams, newquery);
+        this.props.dispatch(push(URLBuilder(url)));
         this.onChange();
     }
 
@@ -121,7 +122,8 @@ function mapStateToProps(state) {
         count: state.docs.count || 0,
         loading: state.docs.loading && true,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
-        queryParams: state.routing.locationBeforeTransitions.query || ''
+        queryParams: state.routing.locationBeforeTransitions.query || '',
+        location: state.routing.locationBeforeTransitions || ''
     };
 }
 

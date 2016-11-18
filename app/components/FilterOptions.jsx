@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
+import { replace } from 'react-router-redux';
+import URLBuilder from '../helpers/URLBuilder.js';
 
-const TYPE_CHOICES = ["HTML", "PDF", "OTHER"]
-const DOMAINS = ["web.ca, ca.ca, .com"]
 export class FilterOptions extends React.Component {
     /**
      * Constructor for FilterOptions component. Initializes state and bind eventlisteners.
@@ -14,58 +14,65 @@ export class FilterOptions extends React.Component {
      */
     constructor(props) {
         super(props);
-        console.log("FILTER OPTIONS", props.queryParams);
         this.state = {
             filterOptions: {
-                type: []
+                type: props.queryParams.type ? props.queryParams.type.split(",") : [],
+                crawl_date__year: [],
+                pub_date__year: [],
+                domain: props.queryParams.domain ? props.queryParams.domain.split(",") : [],
             }
         };
 
         this.filterClick = this.filterClick.bind(this)
     }
 
-    buildQueryParams(query) {
-        _.reduce(query, (result, value, key) => {
-            
-            result += `?${key}=${value.type.join()}`
-        }, "");
-    }
-
     filterClick(e) {
         e.preventDefault();
-        // this.props.dispatch(push("/search/hi"));
-
+        const key = e.target.parentNode.parentNode.getAttribute("data-property")
         // Toggle checked class
         if (e.target.getElementsByTagName("i")[0].classList.contains("selected")) {
             e.target.getElementsByTagName("i")[0].className = "fa fa-check-circle";
             this.setState({
-                type: _.remove(this.state.filterOptions.type, (item) => item === e.target.parentNode.getAttribute("data-key"))
+                type: _.remove(this.state.filterOptions[key], (item) => item === e.target.parentNode.getAttribute("data-key"))
             });
         } else {
             e.target.getElementsByTagName("i")[0].className += " " + "selected";
             this.setState({
-                type: this.state.filterOptions.type.push(e.target.parentNode.getAttribute("data-key"))
+                type: this.state.filterOptions[key].push(e.target.parentNode.getAttribute("data-key"))
             });
-            console.log(this.buildQueryParams(this.state));
         }
-
-        // TODO: Push new path(")
-        // this.props.dispatch({type})
-        console.log(e.target.getElementsByTagName("i")[0].className);
+        this.props.dispatch(replace(`${this.props.location}${this.buildQueryParams(this.state.filterOptions)}`));
     }
 
-    generateFilterList(filters) {
+    buildQueryParams(query) {
+        let url = URLBuilder(_.pick(this.props.queryParams, ['search'])) || "?";
+        return _.reduce(query, (url, value, key) => {
+            if (value.length > 0) {
+                url += `&${key}=${value.join()}`
+            }
+            return url;
+        }, url);
+    }
+
+    generateFilterList(filters, property) {
         let listItems = filters.map((item) => { 
+            let classname = "fa fa-check-circle";
+            const param = this.props.queryParams[property] ? this.props.queryParams[property].split(',') : [];
+
+            if (param.length !== 0 && _.includes(param, item)) {
+                classname = "fa fa-check-circle selected";
+            }
+
             return (<li data-key={item} key={item}> 
                 <a href={"#"} onClick={this.filterClick}> 
-                    <i className="fa fa-check-circle" aria-hidden="true" />
+                    <i className={classname} aria-hidden="true" />
                     {item} 
                 </a> 
             </li>)
         });
 
         return (
-            <ul className="filter-list">
+            <ul className="filter-list" data-property={property}>
                 {listItems}
             </ul>
         );
@@ -76,6 +83,7 @@ export class FilterOptions extends React.Component {
      * 
      */
     render() {
+        console.log("this state", this.state);
         return (
             <div className="filter-box">
                 <div className="filter-header">
@@ -84,11 +92,19 @@ export class FilterOptions extends React.Component {
                 <div className="filters">
                     <div className="type-filter">
                         Categories
-                        {this.generateFilterList(this.props.typeFilters)}
+                        {this.generateFilterList(this.props.typeFilters, "type")}
                     </div>
+                    {/*}<div className="crawl-date-filter">
+                        Crawl Dates
+                        {this.generateFilterList(this.props.yearFilters, "crawl_date__year")}
+                    </div>
+                    <div className="pub-year-filter">
+                        Publish Dates
+                        {this.generateFilterList(this.props.pubYearFilters, "pub_date__year")}
+                    </div>*/}
                     <div className="domain-filter">
-                    </div>
-                    <div className="year-filter">
+                        Domain
+                        {this.generateFilterList(this.props.domainFilters, "domain")}
                     </div>
                 </div>
             </div>
@@ -102,9 +118,10 @@ export class FilterOptions extends React.Component {
 function mapStateToProps(state) {
     console.log("Filter state", state);
     return {
-        typeFilters: ["HTML", "PDF", "OTHER"],
-        domainFilters: ["web.ca, ca.ca, .com"],
-        yearFilters: ["1991, 1992, 2016"],
+        typeFilters: state.docs.filterOptions ? state.docs.filterOptions[0] : [],
+        domainFilters: state.docs.filterOptions ? state.docs.filterOptions[1] : [],
+        yearFilters: state.docs.filterOptions ? state.docs.filterOptions[2] : [],
+        pubYearFilters: state.docs.filterOptions ? state.docs.filterOptions[3] : [],
         location: state.routing.locationBeforeTransitions.pathname,
         queryParams: state.routing.locationBeforeTransitions.query || ''
     };

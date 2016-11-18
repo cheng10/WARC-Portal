@@ -109,7 +109,7 @@ export default class DateField extends Component {
             selectedDay: momentDay.toDate(),
             value,
             }, () => {
-            this.daypicker.showMonth(this.state.selectedDay);
+                this.daypicker.showMonth(this.state.selectedDay);
             });
         } else {
             this.setState({ value, selectedDay: null });

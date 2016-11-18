@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import Gallery from 'react-photo-gallery';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 
-import Lightbox from 'react-images';
+import URLBuilder from '../helpers/URLBuilder.js';
 import DocumentList from '../components/DocumentList.jsx';
 
 const IMAGE='https://images.unsplash.com/photo-1418985991508-e47386d96a71?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=';
@@ -104,11 +104,9 @@ export class Images extends React.Component {
      * @param {number} page number changing to
      */
     changePage(page) {
-        console.log("changing page");
-        const search = this.props.queryParams.search;
-        console.log(search);
-        let url = search ? `/images/?search=${search}&page=${page}`: `/images/?page=${page}`;
-        this.props.dispatch(push(url));
+        let newquery = {page: page};
+        let url = _.merge({}, this.props.queryParams, newquery);
+        this.props.dispatch(push(URLBuilder(url)));
         this.onChange();
     }
 

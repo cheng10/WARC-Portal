@@ -40,27 +40,31 @@ class ListFilter(Filter):
         value_list = value.split(u',')
         return super(ListFilter, self).filter(qs, Lookup(value_list, 'in'))
 
-
 class DocumentFilter(FilterSet):
     type = ListFilter(name='type')
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
-    pub_start_date = DateFilter(name='pub_date', lookup_expr='gt')
-    pub_end_date = DateFilter(name='pub_date', lookup_expr='lt')
-    pub_year = NumberFilter(name='pub_date', lookup_expr='year')
-    crawl_start_date = DateFilter(name='crawl_date', lookup_expr='gt')
-    crawl_end_date = DateFilter(name='crawl_date', lookup_expr='lt')
-    crawl_year = NumberFilter(name='crawl_date', lookup_expr='year')
+    pub_start_date = DateFilter(name='pub_date', lookup_type=('gt')) 
+    pub_end_date = DateFilter(name='pub_date' ,lookup_type=('lt'))
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type=('exact')) 
+    crawl_end_date = DateFilter(name='crawl_date', lookup_type=('lt'))
 
     class Meta:
         model = Document
-        fields = ['type', 'file', 'domain', 'pub_start_date', 'pub_end_date',
-                  'crawl_start_date', 'crawl_end_date', 'pub_year', 'crawl_year']
+        fields = {
+            'type': ['exact'], 
+            'file': ['exact'],  
+            'domain': ['exact'],
+            'crawl_date': ['exact', 'year'],
+            'pub_date': ['exact', 'year']
+        }
 
 
 class ImageFilter(FilterSet):
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
+    crawl_start_date = DateFilter(name='crawl_date',lookup_type=('gt')) 
+    crawl_end_date = DateFilter(name='crawl_date',lookup_type=('lt'))
 
     class Meta:
         model = Image
@@ -81,6 +85,7 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ('id', 'pub_date_confident', 'pub_date', 'crawl_date')
     search_fields = ('title', 'content')
     filter_class = DocumentFilter
+    pagination_class = DocumentsResultsPagination
 
 
 @permission_classes((AllowAny, ))

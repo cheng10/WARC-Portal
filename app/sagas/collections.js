@@ -17,6 +17,18 @@ export function* collectionFetchList(action) {
     });
 }
 
+export function* filesFetchList(action) {
+    // call the api to get the users list
+    console.log("collections fetch list", action)
+    const files = yield call(ApiCol.getFiles);
+
+    // dispatch the success action with the collections from /reducers/collections
+    yield put({
+        type: 'collections.fetchFilesSuccess',
+        files: files,
+    });
+}
+
 // Handles posting collections
 export function* collectionPost(action) {
     // call the api to get the users list

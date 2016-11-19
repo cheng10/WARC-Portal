@@ -8,7 +8,7 @@ import Toolbar from './Toolbar.jsx';
 
 /**
  * Root component that is rendered
- * 
+ *
  * App
  * @extends {React.Component}
  */
@@ -36,15 +36,18 @@ class Content extends React.Component {
         if (e.target.textContent === 'Images') {
             this.props.dispatch(push('/images'))
             this.setState({tab: "images"});
-        } else {
+        } else if (e.target.textContent === 'Archives'){
             this.props.dispatch(push('/search'))
             this.setState({tab: "search"});
+        } else {
+          this.props.dispatch(push('/collections'))
+          this.setState({tab: "collections"});
         }
     }
 
     /**
      * render method rendering App
-     * 
+     *
      */
     render() {
         return (
@@ -59,6 +62,11 @@ class Content extends React.Component {
                         <li className={this.state.tab === "images" ? "link selected": "link"} data-id="people">
                             <a href="" onClick={this.onClick}>
                                 <div className="title">Images</div>
+                            </a>
+                        </li>
+                        <li className={this.state.tab === "collections" ? "link selected": "link"} data-id="collections">
+                            <a href="" onClick={this.onClick}>
+                                <div className="title">Collections</div>
                             </a>
                         </li>
                     </ul>

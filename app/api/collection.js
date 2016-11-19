@@ -3,14 +3,14 @@ import URLBuilder from '../helpers/URLBuilder.js';
 /**
  * Interface for xhr requests to retrieve collections
  * from server
- * 
+ *
  * @class ApiCol
  */
 export default class ApiCol {
 
     /**
      * Retrieve collections
-     * @param {object} action contains keywords/page properties 
+     * @param {object} action contains keywords/page properties
      */
     static getCollections(action) {
         console.log("API get collections", action);
@@ -22,11 +22,28 @@ export default class ApiCol {
             console.log(collections);
             return collections;
         });
+        
+    }
+
+    /**
+     * Retrieve collections
+     * @param {object} action contains keywords/page properties
+     */
+    static getFiles(action) {
+        console.log("API get files", action);
+        let files = [];
+        return fetch(`http://warc.tech:8000/warcfile/`).then((res) => {
+            console.log(res);
+            return res.json();
+        }).then((files) => {
+            console.log("FILES",files);
+            return files;
+        });
     }
 
     /**
      * Post collections
-     * @param {object} action contains keywords/page properties 
+     * @param {object} action contains keywords/page properties
      */
 
     // TODO: fill out. checkout https://github.com/github/fetch#post-json

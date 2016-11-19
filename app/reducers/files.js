@@ -5,7 +5,7 @@ import { reducerCall } from './index';
  * Wrapping reducers to keep reducers pure
  * see reducers/index.js
  */
-export default function collections(state = {}, action) {
+export default function files(state = {}, action) {
     return reducerCall(state, action, reducerClass);
 }
 
@@ -21,21 +21,11 @@ class reducerClass {
      * @param {object} action being called with payload from fetcthing lists
      *
      */
-    static fetchColSuccess(new_state, action) {
-        console.log("fetch collections success");
-        new_state = action.collections;
-        return new_state;
-    }
 
     static fetchFilesSuccess(new_state, action) {
         console.log("fetch files success", action);
-        new_state.files = action.files.results;
+        new_state = action.files.results;
         return new_state;
     }
 
-    // TODO: fill out. Maybe make the collections api return the new set of collections on POST and set it as the state.
-    static postColSuccess(new_state, action) {
-        console.log("fetch collections success");
-        return new_state;
-    }
 }

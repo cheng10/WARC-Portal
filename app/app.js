@@ -28,7 +28,7 @@ sagaMiddleware.run(sagas);
 
 
 /**
- * Root of everything. Given to index.html to 
+ * Root of everything. Given to index.html to
  * render our app
  */
 ReactDOM.render (
@@ -39,8 +39,8 @@ ReactDOM.render (
                 <Route path="/" component={Content}>
                     <Route path="search" component={DocumentList} />
                     <Route path="images" component={Images} />
+                    <Route path="collections" component={Collections}/>
                 </Route>
-                <Route path="collections" component={Collections}/>
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

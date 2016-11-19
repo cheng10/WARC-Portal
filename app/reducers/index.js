@@ -2,8 +2,10 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
+
 import docs from './docs';
 import collections from './collections';
+import files from './files';
 
 /**
  * function used to combine reducers into a single reducer
@@ -14,13 +16,14 @@ export const reducers = combineReducers({
     form: formReducer,
     docs: docs,
     collections: collections,
+    files: files,
 });
 
 /**
  * function that is wrapping reducer calls
  * to ensure that reducers remain pure
  * See: http://redux.js.org/docs/basics/Reducers.html for more details
- * 
+ *
  * @param {object} current state
  * @param {object} action sent to the reducer
  * @param {object} reducer being called

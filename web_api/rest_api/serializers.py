@@ -41,19 +41,7 @@ class WarcFileSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = WarcFile
-        fields = ('id', 'name')
-
-
-class CollectionDocListSerializer(serializers.ModelSerializer):
-    """
-    The serializer for list all documents in a collection.
-    """
-    doc = DocumentSerializer(many=True)
-    warcuser = serializers.StringRelatedField()
-
-    class Meta:
-        model = Collection
-        fields = ('url', 'warcuser', 'name', 'detail', 'doc')
+        fields = ('url', 'name')
 
 
 class CollectionSerializer(serializers.ModelSerializer):

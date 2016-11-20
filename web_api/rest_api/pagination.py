@@ -2,6 +2,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from .models import Document
 
+
 class ImageResultsPagination(PageNumberPagination):
     """
         Pagination class for displaying image results
@@ -20,11 +21,11 @@ class DocumentsResultsPagination(PageNumberPagination):
     max_page_size = 1000
     
     def get_paginated_response(self, data):
-        querySet = Document.objects.all().order_by('type').values_list('type', flat=True).distinct()
-        types = querySet.order_by('type').values_list('type', flat=True).distinct()
-        domain = querySet.order_by('domain').values_list('domain', flat=True).distinct()
-        crawl_years = querySet.dates('crawl_date', 'year', order='DESC')
-        pub_years = querySet.dates('pub_date', 'year', order='DESC')
+        queryset = Document.objects.all().order_by('type').values_list('type', flat=True).distinct()
+        types = queryset.order_by('type').values_list('type', flat=True).distinct()
+        domain = queryset.order_by('domain').values_list('domain', flat=True).distinct()
+        crawl_years = queryset.dates('crawl_date', 'year', order='DESC')
+        pub_years = queryset.dates('pub_date', 'year', order='DESC')
 
         return Response({
             "count": self.page.paginator.count,

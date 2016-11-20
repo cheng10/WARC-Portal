@@ -2,7 +2,6 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters, status
 from serializers import *
 from models import *
@@ -11,9 +10,6 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly 
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import detail_route, list_route
 
 
 @permission_classes((IsAdminUser, ))
@@ -43,14 +39,15 @@ class ListFilter(Filter):
         value_list = value.split(u',')
         return super(ListFilter, self).filter(qs, Lookup(value_list, 'in'))
 
+
 class DocumentFilter(FilterSet):
     type = ListFilter(name='type')
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
-    pub_start_date = DateFilter(name='pub_date', lookup_type=('gt')) 
-    pub_end_date = DateFilter(name='pub_date' ,lookup_type=('lt'))
-    crawl_start_date = DateFilter(name='crawl_date', lookup_type=('exact')) 
-    crawl_end_date = DateFilter(name='crawl_date', lookup_type=('lt'))
+    pub_start_date = DateFilter(name='pub_date', lookup_type='gt')
+    pub_end_date = DateFilter(name='pub_date', lookup_type='lt')
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type='exact')
+    crawl_end_date = DateFilter(name='crawl_date', lookup_type='lt')
 
     class Meta:
         model = Document
@@ -66,15 +63,15 @@ class DocumentFilter(FilterSet):
 class ImageFilter(FilterSet):
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
-    crawl_start_date = DateFilter(name='crawl_date',lookup_type=('gt')) 
-    crawl_end_date = DateFilter(name='crawl_date',lookup_type=('lt'))
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type='gt')
+    crawl_end_date = DateFilter(name='crawl_date', lookup_type='lt')
 
     class Meta:
         model = Image
         fields = ['file', 'domain']
 
 
-@permission_classes((AllowAny, ))
+@permission_classes((AllowAny,))
 class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint that allows documents to be **viewed** by **anyone**,
@@ -89,6 +86,40 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ('title', 'content')
     filter_class = DocumentFilter
     pagination_class = DocumentsResultsPagination
+
+    def get_queryset(self):
+        queryset = Document.objects.all()
+        collection = self.request.query_params.get('collection', None)
+
+        if collection is not None:
+            col = Collection.objects.get(name=collection)
+            files = col.file.all()
+            # Create empty qs to add in manually
+            col_queryset = Document.objects.none()
+            # OR empty qs with filtered documents that match file
+            for warc_file in files:
+                col_queryset = col_queryset | queryset.filter(file=warc_file)
+            return col_queryset
+
+        else:
+            return Document.objects.all()
+
+
+# @permission_classes((AllowAny, ))
+# class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
+#     """
+#     API endpoint that allows documents to be **viewed** by **anyone**,
+#     with the functionality of **ordering**, **searching** and **filtering**.
+#
+#     Returns a list of all documents in the system.
+#     """
+#     queryset = Document.objects.all()
+#     serializer_class = DocumentSerializer
+#     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
+#     ordering_fields = ('id', 'pub_date_confident', 'pub_date', 'crawl_date')
+#     search_fields = ('title', 'content')
+#     filter_class = DocumentFilter
+#     pagination_class = DocumentsResultsPagination
 
 
 @permission_classes((AllowAny, ))
@@ -118,31 +149,9 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WarcFile.objects.all()
     serializer_class = WarcFileSerializer
 
-    @detail_route(methods=['get'])
-    def doc_list(self, request, pk):
-        docs = WarcFile.objects.get(pk=pk).document_set.all()
-
-        page = self.paginate_queryset(docs)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(docs, many=True)
-        return Response(serializer.data)
-
-        # serializer = DocumentSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     warc_file = WarcFile.objects.get(pk=pk)
-        #     docs = warc_file.document_set.all()
-        #     serializer = DocumentSerializer(docs)
-        #     return Response(serializer.data)
-        # else:
-        #     return Response(serializer.errors,
-        #                     status=status.HTTP_400_BAD_REQUEST)
-
-    # @list_route()
-    # def docs(self, request):
-    #     docs = WarcFile.objects.get(pk=3).document_set.all()
+    # @detail_route(methods=['get'])
+    # def doc_list(self, request, pk):
+    #     docs = WarcFile.objects.get(pk=pk).document_set.all()
     #
     #     page = self.paginate_queryset(docs)
     #     if page is not None:

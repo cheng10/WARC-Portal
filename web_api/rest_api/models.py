@@ -108,20 +108,3 @@ class Collection(models.Model):
 
     class Meta:
         ordering = ('name',)
-
-
-class CollectionDocList(models.Model):
-    """
-    Stores user's warc file collections,
-    related to :model:`auth.User` and :model:`web_api.WarcFile`.
-    """
-    warcuser = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, blank=True, default='',
-                            help_text='Name of the warc file collection.')
-    doc = models.ManyToManyField(Document)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ('name',)

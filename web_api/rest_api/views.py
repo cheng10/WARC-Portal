@@ -6,7 +6,7 @@ from rest_framework import viewsets, filters, status
 from serializers import *
 from models import *
 from pagination import *
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, detail_route
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly 
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
@@ -21,6 +21,18 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+
+    # @detail_route(methods=['post'])
+    # def set_password(self, request, pk=None):
+    #     user = User.objects.get(pk=pk)
+    #     serializer = PasswordSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         user.set_password(serializer.data['password'])
+    #         user.save()
+    #         return Response({'status': 'password set'})
+    #     else:
+    #         return Response(serializer.errors,
+    #                         status=status.HTTP_400_BAD_REQUEST)
 
 
 @permission_classes((IsAdminUser, ))

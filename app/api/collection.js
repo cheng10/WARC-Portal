@@ -48,21 +48,27 @@ export default class ApiCol {
 
     // TODO: fill out. checkout https://github.com/github/fetch#post-json
     static postCollections(action) {
-        //const hash = new Buffer(`admin:adminadmin`).toString('base64')
+        const hash = new Buffer(`admin:adminadmin`).toString('base64')
         console.log("API POST collections", action);
-        let collections = [];
-        /*return fetch('http://warc.tech:8000/collection/', {
+        let collections = {};
+        console.log(action['name']);
+        collections["name"] = action['name'];
+        collections["detail"] = "";
+        let files = [];
+        for (var i = 0; i < action['warcFiles'].length; i++) {
+          files[i] = {"name": action['warcFiles'][i]};
+        }
+        collections["file"] = files;
+        console.log(collections);
+        let data = fetch('http://warc.tech:8000/collection/', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
-            'Authentication': 'Basic ${hash}'
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + hash
           },
-          body: JSON.stringify({
-            name: 'Hubot',
-            login: 'hubot',
-          })
+          body: JSON.stringify(collections)
         })
-        */
-        return "new collections list"
+        return data;
+
     }
 }

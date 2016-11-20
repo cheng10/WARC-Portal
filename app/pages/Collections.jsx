@@ -30,7 +30,7 @@ class Collections extends React.Component {
        let files = [];
        _.forEach(_.omit(form, ["collectionName"]), (value, key) => {
          if (form[key] === true){
-           files.push(key);
+           files.push(key.replace(/-/g, "."));
          }
        })
        this.props.dispatch({type: 'collectionPost', name: form.collectionName, warcFiles: files });
@@ -71,7 +71,7 @@ class Collections extends React.Component {
                     {this.props.files.map((file, index) => {
                       return( <div>
                         <label htmlFor={file.name}>{file.name}</label>
-                        <Field name={file.name} component="input" type="checkbox"></Field>
+                        <Field name={file.name.replace(/\./g, "-")} component="input" type="checkbox"></Field>
                       </div> );
                     })}
                     <div>

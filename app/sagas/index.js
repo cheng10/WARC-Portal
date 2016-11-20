@@ -1,7 +1,7 @@
 import { takeLatest } from 'redux-saga';
 import { fork } from 'redux-saga/effects';
 import { docsFetchList, imgFetchList } from './documents';
-import {collectionFetchList} from './collections';
+import {collectionFetchList, collectionPost} from './collections';
 import {filesFetchList} from './files';
 
 /**
@@ -16,5 +16,6 @@ export function* sagas() {
         fork(takeLatest, 'imgFetchList', imgFetchList ),
         fork(takeLatest, 'collectionFetchList', collectionFetchList ),
         fork(takeLatest, 'filesFetchList', filesFetchList ),
+        fork(takeLatest, 'collectionPost', collectionPost)
     ];
 }

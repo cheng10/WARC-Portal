@@ -7,7 +7,6 @@ import ApiCol from '../api/collection';
  */
 export function* collectionFetchList(action) {
     // call the api to get the users list
-    console.log("collections fetch list", action)
     const cols = yield call(ApiCol.getCollections);
 
     // dispatch the success action with the collections from /reducers/collections
@@ -19,7 +18,6 @@ export function* collectionFetchList(action) {
 
 export function* filesFetchList(action) {
     // call the api to get the users list
-    console.log("collections fetch list", action)
     const files = yield call(ApiCol.getFiles);
 
     // dispatch the success action with the collections from /reducers/collections
@@ -32,8 +30,8 @@ export function* filesFetchList(action) {
 // Handles posting collections
 export function* collectionPost(action) {
     // call the api to get the users list
-    console.log("collections fetch list", action)
-    const cols = yield call(ApiCol.postCollections, action.newCollection);
+    console.log("COLLECTIONS POST LIST", action)
+    const cols = yield call(ApiCol.postCollections, action);
 
     // Call action on post list success
     yield put({

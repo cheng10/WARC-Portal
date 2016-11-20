@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
+import {Field, reduxForm} from 'redux-form';
 import URLBuilder from '../helpers/URLBuilder.js';
 
 /**
@@ -11,17 +12,30 @@ import URLBuilder from '../helpers/URLBuilder.js';
 class Collections extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+          warcFiles: [],
+          name: ""
+        }
         console.log("COLLECTIONSSS");
 
         // Fetching list by calling collectionfetchlist in /sagas/collections
         this.props.dispatch({type: 'collectionFetchList'});
         this.props.dispatch({type: 'filesFetchList'});
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(event) {
-       event.preventDefault(); // this will prevent it from refreshing the page automatically
-       this.props.dispatch({type: "colPostListOrWhaeverActionYouGuysMade"})
+    handleSubmit(form) {
+       console.log("SUBMITTING", form);
+       _.omit(form, ["collectionName"])
+       let files = [];
+       _.forEach(_.omit(form, ["collectionName"]), (value, key) => {
+         if (form[key] === true){
+           files.push(key);
+         }
+       })
+       this.props.dispatch({type: 'collectionPost', name: form.collectionName, warcFiles: files });
      }
+
 
     render() {
         console.log(this.props.collections);
@@ -53,12 +67,19 @@ class Collections extends React.Component {
               <hr></hr>
                 <div>
                   <center><h1> Create a Collection </h1></center>
-                  <form onSubmit={this.handleSubmit} id="files_list">
+                  <form onSubmit={this.props.handleSubmit(this.handleSubmit)} id="files_list">
                     {this.props.files.map((file, index) => {
-                      return( <div>{file.name} <input type ="checkbox" name={file.name} value={file.name} id={index}/></div> );
+                      return( <div>
+                        <label htmlFor={file.name}>{file.name}</label>
+                        <Field name={file.name} component="input" type="checkbox"></Field>
+                      </div> );
                     })}
-                    <div> Collection Name: <input type="text" id='title'/></div>
-                    <input type="submit" value="Submit"/>
+                    <div>
+                      <label>Collection Name:</label>
+                      <Field name="collectionName" component="input" type="text"/>
+                    </div>
+
+                    <button type="submit">Add Collection</button>
                   </form>
                 </div>
               </div> );
@@ -66,6 +87,7 @@ class Collections extends React.Component {
 
     }
 }
+const CollectionForm = reduxForm({form: 'collection'})(Collections);
 /**
  * Mapping props from state received from store. Turns state.collections in this.props.collections
  * to be used in the component
@@ -79,4 +101,4 @@ function mapStateToProps(state) {
 }
 
 // Connecting component to the store
-export default connect(mapStateToProps)(Collections);
+export default connect(mapStateToProps)(CollectionForm);

@@ -21,7 +21,7 @@ const PHOTO_SET = [
     width: 300,
     height: 300,
     aspectRatio: 1,
-  },  
+  },
   {
     src: IMAGE,
     width: 300,
@@ -38,7 +38,7 @@ const PHOTO_SET = [
     width: 300,
     height: 300,
     aspectRatio: 1,
-  },  
+  },
   {
     src: IMAGE,
     width: 300,
@@ -59,13 +59,13 @@ export class Images extends React.Component {
         props.dispatch({type: 'imgFetchList', query: this.props.page});
 
         this.changePage = this.changePage.bind(this);
-        this.onChange = this.onChange.bind(this);    
+        this.onChange = this.onChange.bind(this);
     }
 
     /**
      * Life cycle method of React that is called before receiving new props
-     * 
-     * @param {object} newprops passed down from parent to check if page needs to retrieve new data 
+     *
+     * @param {object} newprops passed down from parent to check if page needs to retrieve new data
      */
     componentWillUpdate(newprops) {
         console.log("willupdate", this.props, newprops.queryParams.queryParams);
@@ -117,7 +117,7 @@ export class Images extends React.Component {
 
     /**
      * render method rendering Images
-     * 
+     *
      */
     render() {
         console.log("image rerender")

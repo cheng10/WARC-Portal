@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User, Group
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.response import Response
 from rest_framework import serializers
 import json
 import ast
@@ -11,7 +13,17 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('url', 'username', 'email', 'groups', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,6 +33,29 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
         fields = ('url', 'name')
+
+
+class PasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password',)
+        extra_kwargs = {'password': {'write_only': True}}
+
+
+# class CreateUserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('email', 'username', 'password')
+#         extra_kwargs = {'password': {'write_only': True}}
+#
+#     def create(self, validated_data):
+#         user = User(
+#             email=validated_data['email'],
+#             username=validated_data['username']
+#         )
+#         user.set_password(validated_data['password'])
+#         user.save()
+#         return user
 
 
 class DocumentSerializer(serializers.ModelSerializer):

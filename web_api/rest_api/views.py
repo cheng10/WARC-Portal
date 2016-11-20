@@ -165,8 +165,8 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
 @permission_classes((IsAuthenticatedOrReadOnly, ))
 class CollectionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows collations to be **viewed** only by by **authenticated user**,
-    or to be **created** by the **current user**.
+    API endpoint that allows collections to be **viewed** by **anyone**,
+    or to be **created** by **current authenticated user**.
 
     Returns a list of all collection in the system.
     """

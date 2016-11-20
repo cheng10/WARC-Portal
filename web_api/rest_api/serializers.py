@@ -72,7 +72,7 @@ class CollectionSerializer(serializers.ModelSerializer):
         collection = Collection.objects.create(warcuser=user, **validated_data)
         collection.save()
         for file_data in files_data:
-            collection.file.add(WarcFile.objects.create(**file_data))
+            collection.file.add(WarcFile.objects.get(name=file_data['name']))
             collection.save()
 
         return collection

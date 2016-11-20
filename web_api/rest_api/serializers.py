@@ -67,7 +67,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ('url', 'title', 'domain', 'file', 'crawl_date', 'pub_date', 'pub_date_confident',
-                  'type', 'link', 'detail', 'content')
+                  'type', 'link', 'detail', 'content', 'score_kv')
 
 
 class WarcFileSerializer(serializers.ModelSerializer):

@@ -91,7 +91,7 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
 
     Returns a list of all documents in the system.
     """
-    queryset = Document.objects.all()
+    queryset = Document.objects.all().distinct()
     serializer_class = DocumentSerializer
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, filters.DjangoFilterBackend,)
     ordering_fields = ('id', 'pub_date_confident', 'pub_date', 'crawl_date')

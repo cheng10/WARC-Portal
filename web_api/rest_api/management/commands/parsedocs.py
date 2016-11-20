@@ -17,85 +17,6 @@ PDF_STORE = "/mnt/md0/pdf_store/"
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        # parse PDF_DIR
-        print 'parsing '+PDF_DIR
-        for warc_file_name in os.listdir(PDF_DIR):
-            for outfile in os.listdir(PDF_DIR+warc_file_name):
-                if outfile.startswith('part'):
-                    print "Parsing..." + warc_file_name
-                    f = open(PDF_DIR+warc_file_name+'/'+outfile)
-                    # record warc file name
-                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
-                    for line in f:
-                        try:
-                            data = json.loads(line)
-                            crawl_date, mime, domain, url = data
-                            filename = url.split('?')[0].split('/')[-1].encode('unicode_escape')
-                        except Exception, e:
-                            print e
-                            continue
-
-                        try:
-                            urllib.urlretrieve(url, PDF_STORE+filename)
-                            fp = open(PDF_STORE+filename, 'rb')
-                            parser = PDFParser(fp)
-                            doc = PDFDocument(parser)
-                        except Exception, e:
-                            print e
-                            title = filename
-                            pub_date = '19700101000000'
-                            confident = False
-                            print 'using filename as title:' + filename
-                            # store pdf documents
-                            Document.objects.create(
-                                title=title,
-                                domain=domain,
-                                file=warc,
-                                pub_date=datetime.strptime(pub_date, '%Y%m%d%H%M%S'),
-                                pub_date_confident=confident,
-                                crawl_date=datetime.strptime(crawl_date, '%Y%m%d').strftime("%Y-%m-%d"),
-                                link=url,
-                                content='',
-                                type='pdf',
-                            )
-                            continue
-
-                        try:
-                            pub_date = doc.info[0]['ModDate'][2:16]
-                            confident = True
-                            _ = datetime.strptime(pub_date, '%Y%m%d%H%M%S')
-                        except Exception, e:
-                            print e
-                            pub_date = '19700101000000'
-                            confident = False
-
-                        try:
-                            title = doc.info[0]['Title']
-                        except Exception, e:
-                            print e
-                            title = 'could not parse title'
-
-                        try:
-                            title = title.encode('unicode_escape')
-                        except Exception, e:
-                            print e
-                            title = 'invalid encoding'
-
-                        print title
-
-                        # store pdf documents
-                        Document.objects.create(
-                            title=title,
-                            domain=domain,
-                            file=warc,
-                            pub_date=datetime.strptime(pub_date, '%Y%m%d%H%M%S'),
-                            pub_date_confident=confident,
-                            crawl_date=datetime.strptime(crawl_date, '%Y%m%d').strftime("%Y-%m-%d"),
-                            link=url,
-                            content='',
-                            type='pdf',
-                        )
-
         # parse DIR
         print 'parsing ' + DIR
         for warc_file_name in os.listdir(DIR):
@@ -200,6 +121,85 @@ class Command(BaseCommand):
                             link=link,
                             content=text,
                             type='html',
+                        )
+
+        # parse PDF_DIR
+        print 'parsing '+PDF_DIR
+        for warc_file_name in os.listdir(PDF_DIR):
+            for outfile in os.listdir(PDF_DIR+warc_file_name):
+                if outfile.startswith('part'):
+                    print "Parsing..." + warc_file_name
+                    f = open(PDF_DIR+warc_file_name+'/'+outfile)
+                    # record warc file name
+                    warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
+                    for line in f:
+                        try:
+                            data = json.loads(line)
+                            crawl_date, mime, domain, url = data
+                            filename = url.split('?')[0].split('/')[-1].encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            continue
+
+                        try:
+                            urllib.urlretrieve(url, PDF_STORE+filename)
+                            fp = open(PDF_STORE+filename, 'rb')
+                            parser = PDFParser(fp)
+                            doc = PDFDocument(parser)
+                        except Exception, e:
+                            print e
+                            title = filename
+                            pub_date = '19700101000000'
+                            confident = False
+                            print 'using filename as title:' + filename
+                            # store pdf documents
+                            Document.objects.create(
+                                title=title,
+                                domain=domain,
+                                file=warc,
+                                pub_date=datetime.strptime(pub_date, '%Y%m%d%H%M%S'),
+                                pub_date_confident=confident,
+                                crawl_date=datetime.strptime(crawl_date, '%Y%m%d').strftime("%Y-%m-%d"),
+                                link=url,
+                                content='',
+                                type='pdf',
+                            )
+                            continue
+
+                        try:
+                            pub_date = doc.info[0]['ModDate'][2:16]
+                            confident = True
+                            _ = datetime.strptime(pub_date, '%Y%m%d%H%M%S')
+                        except Exception, e:
+                            print e
+                            pub_date = '19700101000000'
+                            confident = False
+
+                        try:
+                            title = doc.info[0]['Title']
+                        except Exception, e:
+                            print e
+                            title = 'could not parse title'
+
+                        try:
+                            title = title.encode('unicode_escape')
+                        except Exception, e:
+                            print e
+                            title = 'invalid encoding'
+
+                        print title
+
+                        # store pdf documents
+                        Document.objects.create(
+                            title=title,
+                            domain=domain,
+                            file=warc,
+                            pub_date=datetime.strptime(pub_date, '%Y%m%d%H%M%S'),
+                            pub_date_confident=confident,
+                            crawl_date=datetime.strptime(crawl_date, '%Y%m%d').strftime("%Y-%m-%d"),
+                            link=url,
+                            content='',
+                            type='pdf',
                         )
 
         # parse IMG_DIR

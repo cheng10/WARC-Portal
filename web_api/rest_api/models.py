@@ -27,7 +27,7 @@ class WarcFile(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('id',)
 
 
 class Document(models.Model):
@@ -59,6 +59,8 @@ class Document(models.Model):
     file = models.ForeignKey(WarcFile, on_delete=models.CASCADE)
     content = models.TextField(blank=True, default='',
                                help_text='The body of the web page, removed html tag.')
+    score_kv = models.TextField(blank=True, default='null:0.00, ',
+                                help_text='The dictionary of the highest tf-idf score n-grams in a given document.')
 
     def __unicode__(self):
         return self.link
@@ -67,7 +69,7 @@ class Document(models.Model):
         return self.link
 
     class Meta:
-        ordering = ('crawl_date',)
+        ordering = ('id',)
 
 
 class Image(models.Model):
@@ -88,7 +90,7 @@ class Image(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('crawl_date',)
+        ordering = ('id',)
 
 
 class Collection(models.Model):
@@ -107,4 +109,4 @@ class Collection(models.Model):
         return self.name
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('id',)

@@ -3,17 +3,17 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class Snippet(models.Model):
-    """
-    Used to test the basic functionality of rest api,
-    not meant to be used in the production environment.
-    """
-    created = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=100, blank=True, default='')
-    content = models.TextField()
-
-    class Meta:
-        ordering = ('created',)
+# class Snippet(models.Model):
+#     """
+#     Used to test the basic functionality of rest api,
+#     not meant to be used in the production environment.
+#     """
+#     created = models.DateTimeField(auto_now_add=True)
+#     title = models.CharField(max_length=100, blank=True, default='')
+#     content = models.TextField()
+#
+#     class Meta:
+#         ordering = ('created',)
 
 
 class WarcFile(models.Model):
@@ -59,13 +59,8 @@ class Document(models.Model):
     file = models.ForeignKey(WarcFile, on_delete=models.CASCADE)
     content = models.TextField(blank=True, default='',
                                help_text='The body of the web page, removed html tag.')
-    score_kv = models.TextField(blank=True, default='null:0.00, ',
-                                help_text='The dictionary of the highest tf-idf score n-grams in a given document.')
 
     def __unicode__(self):
-        return self.link
-
-    def __str__(self):
         return self.link
 
     class Meta:
@@ -99,7 +94,7 @@ class Collection(models.Model):
     related to :model:`auth.User` and :model:`web_api.WarcFile`.
     """
     warcuser = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, blank=True, default='',
+    name = models.CharField(max_length=100, blank=True, unique=True, default='',
                             help_text='Name of the warc file collection.')
     detail = models.TextField(blank=True, default='',
                               help_text='Description of the collection.')
@@ -107,6 +102,21 @@ class Collection(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        ordering = ('id',)
+
+
+class TfIdf(models.Model):
+    """
+    Store the dictionary of the highest tf-idf scores given a collection.
+    related to :model:`web_api.Document`.
+    """
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+    score_kv = models.TextField(blank=True, default='null:0.00,')
+
+    def __unicode__(self):
+        return self.collection.name
 
     class Meta:
         ordering = ('id',)

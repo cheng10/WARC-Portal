@@ -87,5 +87,12 @@
       "detail": "",
       "file": [1, 2]
     }
+  },
+  {
+    "model": "rest_api.tfidf",
+    "fields": {
+      "collection": 1,
+      "score_kv": "boy:0.31,girl:0.25,"
+    }
   }
 ]

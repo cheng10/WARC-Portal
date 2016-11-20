@@ -180,6 +180,7 @@ class CollectionViewSet(viewsets.ModelViewSet):
     API endpoint that allows collections to be **viewed** by **anyone**,
     or to be **created** by **current authenticated user**.
 
+    **Collection name should be unique.**
     Returns a list of all collection in the system.
     """
     queryset = Collection.objects.all()
@@ -194,57 +195,68 @@ class CollectionViewSet(viewsets.ModelViewSet):
     #     return Collection.objects.filter(warcuser=user)
 
 
-class JSONResponse(HttpResponse):
+@permission_classes((AllowAny, ))
+class TfIdfViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    An HttpResponse that renders its content into JSON.
+    API endpoint that allows tf-idf scores to be **viewed** by **anyone**.
+
+    Returns a list of tf-idf scores of the existing collection.
     """
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
+    queryset = TfIdf.objects.all()
+    serializer_class = TfIdfSerializer
 
 
-@csrf_exempt
-def snippet_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
-    if request.method == 'GET':
-        snippets = Snippet.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
-        return JSONResponse(serializer.data)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = SnippetSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JSONResponse(serializer.data, status=201)
-        return JSONResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def snippet_detail(request, pk):
-    """
-    Retrieve, update or delete a code snippet.
-    """
-    try:
-        snippet = Snippet.objects.get(pk=pk)
-    except Snippet.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = SnippetSerializer(snippet)
-        return JSONResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = SnippetSerializer(snippet, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JSONResponse(serializer.data)
-        return JSONResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        snippet.delete()
-        return HttpResponse(status=204)
+# class JSONResponse(HttpResponse):
+#     """
+#     An HttpResponse that renders its content into JSON.
+#     """
+#     def __init__(self, data, **kwargs):
+#         content = JSONRenderer().render(data)
+#         kwargs['content_type'] = 'application/json'
+#         super(JSONResponse, self).__init__(content, **kwargs)
+#
+#
+# @csrf_exempt
+# def snippet_list(request):
+#     """
+#     List all code snippets, or create a new snippet.
+#     """
+#     if request.method == 'GET':
+#         snippets = Snippet.objects.all()
+#         serializer = SnippetSerializer(snippets, many=True)
+#         return JSONResponse(serializer.data)
+#
+#     elif request.method == 'POST':
+#         data = JSONParser().parse(request)
+#         serializer = SnippetSerializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JSONResponse(serializer.data, status=201)
+#         return JSONResponse(serializer.errors, status=400)
+#
+#
+# @csrf_exempt
+# def snippet_detail(request, pk):
+#     """
+#     Retrieve, update or delete a code snippet.
+#     """
+#     try:
+#         snippet = Snippet.objects.get(pk=pk)
+#     except Snippet.DoesNotExist:
+#         return HttpResponse(status=404)
+#
+#     if request.method == 'GET':
+#         serializer = SnippetSerializer(snippet)
+#         return JSONResponse(serializer.data)
+#
+#     elif request.method == 'PUT':
+#         data = JSONParser().parse(request)
+#         serializer = SnippetSerializer(snippet, data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JSONResponse(serializer.data)
+#         return JSONResponse(serializer.errors, status=400)
+#
+#     elif request.method == 'DELETE':
+#         snippet.delete()
+#         return HttpResponse(status=204)

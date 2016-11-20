@@ -67,7 +67,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ('url', 'title', 'domain', 'file', 'crawl_date', 'pub_date', 'pub_date_confident',
-                  'type', 'link', 'detail', 'content', 'score_kv')
+                  'type', 'link', 'detail', 'content')
 
 
 class WarcFileSerializer(serializers.ModelSerializer):
@@ -124,6 +124,17 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ('url', 'name', 'crawl_date', 'detail', 'link', 'file')
 
 
+class TfIdfSerializer(serializers.ModelSerializer):
+    """
+    The serializer for tf-tdf score.
+    """
+    collection_id = CollectionSerializer
+
+    class Meta:
+        model = TfIdf
+        fields = ('url', 'collection_id', 'score_kv')
+
+
 # class SnippetSerializer(serializers.Serializer):
 #     pk = serializers.IntegerField(read_only=True)
 #     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
@@ -148,7 +159,7 @@ class ImageSerializer(serializers.ModelSerializer):
 #         return instance
 
 
-class SnippetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Snippet
-        fields = ('id', 'title', 'content')
+# class SnippetSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Snippet
+#         fields = ('id', 'title', 'content')

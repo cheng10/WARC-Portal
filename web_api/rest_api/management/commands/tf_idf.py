@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for collection in Collection.objects.all():
             corpus = []
+            score_kv = ''
             files = collection.file.all()
             docs = Document.objects.none()
             for warc_file in files:
@@ -37,5 +38,10 @@ class Command(BaseCommand):
             sorted_phrase_scores = sorted(phrase_scores, key=lambda t: t[1] * -1)
             for phrase, score in [(feature_names[word_id], score) for (word_id, score) in sorted_phrase_scores][:20]:
                 print('{0: <20} {1}'.format(phrase, score))
+                score_kv += '{0}:{1},'.format(phrase, score)
+            ti, created = TfIdf.objects.get_or_create(collection=collection)
+            ti.score_kv = score_kv
+            ti.save()
+
             self.stdout.write(self.style.SUCCESS('Successfully populated tf-idf score on collection '
                                                  '"%s"' % collection.id))

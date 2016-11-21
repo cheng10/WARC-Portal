@@ -7,6 +7,8 @@ from ...models import Document, WarcFile, Image
 import urllib
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
+import hashlib
+
 
 DIR = "/mnt/md0/spark_out/"
 IMG_DIR = "/mnt/md0/spark_image/"

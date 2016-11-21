@@ -59,6 +59,7 @@ class Document(models.Model):
     file = models.ForeignKey(WarcFile, on_delete=models.CASCADE)
     content = models.TextField(blank=True, default='',
                                help_text='The body of the web page, removed html tag.')
+    hash = models.TextField(blank=True, default='')
 
     def __unicode__(self):
         return str(self.id)+self.title

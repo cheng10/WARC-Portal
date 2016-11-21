@@ -6,7 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import URLBuilder from '../helpers/URLBuilder.js';
 
-import 'react-day-picker/lib/style.css';
+// import 'react-day-picker/lib/style.css';
 
 const overlayStyle = {
     position: 'absolute',

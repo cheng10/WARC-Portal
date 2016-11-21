@@ -61,7 +61,7 @@ class Document(models.Model):
                                help_text='The body of the web page, removed html tag.')
 
     def __unicode__(self):
-        return self.link
+        return str(self.id)+self.title
 
     class Meta:
         ordering = ('id',)
@@ -98,6 +98,7 @@ class Collection(models.Model):
                             help_text='Name of the warc file collection.')
     detail = models.TextField(blank=True, default='',
                               help_text='Description of the collection.')
+    score_kv = models.TextField(blank=True, default='null:0.00,')
     file = models.ManyToManyField(WarcFile)
 
     def __unicode__(self):
@@ -107,16 +108,16 @@ class Collection(models.Model):
         ordering = ('id',)
 
 
-class TfIdf(models.Model):
-    """
-    Store the dictionary of the highest tf-idf scores given a collection.
-    related to :model:`web_api.Document`.
-    """
-    collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    score_kv = models.TextField(blank=True, default='null:0.00,')
-
-    def __unicode__(self):
-        return self.collection.name
-
-    class Meta:
-        ordering = ('id',)
+# class TfIdf(models.Model):
+#     """
+#     Store the dictionary of the highest tf-idf scores given a collection.
+#     related to :model:`web_api.Document`.
+#     """
+#     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+#     score_kv = models.TextField(blank=True, default='null:0.00,')
+#
+#     def __unicode__(self):
+#         return self.collection.name
+#
+#     class Meta:
+#         ordering = ('id',)

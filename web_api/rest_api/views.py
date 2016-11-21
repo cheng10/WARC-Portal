@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, I
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
 
+
 @authentication_classes((BasicAuthentication, JSONWebTokenAuthentication ))
 @permission_classes((IsAdminUser, ))
 class UserViewSet(viewsets.ModelViewSet):
@@ -35,6 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
     #     else:
     #         return Response(serializer.errors,
     #                         status=status.HTTP_400_BAD_REQUEST)
+
 
 @authentication_classes((BasicAuthentication, JSONWebTokenAuthentication))
 @permission_classes((IsAdminUser, ))
@@ -175,6 +177,7 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     #     serializer = self.get_serializer(docs, many=True)
     #     return Response(serializer.data)
 
+
 @authentication_classes((JSONWebTokenAuthentication, ))
 @permission_classes((IsAuthenticatedOrReadOnly, ))
 class CollectionViewSet(viewsets.ModelViewSet):
@@ -197,15 +200,15 @@ class CollectionViewSet(viewsets.ModelViewSet):
     #     return Collection.objects.filter(warcuser=user)
 
 
-@permission_classes((AllowAny, ))
-class TfIdfViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API endpoint that allows tf-idf scores to be **viewed** by **anyone**.
-
-    Returns a list of tf-idf scores of the existing collection.
-    """
-    queryset = TfIdf.objects.all()
-    serializer_class = TfIdfSerializer
+# @permission_classes((AllowAny, ))
+# class TfIdfViewSet(viewsets.ReadOnlyModelViewSet):
+#     """
+#     API endpoint that allows tf-idf scores to be **viewed** by **anyone**.
+#
+#     Returns a list of tf-idf scores of the existing collection.
+#     """
+#     queryset = TfIdf.objects.all()
+#     serializer_class = TfIdfSerializer
 
 
 # class JSONResponse(HttpResponse):

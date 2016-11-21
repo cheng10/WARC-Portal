@@ -10,7 +10,7 @@ router.register(r'documents', views.DocumentViewSet)
 router.register(r'image', views.ImageViewSet)
 router.register(r'warcfile', views.WarcFileViewSet)
 router.register(r'collection', views.CollectionViewSet)
-router.register(r'tf-idf', views.TfIdfViewSet)
+# router.register(r'tf-idf', views.TfIdfViewSet)
 
 
 urlpatterns = [

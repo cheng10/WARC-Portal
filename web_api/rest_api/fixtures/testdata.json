@@ -32,7 +32,15 @@
     }
   },
   {
+    "model": "rest_api.warcfile",
+    "pk": 4,
+    "fields": {
+      "name": "file4"
+    }
+  },
+  {
     "model": "rest_api.document",
+    "pk": 1,
     "fields": {
       "crawl_date": "2014-01-01",
       "pub_date": "2014-01-01",
@@ -47,6 +55,7 @@
   },
     {
     "model": "rest_api.document",
+    "pk": 2,
     "fields": {
       "crawl_date": "2015-01-01",
       "pub_date": "2015-01-01",
@@ -56,7 +65,22 @@
       "link": "some fake link",
       "file": 2,
       "domain": "www.cheng10.cc",
-      "content": "hi nothing here"
+      "content": "Company packaged nasal spray in laundry room"
+    }
+  },
+  {
+    "model": "rest_api.document",
+    "pk": 3,
+    "fields": {
+      "crawl_date": "2015-01-01",
+      "pub_date": "2015-01-01",
+      "title": "test doc 3",
+      "type": "other",
+      "detail": "null",
+      "link": "some fake link",
+      "file": 4,
+      "domain": "www.cheng10.cc",
+      "content": "API endpoint that allows tf-idf scores to be viewed by anyone"
     }
   },
   {
@@ -81,15 +105,17 @@
   },
   {
     "model": "rest_api.collection",
+    "pk": 1,
     "fields": {
       "name": "collection1",
       "warcuser": 1,
       "detail": "",
-      "file": [1, 2]
+      "file": [1, 2, 4]
     }
   },
   {
     "model": "rest_api.tfidf",
+    "pk": 1,
     "fields": {
       "collection": 1,
       "score_kv": "boy:0.31,girl:0.25,"

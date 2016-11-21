@@ -35,13 +35,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 
-class PasswordSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username', 'password',)
-        extra_kwargs = {'password': {'write_only': True}}
-
-
 # class CreateUserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User

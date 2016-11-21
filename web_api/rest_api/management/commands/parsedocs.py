@@ -114,7 +114,7 @@ class Command(BaseCommand):
 
                         # comparing hash value with existing doc to avoid duplication
                         m = hashlib.md5()
-                        m.update(text+link+title)
+                        m.update(text+link)
                         doc_hash = m.hexgigest()
                         if Document.objects.get(hash=doc_hash):
                             continue

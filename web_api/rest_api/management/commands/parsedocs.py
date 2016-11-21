@@ -112,6 +112,13 @@ class Command(BaseCommand):
                             print e
                             text = 'invalid_encoding'
 
+                        # comparing hash value with existing doc to avoid duplication
+                        m = hashlib.md5()
+                        m.update(text)
+                        doc_hash = m.hexgigest()
+                        if Document.objects.get(hash=doc_hash):
+                            continue
+
                         # store documents
                         Document.objects.create(
                             title=title,
@@ -123,6 +130,7 @@ class Command(BaseCommand):
                             link=link,
                             content=text,
                             type='html',
+                            hash=doc_hash
                         )
 
         # parse PDF_DIR

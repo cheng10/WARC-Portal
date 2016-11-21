@@ -2,6 +2,26 @@
 
 https://facebook.github.io/react/docs/hello-world.html
 
+## General Flow
+
+**Component / Page --> Saga --> Reducer --> API**
+
+### auth.js
+API classes for handling authentication with the Django backend
+
+* Login deals with login into the django backend.
+
+### collection.js
+API classes for communicating with the Django backend for the purposes
+of getting and creating collections
+
+* getCollections gets a list of the current user's collections
+
+* getFiles gets a list of the files currently in the System
+
+* postCollections creates a new collection from selected files
+
+
 ### document.js
 Classes for retrieving documents from the back end server
 
@@ -9,30 +29,57 @@ Classes for retrieving documents from the back end server
 
 * getImages works on images.
 
-### App.jsx
+### filter.js
+API class for retrieving filters from the Django backend
 
-The react component of the main page that allows for tabbed browsing.
+* getFilters returns all filters
+
+### App.jsx
+The react component describing the body of the app.
+
+### Content.jsx
+The react component describing the tabbed browsing of the main page.
+
+Dictates the navigation between the search, images, and login tabs.
+
+### DateField.jsx
+React component for the date picker of the toolbar.
 
 ### DocElementList.jsx
 React component for the individual elements of the list on homepage.
 
 ### DocumentList.jsx
-
 React component for the feature of a document list.
 
 * Allows updating of the list based on search queries.
 * Enables pagination of results.
 * Sets design and properties of the entire list.
 
-### menu.jsx
+### FilterOptions.jsx
+The react component that deals with the filtering options on the side
+of the page
+
+Collects all of the options, and renders them into a list, and then handles
+their selection and the changes as a result of the selections.
+
+### Menu.jsx
 React component for the top menu bar of the homepage which includes
 the search box, and navigation buttons.
 
-### URLBuilder.js
-Builds a URL String from information for use in query strings (wayback)
+### Toolbar.jsx
+The filtering toolbar that allows for searching within dates / collections
 
-### home.jsx
-The react component linking the whole homepage together
+### URLBuilder.js
+Builds a URL String from passed information for use in query strings
+
+### Collections.jsx
+The react component for the collections management page
+
+Handles rendering the collection list, and a list of files that can be selected
+and named into a new collection
+
+### Login.jsx
+The react component for the login form
 
 ### Images.jsx
 The react class describing the image display gallery.
@@ -40,12 +87,25 @@ The react class describing the image display gallery.
 ### NotFound.jsx
 Page not found landing component.
 
+## Reducers
+Reducers handle the connection between the sagas and the API, allowing for
+changes in state based on the returns from the API calls.
+
+### Reducers/auth.js
+Handles the state changes as a result of authentication.
+
+### Reducers/collections.js
+Handles state changes as a result of obtaining collections.
+
 ### Reducers/docs.js
 Describes how the state of the application changes
 upon success of certain functions
 * State upon success of fetch list
 * State upon success of fetch image
 * State when onLoad is executing
+
+### Reducers/files.js
+Handles state changes as a result of obtaining lists of file names.
 
 ### Reducers/index.js
 Describes how the state of the application changes
@@ -67,10 +127,25 @@ which means that we couldn't store Date() in state even if we wanted to. Unless 
 
 Returns **any**
 
+## Sagas
+Sagas are called by react components, and rely on a reducer to send through requests
+to the API and back.
+
+### Sagas/auth.js
+Handles Redux flow for the API calls of authentication. Returns all necessary
+information for proper authentication
+
+### Sagas/collections.js
+Handles the redux flow for obtaining lists of collections and posting new collections to the database.
+
+
 ### Sagas/documents.js
 Sagas dealing specifically with documents:
 * Call to fetch document list
 * Call to fetch image list
+
+### Sagas/files.js
+Handles the redux flow for obtaining lists of files from the databasee.
 
 ### Sagas/index.js
 Main saga generator - allows usage of sagas in the system.
@@ -98,6 +173,8 @@ interaction.
 
 ### server.js
 Dictates the server settings for the front-end.
+
+
 
 <!--
 

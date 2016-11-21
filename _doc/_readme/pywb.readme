@@ -18,6 +18,11 @@ please search for and install these packages through alternate means **
 
 2) || > git clone https://github.com/ikreymer/pywb.git
 
+** Before continuing, please go into the WARC-Portal git directory, and refer to
+the files 'default_banner.js' and 'wb.css' in the pywb sub directory. Please use these
+files to replace the existing files in '../pywb/pywb/static/' to allow for design
+integration into the WARC Portal user interface **
+
 3) || > cd pywb
 
 4) || > python setup.py install

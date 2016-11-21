@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 
 import ApiCol from '../api/collection';
 /**
- * Handles the action of fetching collections
+ * Handles the action of fetching files
  * @param {action} action being dispatched containig the query
  */
 

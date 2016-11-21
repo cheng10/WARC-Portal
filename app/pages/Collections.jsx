@@ -6,10 +6,12 @@ import _ from 'lodash';
 import {Field, reduxForm} from 'redux-form';
 import URLBuilder from '../helpers/URLBuilder.js';
 
-/**
- * Not found page component
- */
 class Collections extends React.Component {
+  /**
+   * Constructor for app component. Initializes state and bind eventlisteners.
+   * Fetches image list on construction
+   * @param {object} props passed down from parent
+   */
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +25,11 @@ class Collections extends React.Component {
         this.props.dispatch({type: 'filesFetchList'});
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    /**
+     * Handler for submitting of the form included in collection creation.
+     *
+     * @param {object} form data passed down from the caller
+     */
     handleSubmit(form) {
        console.log("SUBMITTING", form);
        _.omit(form, ["collectionName"])
@@ -36,7 +42,9 @@ class Collections extends React.Component {
        this.props.dispatch({type: 'collectionPost', name: form.collectionName, warcFiles: files });
      }
 
-
+     /**
+      * render method to render the collections page
+      */
     render() {
         console.log(this.props.collections);
         let collectionName = "HelloWorld"
@@ -87,6 +95,10 @@ class Collections extends React.Component {
 
     }
 }
+
+/*
+* Form uses redux to make the data more digestable
+*/
 const CollectionForm = reduxForm({form: 'collection'})(Collections);
 /**
  * Mapping props from state received from store. Turns state.collections in this.props.collections

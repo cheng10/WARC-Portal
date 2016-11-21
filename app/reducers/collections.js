@@ -27,13 +27,13 @@ class reducerClass {
         return new_state;
     }
 
-    static fetchFilesSuccess(new_state, action) {
-        console.log("fetch files success", action);
-        new_state.files = action.files.results;
-        return new_state;
-    }
-
-    // TODO: fill out. Maybe make the collections api return the new set of collections on POST and set it as the state.
+    /**
+     * reducer used when posting collections succeeds. Setting the store state
+     * with the new collection posted.
+     * @param {object} new state
+     * @param {object} action
+     *
+     */
     static postColSuccess(new_state, action) {
         console.log("fetch collections success");
         return new_state;

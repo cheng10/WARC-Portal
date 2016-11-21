@@ -14,11 +14,12 @@ export default function files(state = {}, action) {
  *
  */
 class reducerClass {
+
     /**
-     * reducer used when fetching collections succeeds. Setting the store state
-     * with the new collection retrieved.
+     * reducer used when fetching files succeeds. Setting the store state
+     * with the files retrieved.
      * @param {object} new state
-     * @param {object} action being called with payload from fetcthing lists
+     * @param {object} action being called with payload from fetcthing files
      *
      */
 

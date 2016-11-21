@@ -55,7 +55,7 @@ export class FilterOptions extends React.Component {
     }
 
     generateFilterList(filters, property) {
-        let listItems = filters.map((item) => { 
+        let listItems = filters.map((item) => {
             let classname = "fa fa-check-circle";
             const param = this.props.queryParams[property] ? this.props.queryParams[property].split(',') : [];
 
@@ -63,11 +63,11 @@ export class FilterOptions extends React.Component {
                 classname = "fa fa-check-circle selected";
             }
 
-            return (<li data-key={item} key={item}> 
-                <a href={"#"} onClick={this.filterClick}> 
+            return (<li data-key={item} key={item} id={item}>
+                <a href={"#"} onClick={this.filterClick}>
                     <i className={classname} aria-hidden="true" />
-                    {item} 
-                </a> 
+                    {item}
+                </a>
             </li>)
         });
 
@@ -80,7 +80,7 @@ export class FilterOptions extends React.Component {
 
     /**
      * render method rendering Images
-     * 
+     *
      */
     render() {
         console.log("this state", this.state);

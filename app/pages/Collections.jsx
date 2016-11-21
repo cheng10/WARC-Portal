@@ -79,7 +79,7 @@ class Collections extends React.Component {
                     {this.props.files.map((file, index) => {
                       return( <div>
                         <label htmlFor={file.name}>{file.name}</label>
-                        <Field name={btoa(file.name)} component="input" type="checkbox"></Field>
+                        <Field name={btoa(file.name)} id={file.name} component="input" type="checkbox"></Field>
                       </div> );
                     })}
                     <div>
@@ -87,7 +87,7 @@ class Collections extends React.Component {
                       <Field name="collectionName" component="input" type="text"/>
                     </div>
 
-                    <button type="submit">Add Collection</button>
+                    <button type="submit" id="add">Add Collection</button>
                   </form>
                 </div>
               </div> );

@@ -42,23 +42,21 @@ module.exports = {
       this.assert.equal(result.value, "");});
   },
 
-  'Test Login' : function(client){
+  'Test Login & collections' : function(client){
     client.url('http://localhost:5000/login');
-    var user = "admin";
-    var pass = "deetdoot";
+    var user = "testuser1";
+    var pass = "djangoadmin";
     client.setValue('input[id=username]', user);
     client.setValue('input[type=password]', [pass, client.Keys.ENTER]);
     client.expect.element('.docs-title-font').to.be.present;
-  },
-
-  'Test Collections' : function(client){
+    //collections
     client.url('http://localhost:5000/collections');
     client.expect.element('.doc-list').to.be.present;
-    client.expect.element('.files_list').to.be.present;
-    client.click("ZmlsZTE=");
+    //client.expect.element('.files_list').to.be.present;
+    client.waitForElementVisible('input[id=file1]', 10000).click('input');
     var coll = "TSTTST";
-    client.setValue('input[name=collectionName]', user);
-    client.click("submit");
+    client.setValue('input[name=collectionName]', coll);
+    client.waitForElementVisible('button[id=add]', 10000).click('button');
     client.end();
   }
 };

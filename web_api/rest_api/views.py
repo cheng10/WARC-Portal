@@ -7,12 +7,13 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from serializers import *
 from models import *
 from pagination import *
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.decorators import permission_classes, detail_route, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly 
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
 
-
+@authentication_classes((BasicAuthentication, JSONWebTokenAuthentication ))
 @permission_classes((IsAdminUser, ))
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -35,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
     #         return Response(serializer.errors,
     #                         status=status.HTTP_400_BAD_REQUEST)
 
-
+@authentication_classes((BasicAuthentication, JSONWebTokenAuthentication))
 @permission_classes((IsAdminUser, ))
 class GroupViewSet(viewsets.ModelViewSet):
     """

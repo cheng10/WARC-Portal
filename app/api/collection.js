@@ -48,9 +48,9 @@ export default class ApiCol {
 
     // TODO: fill out. checkout https://github.com/github/fetch#post-json
     static postCollections(action) {
-        const hash = new Buffer(`admin:adminadmin`).toString('base64')
         console.log("API POST collections", action);
         let collections = {};
+        const token = sessionStorage.token;
         console.log(action['name']);
         collections["name"] = action['name'];
         collections["detail"] = "";
@@ -64,7 +64,7 @@ export default class ApiCol {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + hash
+            'Authorization': 'JWT ' + token
           },
           body: JSON.stringify(collections)
         })

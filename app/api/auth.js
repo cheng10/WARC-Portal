@@ -17,7 +17,7 @@ export default class ApiAuth {
         // TODO: UNHARDCODE URLS
         let list = [];
         
-        return fetch('http://192.168.33.10:8000/api-token-auth/', {
+        return fetch('http://warc.tech:8000/api-token-auth/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

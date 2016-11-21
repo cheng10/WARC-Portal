@@ -4,7 +4,7 @@ https://facebook.github.io/react/docs/hello-world.html
 
 ## General Flow
 
-**Component / Page --> Saga --> Reducer --> API**
+**Component / Page --> Saga --> API --> Saga --> Reducer --> Component/Page**
 
 ### auth.js
 API classes for handling authentication with the Django backend

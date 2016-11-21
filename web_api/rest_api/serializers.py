@@ -60,7 +60,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ('url', 'title', 'domain', 'file', 'crawl_date', 'pub_date', 'pub_date_confident',
-                  'type', 'link', 'detail', 'content')
+                  'type', 'link', 'detail', 'content', 'hash')
 
 
 class WarcFileSerializer(serializers.ModelSerializer):
@@ -81,7 +81,7 @@ class CollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ('url', 'warcuser', 'name', 'detail', 'file')
+        fields = ('url', 'warcuser', 'name', 'score_kv', 'detail', 'file')
 
     def create(self, validated_data):
         """
@@ -117,15 +117,15 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ('url', 'name', 'crawl_date', 'detail', 'link', 'file')
 
 
-class TfIdfSerializer(serializers.ModelSerializer):
-    """
-    The serializer for tf-tdf score.
-    """
-    collection_id = CollectionSerializer
-
-    class Meta:
-        model = TfIdf
-        fields = ('url', 'collection_id', 'score_kv')
+# class TfIdfSerializer(serializers.ModelSerializer):
+#     """
+#     The serializer for tf-tdf score.
+#     """
+#     collection_id = CollectionSerializer
+#
+#     class Meta:
+#         model = TfIdf
+#         fields = ('url', 'collection_id', 'score_kv')
 
 
 # class SnippetSerializer(serializers.Serializer):

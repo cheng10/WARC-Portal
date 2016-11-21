@@ -7,6 +7,8 @@ from ...models import Document, WarcFile, Image
 import urllib
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
+import hashlib
+
 
 DIR = "/mnt/md0/spark_out/"
 IMG_DIR = "/mnt/md0/spark_image/"
@@ -110,6 +112,13 @@ class Command(BaseCommand):
                             print e
                             text = 'invalid_encoding'
 
+                        # comparing hash value with existing doc to avoid duplication
+                        m = hashlib.md5()
+                        m.update(text)
+                        doc_hash = m.hexgigest()
+                        if Document.objects.get(hash=doc_hash):
+                            continue
+
                         # store documents
                         Document.objects.create(
                             title=title,
@@ -121,6 +130,7 @@ class Command(BaseCommand):
                             link=link,
                             content=text,
                             type='html',
+                            hash=doc_hash
                         )
 
         # parse PDF_DIR

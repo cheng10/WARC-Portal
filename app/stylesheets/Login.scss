@@ -1,0 +1,30 @@
+.login-content{
+    padding-top: 10em;
+    .auth-form {
+        margin: auto;
+        width: 45%;
+        background: white;
+        padding: 50px 50px 20px;
+        border-radius: 15px;
+        margin: auto;
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .col-sm-2 {
+            margin-right: 20%;
+            font-weight: 700;
+        }
+
+        .button-center {
+            display: block;
+            margin: 10px 30%;
+        }
+
+        .btn {
+            width: 10em;
+        }
+    }
+}

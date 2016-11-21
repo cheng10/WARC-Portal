@@ -39,9 +39,12 @@ class Content extends React.Component {
         } else if (e.target.textContent === 'Archives'){
             this.props.dispatch(push('/search'))
             this.setState({tab: "search"});
-        } else {
+        } else if (e.target.textContent === 'Collections') {
           this.props.dispatch(push('/collections'))
           this.setState({tab: "collections"});
+        } else if (e.target.textContent === 'Login') {
+          this.props.dispatch(push('/login'))
+          this.setState({tab: "login"});
         }
     }
 
@@ -67,6 +70,11 @@ class Content extends React.Component {
                         <li className={this.state.tab === "collections" ? "link selected": "link"} data-id="collections">
                             <a href="" onClick={this.onClick}>
                                 <div className="title">Collections</div>
+                            </a>
+                        </li>
+                        <li className={this.state.tab === "login" ? "link selected": "link"} data-id="login">
+                            <a href="" onClick={this.onClick}>
+                                <div className="title">Login</div>
                             </a>
                         </li>
                     </ul>

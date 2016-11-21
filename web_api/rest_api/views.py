@@ -3,10 +3,11 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import viewsets, filters, status
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from serializers import *
 from models import *
 from pagination import *
-from rest_framework.decorators import permission_classes, detail_route
+from rest_framework.decorators import permission_classes, detail_route, authentication_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly 
 from django_filters import Filter, FilterSet, DateFilter, NumberFilter
 from django_filters.filters import Lookup
@@ -173,7 +174,7 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     #     serializer = self.get_serializer(docs, many=True)
     #     return Response(serializer.data)
 
-
+@authentication_classes((JSONWebTokenAuthentication, ))
 @permission_classes((IsAuthenticatedOrReadOnly, ))
 class CollectionViewSet(viewsets.ModelViewSet):
     """

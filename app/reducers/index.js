@@ -6,6 +6,7 @@ import { reducer as formReducer } from 'redux-form';
 import docs from './docs';
 import collections from './collections';
 import files from './files';
+import auth from './auth';
 
 /**
  * function used to combine reducers into a single reducer
@@ -17,6 +18,7 @@ export const reducers = combineReducers({
     docs: docs,
     collections: collections,
     files: files,
+    auth: auth,
 });
 
 /**

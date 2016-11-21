@@ -190,7 +190,6 @@ class DateField extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('docstate', state);
     return {
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
         queryParams: state.routing.locationBeforeTransitions.query || '',

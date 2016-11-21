@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound.jsx';
 import DocumentList from './components/DocumentList.jsx'
 import Collections from './pages/Collections.jsx';
 import Content from './components/Content.jsx'
+import Login from './pages/Login.jsx';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -39,7 +40,11 @@ ReactDOM.render (
                 <Route path="/" component={Content}>
                     <Route path="search" component={DocumentList} />
                     <Route path="images" component={Images} />
+                    {
+                        // TODO: Move collections/login to a header location
+                    }
                     <Route path="collections" component={Collections}/>
+                    <Route path="login" component={Login} />
                 </Route>
                 <Route path="*" component={NotFound}/>
             </Route>

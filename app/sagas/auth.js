@@ -7,11 +7,12 @@ function setAuthAndRedirect(token, author) {
 }
 
 import ApiAuth from '../api/auth';
-/**
- * Handles the action of fetching collections
- * @param {action} action being dispatched containig the query
- */
 
+/**
+ * Handles the action of logging in and sets the token in sessionStorage
+ * 
+ * @param {action} action being dispatched containig the login
+ */
 export function* authLogin(action) {
     // call the api to get the users list
     console.log("collections fetch list", action)

@@ -10,7 +10,6 @@ export default function URLBuilder(query) {
     if (!_.isEmpty(query)) {
         url +='?';
         _.forEach(query, (value, key) => {
-            console.log(key);
             url+=`&${key}=${value}`
         });
     }

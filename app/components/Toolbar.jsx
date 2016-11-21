@@ -1,17 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import Select from 'react-select';
-import moment from 'moment';
 import _ from 'lodash';
 import DateField from './DateField.jsx';
 import URLBuilder from '../helpers/URLBuilder.js';
 
-const options = [
-    { value: 'one', label: 'Politics' },
-    { value: 'two', label: 'Canada' }
-];
+/**
+ * Toolbar component responsible for the subnav for advanced search
+ *
+ * @extends {React.Component}
+ */
 export class Toolbar extends React.Component {
     /**
      * Constructor for Toolbar component. Initializes state and bind eventlisteners.
@@ -20,12 +19,52 @@ export class Toolbar extends React.Component {
      */
     constructor(props) {
         super(props);
+        this.state = {
+            category: ""
+        }
 
+        this.props.dispatch({type: 'collectionFetchList'});
+
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
-    logChange(val) {
-        console.log("Selected: " + val);
+    /**
+     * Select handler
+     *
+     * @param {object} the item clicked on from the dropdown
+     */
+    handleSelect(value) {
+        this.setState({category: value.value});
+        this.setQueryParams(value.label);
     }
+
+    /**
+     * Creates list of collections
+     *
+     */
+    createCollectionList() {
+        let options = [];
+        if (this.props.collections.results) {
+            this.props.collections.results.map(({name}, i) => {
+                options.push({
+                    value: i,
+                    label: name
+                });
+            });
+        }
+        return options;
+    }
+
+   /**
+     * Creates and pushes the location given the category selected
+     * @param {string} the category name selected
+     */
+   setQueryParams(category) {
+        let newquery = {};
+        newquery["collection"] = category || "";
+        const url = _.merge({}, _.omit(this.props.queryParams, ['page']), newquery);
+        this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
+   }
 
     /**
      * render method rendering toolbar
@@ -40,8 +79,9 @@ export class Toolbar extends React.Component {
                         <Select
                             name="form-field-name"
                             placeholder="Categories"
-                            options={options}
-                            onChange={this.logChange}
+                            value={this.state.category}
+                            options={this.createCollectionList()}
+                            onChange={this.handleSelect}
                         />                    
                     </div>
                     <div className="publish-date-selector"> 
@@ -71,9 +111,9 @@ export class Toolbar extends React.Component {
 function mapStateToProps(state) {
     console.log("Image state", state);
     return {
-        page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
-        categories: ["HTML", "PDF", "OTHER"],
-        queryParams: state.routing.locationBeforeTransitions.query || ''
+        collections: state.collections || [],
+        queryParams: state.routing.locationBeforeTransitions.query || '',
+        path: state.routing.locationBeforeTransitions || ''
     };
 }
 export default connect(mapStateToProps)(Toolbar);

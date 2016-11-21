@@ -3,13 +3,26 @@ import {connect} from 'react-redux';
 import { Modal, Button, FormGroup, FormControl, InputGroup, Col, PageHeader, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form'
 
+/**
+ * Component displaying the login form
+ *
+ * @extends {React.Component}
+ */
 export class Login extends React.Component {
-    constructor(props)
+    /**
+     * Constructor for Login component. Initializes state and bind eventlisteners.
+     *
+     */
+    constructor()
     {
-        super(props);
+        super();
         this.formSubmit = this.formSubmit.bind(this);
     }
 
+    /**
+     * render method rendering login form
+     * 
+     */
     render() {
         console.log("redner", this.state);
         return (
@@ -33,6 +46,10 @@ export class Login extends React.Component {
         );
     }
 
+   /**
+     * submit handler. Dispatches an action with the form given as a payload.
+     * @param {object} the form passed in from the user inputs
+     */
     formSubmit(form) {
         console.log(form);
         this.props.dispatch({
@@ -42,7 +59,11 @@ export class Login extends React.Component {
         });
     }
 }
-
+/**
+ * Stateless component displaying login name component in the form
+ *
+ * @extends {React.Component}
+ */
 class AuthorLoginName extends React.Component {
     render() {
         return (
@@ -55,7 +76,11 @@ class AuthorLoginName extends React.Component {
         );
     }
 }
-
+/**
+ * Stateless component displaying login password component in the form
+ *
+ * @extends {React.Component}
+ */
 class AuthorLoginPass extends React.Component {
     render() {
         return (

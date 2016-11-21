@@ -6,6 +6,11 @@ import _ from 'lodash';
 import { replace } from 'react-router-redux';
 import URLBuilder from '../helpers/URLBuilder.js';
 
+/**
+ * The list of filters that are clickable
+ *
+ * @extends {React.Component}
+ */
 export class FilterOptions extends React.Component {
     /**
      * Constructor for FilterOptions component. Initializes state and bind eventlisteners.
@@ -26,6 +31,11 @@ export class FilterOptions extends React.Component {
         this.filterClick = this.filterClick.bind(this)
     }
 
+    /**
+     * Onclick handler for when filter is clicked
+     * Changes icon to green then calls buildQueryParams to build the link
+     * @param {object} event passed from click handler
+     */
     filterClick(e) {
         e.preventDefault();
         const key = e.target.parentNode.parentNode.getAttribute("data-property")
@@ -41,19 +51,34 @@ export class FilterOptions extends React.Component {
                 type: this.state.filterOptions[key].push(e.target.parentNode.getAttribute("data-key"))
             });
         }
-        this.props.dispatch(replace(`${this.props.location}${this.buildQueryParams(this.state.filterOptions)}`));
+        this.buildQueryParams(this.state.filterOptions);
     }
 
+    /**
+     * Builds the object from the list of filters created then pushes to new location
+     * 
+     * @param {query} object made up of filters
+     */
     buildQueryParams(query) {
-        let url = URLBuilder(_.pick(this.props.queryParams, ['search'])) || "?";
-        return _.reduce(query, (url, value, key) => {
+        let newquery = {};
+        const filterParams =  _.reduce(query, (newquery, value, key) => {
+            console.log(value);
             if (value.length > 0) {
-                url += `&${key}=${value.join()}`
+                newquery[key] = value.join();
             }
-            return url;
-        }, url);
+            return newquery;
+        }, {});
+
+        const url = _.merge({}, _.omit(this.props.queryParams, ['page']), filterParams);
+        this.props.dispatch(push(this.props.location + URLBuilder(url)));
     }
 
+    /**
+     * Builds the list of collections retrieved from the API request
+     * 
+     * @param {object} list of filters 
+     * @param {string} name of the property of the filter used for the queryparam
+     */
     generateFilterList(filters, property) {
         let listItems = filters.map((item) => {
             let classname = "fa fa-check-circle";
@@ -79,8 +104,8 @@ export class FilterOptions extends React.Component {
     }
 
     /**
-     * render method rendering Images
-     *
+     * render method rendering the list
+     * 
      */
     render() {
         console.log("this state", this.state);

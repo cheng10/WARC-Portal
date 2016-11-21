@@ -53,7 +53,7 @@ class Collections extends React.Component {
         }
         var rows = [];
 
-        if(!this.props.collections.results || this.props.files.length === 0){
+        if(!this.props.collections.results || this.props.files.length === 0 || this.props.files.length === undefined){
           return(
             <div>LOADING</div>
           )

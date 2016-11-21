@@ -9,8 +9,8 @@ import URLBuilder from '../helpers/URLBuilder.js';
 export default class ApiAuth {
 
     /**
-     * Retrieve filter options
-     * @param {object} action contains keywords/page properties 
+     * Post login names and retrieve token
+     * @param {object} action contains login properties 
      */
     static login(action) {
         console.log("action", action);

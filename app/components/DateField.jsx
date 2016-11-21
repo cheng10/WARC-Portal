@@ -17,7 +17,12 @@ const currentYear = (new Date()).getFullYear();
 const fromMonth = new Date(currentYear-50, 0, 1, 0, 0);
 const toMonth = new Date(currentYear + 10, 11, 31, 23, 59);
 
-// Component will receive date, locale and localeUtils props
+/**
+ * Stateless component displaying month component in the form
+ *
+ * @param {object} object containing the date, methods required for locale, and onchange handler
+ * 
+ */
 function YearMonthForm({ date, localeUtils, onChange }) {
   const months = localeUtils.getMonths();
   const years = [];
@@ -50,6 +55,11 @@ function YearMonthForm({ date, localeUtils, onChange }) {
   );
 }
 
+/**
+ * Stateless component displaying DateField component and the calendar popup
+ *
+ * @extends {React.Component}
+ */
 class DateField extends Component {
     constructor(props) {
         super(props);
@@ -71,10 +81,20 @@ class DateField extends Component {
         this.handleContainerMouseDown = this.handleContainerMouseDown.bind(this);
     }
 
+    /**
+     * Stateless component displaying DateField component and the calendar popup
+     *
+     * @extends {React.Component}
+     */
     componentWillUnmount() {
         clearTimeout(this.clickTimeout);
     }
 
+    /**
+     * Stateless component displaying DateField component and the calendar popup
+     *
+     * @extends {React.Component}
+     */
     handleContainerMouseDown() {
         this.clickedInside = true;
         // The input's onBlur method is called from a queue right after onMouseDown event.
@@ -84,12 +104,22 @@ class DateField extends Component {
         }, 0);
     }
 
+    /**
+     * Stateless component displaying DateField component and the calendar popup
+     *
+     * @extends {React.Component}
+     */
     handleInputFocus() {
         this.setState({
             showOverlay: true,
         });
     }
 
+/**
+ * Stateless component displaying DateField component and the calendar popup
+ *
+ * @extends {React.Component}
+ */
     handleInputBlur() {
         const showOverlay = this.clickedInside;
 
@@ -103,6 +133,11 @@ class DateField extends Component {
         }
     }
 
+    /**
+     * Inputhandler for when field is typed in
+     *
+     * @param {object} event from the input event
+     */
     handleInputChange(e) {
         const { value } = e.target;
         const momentDay = moment(value, 'l', true);
@@ -113,15 +148,21 @@ class DateField extends Component {
             }, () => {
                 this.daypicker.showMonth(this.state.selectedDay);
             });
-            this.setQueryParams(momentDay);
+            this.setQueryParams(moment(momentDay).format('l'));
         } else if (value === "") {
+            this.clearDate();
             this.setQueryParams("");
         } else {
             this.setState({ value, selectedDay: null });
         }
     }
 
-
+    /**
+     * Handler for when date in the calendar is clicked on
+     *
+     * @param {event} event passed in from the click
+     * @param {string} day passed in from the click
+     */
     handleDayClick(e, day) {
         console.log("DAY CHANGED", day);
         this.setState({
@@ -133,6 +174,10 @@ class DateField extends Component {
         this.input.blur();
     }
 
+  /**
+     * Creates and pushes the location given the category selected
+     * @param {string} the date selected
+     */
     setQueryParams(date) {
         let newquery = {};
         newquery[this.props.param] = date || "";
@@ -141,7 +186,10 @@ class DateField extends Component {
         this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
         this.onChange();
     }
-
+    /**
+     * Clears date
+     *
+     */
     clearDate() {
         this.setState({
             selectedDay: "",
@@ -152,7 +200,10 @@ class DateField extends Component {
     onChange() {
         this.props.dispatch({type: 'docs.onLoad'});
     }
-
+    /**
+     * Render function for the datefield
+     *
+     */
     render() {
         return (
             <div onMouseDown={ this.handleContainerMouseDown }>

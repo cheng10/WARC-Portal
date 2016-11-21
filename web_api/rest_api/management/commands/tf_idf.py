@@ -6,6 +6,9 @@ import json
 
 class Command(BaseCommand):
     help = 'Calculate the tf-idf scores on all collections and add them to TfIdf model'
+    # Thanks to the author on
+    # http://www.markhneedham.com/blog/2015/02/15/pythonscikit-
+    # learn-calculating-tfidf-on-how-i-met-your-mother-transcripts/
 
     # def add_arguments(self, parser):
     #     parser.add_argument('collection_id', nargs='+', type=int)

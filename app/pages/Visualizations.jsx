@@ -41,7 +41,7 @@ class Visualizations extends React.Component {
      */
     handleSelect(value) {
         console.log(value);
-        this.setState({category: value.value});
+        this.setState({category: value ? value.value : null});
         console.log(this.state);
     }
 
@@ -51,7 +51,7 @@ class Visualizations extends React.Component {
      * @param {object} the item clicked on from the dropdown
      */
     handleDocumentSelect(value) {
-        this.setState({document: value.value});
+        this.setState({document: value ? value.value : null});
     }
 
     /**

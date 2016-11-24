@@ -36,6 +36,7 @@ class reducerClass {
      */
     static postColSuccess(new_state, action) {
         console.log("fetch collections success");
+        new_state.success = true;
         return new_state;
     }
 }

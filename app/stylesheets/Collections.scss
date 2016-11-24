@@ -1,0 +1,56 @@
+.collection-container {
+    display: flex;
+    flex-direction: column;
+
+    .collection-list-container{
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5em;
+        background-color: white;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        border: 1px solid #ddd;
+        padding: 1em 2em 4em 2em;
+        background-color: white;
+    }
+
+    .collection-list-container {
+        width: 600px;
+
+        .create-collection-list {
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        hr {
+            border: none;
+            color:#aaa;
+            background-color:#aaa;
+            height:1px;
+            width: 70%
+        }
+        .files-selector-container {
+            display: flex;
+            .files-selector {
+                width: 400px;
+                padding-right: 2em;
+            }
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border: 1px solid #ddd;
+            line-height: 1em;
+            margin: 0;
+            padding: 0.2em;
+        }
+    }
+    .create-collection-container {
+        width: 600px;
+    }
+}

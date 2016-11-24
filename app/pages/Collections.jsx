@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
+import {ProgressBar, List, Pagination, ListGroup, Button} from 'react-bootstrap';
+import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import {Field, reduxForm} from 'redux-form';
 import URLBuilder from '../helpers/URLBuilder.js';
+import Select from 'react-select';
 
 class Collections extends React.Component {
   /**
@@ -16,7 +18,8 @@ class Collections extends React.Component {
         super(props);
         this.state = {
           warcFiles: [],
-          name: ""
+          name: "",
+          value: null
         }
         console.log("COLLECTIONSSS");
 
@@ -24,6 +27,8 @@ class Collections extends React.Component {
         this.props.dispatch({type: 'collectionFetchList'});
         this.props.dispatch({type: 'filesFetchList'});
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.createFileList = this.createFileList.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
     }
     /**
      * Handler for submitting of the form included in collection creation.
@@ -39,7 +44,30 @@ class Collections extends React.Component {
            files.push(atob(key));
          }
        })
-       this.props.dispatch({type: 'collectionPost', name: form.collectionName, warcFiles: files });
+       console.log(files);
+       
+       this.props.dispatch({
+         type: 'collectionPost', 
+         name: form.collectionName, 
+         warcFiles: this.state.value ? this.state.value.split(",") : null});
+     }
+
+    handleSelectChange (value) {
+      this.setState({ value });
+    }
+
+    createFileList() {
+    console.log("creating files")
+      if (this.props.files) {
+      return this.props.files.map((file) => {
+        return {
+          value: file.name,
+          label: file.name
+          }
+        })
+      } else {
+        return null;
+      }
      }
 
      /**
@@ -52,43 +80,49 @@ class Collections extends React.Component {
             collectionName = this.props.collections.results[0 ].name;
         }
         var rows = [];
-
+  
         if(!this.props.collections.results || this.props.files.length === 0 || this.props.files.length === undefined){
           return(
             <div>LOADING</div>
           )
         }
-        else{
-          console.log("HELLOIAMDOG", this.props.files)
-          return(
+        else {
+          return (
             <div className="app-body">
-              <center> <h1> Your Collections </h1> </center>
-              <div className="doc-list">
-                  <ul id="collections_list">
-                    {this.props.collections.results.map((collection, index) => {
-                        return (<h3><li color="white" key={index} id={index}>{collection.name}</li></h3> );
-                    })}
-                    </ul>
-                </div>
-              <br></br>
-              <br></br>
-              <hr></hr>
-                <div>
-                  <center><h1> Create a Collection </h1></center>
-                  <form onSubmit={this.props.handleSubmit(this.handleSubmit)} id="files_list">
-                    {this.props.files.map((file, index) => {
-                      return( <div>
-                        <label htmlFor={file.name}>{file.name}</label>
-                        <Field name={btoa(file.name)} id={file.name} component="input" type="checkbox"></Field>
-                      </div> );
-                    })}
-                    <div>
-                      <label>Collection Name:</label>
-                      <Field name="collectionName" component="input" type="text"/>
+              <div className="collection-container">
+                <div className="collection-list-container">
+                    <center> <h1> Collections </h1> </center>
+                    <div className="create-collection-list">
+                      <ul id="collections_list">
+                        {this.props.collections.results.map((collection, index) => {
+                            return (<h3 key={index}><li color="white" key={collection.name} id={index}>{collection.name}</li></h3> );
+                        })}
+                      </ul>
                     </div>
-
-                    <button type="submit" id="add">Add Collection</button>
-                  </form>
+                  <hr/>
+                    <div className="create-collection-container">
+                      <center><h1> Create a Collection </h1></center>
+                      <form onSubmit={this.props.handleSubmit(this.handleSubmit)} id="files_list">
+                        <div>
+                          <label>Collection Name:</label>
+                          <Field name="collectionName" component="input" type="text"/>
+                        </div>
+                        <div className="files-selector-container">
+                          <div className="files-selector">
+                            <Select multi simpleValue 
+                              value={this.state.value} 
+                              placeholder="Select your files" 
+                              options={this.createFileList()} 
+                              onChange={this.handleSelectChange} 
+                            />
+                          </div>
+                          <Button bsStyle="success" type="submit">
+                            <i className="fa fa-plus" aria-hidden="true"/>
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div> );
         }

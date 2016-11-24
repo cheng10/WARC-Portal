@@ -5,25 +5,17 @@
     font-style: bold;
     float:left;
     padding-top: 13px;
-    padding-left: 8em;
-    vertical-align: middle;
     min-width: 10em;
 }
 
 .search-form {
     display: flex;
-    justify-content: center;
-    min-width: 70%;
-    max-width: 600px;
-    padding-left: 6em;
-    padding-top: 7px;
+    min-width: 50%;
+    max-width: 500px;
+    padding: 7px 0 0 6em;
 
     .search-header-field {
         height: 34px;
-    }
-
-    .form-group {
-        flex-grow: 3;
     }
 
     .search-button {
@@ -34,54 +26,55 @@
          width: 80%
     }
 
-    .drop-down-header {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 400px;
-    }
-
     form {
         width:100%;
     }
 }
 
 .header-logo:hover {
-    color: grey;
+    color: #337ab7;
+    cursor: pointer;
 }
+
+.header-links {
+    padding: 7px 0 0 4em;
+    display: flex;
+
+    .analytics-button {
+        padding-right: 2em;
+    }
+}
+
+.login-button {
+    padding-top: 13px;
+    padding-left: 2em;
+    padding-right: 2em;
+    float: right;
+    color: white;
+}
+
+/*.profile-button {
+    padding-top: 13px;
+    padding-left: 2em;
+    padding-right: 2em;
+    float: right;
+    color: white;
+}*/
 
 .navbar {
     top: 0;
     left: 0;
-    overflow: hidden;
-    display: flex;
-    float: left;
-    z-index: 100;
-    padding: 0;
-    margin: 0;
-    position: fixed;
-    background: black;
-    color: rgb(212, 212, 200);
     width: 100%;
-    height: 50px;
-    vertical-align: center;
-    
-    li {
-        display: inline-block;
-        font-size: 0.875em;
-        line-height: 1.225em;
-    }
-
-    li a {
-        color: rgb(212, 212, 200);
-        transition: all 1s ease;
-        padding: 20px;
-        text-decoration: none;
-    }
-
-    li a:hover {
-        color: rgb(26, 83, 92);
-    }
+    z-index: 2000;
+    text-align: left;
+    display: flex;
+    height: 47px;
+    font-size: 16px;
+    font-weight: 400;
+    position: fixed;
+    padding: 0 8em 0 8em;
+    border-bottom: 1px solid rgba(138, 138, 138, 0.3);
+    background-color: rgba(21,21,23,.95);;
 }
 
 .links {
@@ -101,8 +94,7 @@
         display: inline-block;
         font-size: 0.875em;
         line-height: 1.225em;
-        transition: border-bottom .5s ease;
-
+        transition: border-bottom .15s ease;
     }
 
     li:hover {
@@ -141,4 +133,5 @@
 .doc-list-view {
     display: flex;
     justify-content: center;
+    padding: 0 8em 0 9em;
 }

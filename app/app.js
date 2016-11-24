@@ -41,13 +41,10 @@ ReactDOM.render (
                 <Route path="/" component={Content}>
                     <Route path="search" component={DocumentList} />
                     <Route path="images" component={Images} />
-                    {
-                        // TODO: Move collections/login to a header location
-                    }
-                    <Route path="collections" component={Collections}/>
-                    <Route path="login" component={Login} />
-                    <Route path="visualizations" component={Visualizations} />
                 </Route>
+                <Route path="collections" component={Collections}/>
+                <Route path="login" component={Login} />
+                <Route path="visualizations" component={Visualizations} />
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

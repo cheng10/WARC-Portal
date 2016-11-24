@@ -1,15 +1,17 @@
 @import "./DocElementList.scss";
 @import "./Menu.scss";
-@import "./Home.scss";
 @import "./FilterOptions.scss";
 @import "./Toolbar.scss";
 @import "./Login.scss";
+@import "./Visualizations.scss";
 
 html{
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 body {
   background-color: #f3f5f6;
+  font-family: 'Roboto', sans-serif;
 }
 
 .subnav {

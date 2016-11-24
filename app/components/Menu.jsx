@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { replace } from 'react-router-redux';
-import { FormGroup, FormControl, Button, Glyphicon, InputGroup } from 'react-bootstrap';
+import { replace, push } from 'react-router-redux';
+import { FormGroup, FormControl, Button, Glyphicon, InputGroup, ButtonToolbar, DropdownButton, MenuItem, Dropdown } from 'react-bootstrap';
 
 
 /**
@@ -20,19 +20,10 @@ export class Menu extends React.Component {
     constructor() {
         super();
         this.onClick = this.onClick.bind(this);
+        this.onVisSelect = this.onVisSelect.bind(this);
+        this.onProSelect = this.onProSelect.bind(this);
+        this.headerClick = this.headerClick.bind(this);
     }
-
-    // componentDidMount() {
-    //     Spending too much time making it fancy, might come back later to create drop down menu
-    //     const input = document.getElementsByClassName("form-control form-control-search-header-field")[0];
-    //     const searchForm = document.getElementsByClassName("search-form")[0];
-    //     const menu = document.createElement("div");
-    //     console.log(searchForm, "searchForm");
-    //     menu.className = "drop-down-header";
-    //     input.addEventListener("keydown", () => {
-    //         searchForm.appendChild(menu);
-    //     })
-    // }
 
    /**
      * click event for search bar
@@ -46,6 +37,47 @@ export class Menu extends React.Component {
         return false;
     }
 
+    onVisSelect(e) {
+        console.log(e);
+        if (e === "tfidf") {
+            this.props.dispatch(push('/visualizations'));
+        }
+    }
+
+    onProSelect(e) {
+       if (e === "login") {
+            this.props.dispatch(push('/login'));
+        } else if (e === "collection") {
+            this.props.dispatch(push('/collections'))
+        } else if (e === "logout") {
+            sessionStorage.clear();
+            this.props.dispatch(push('/search'));
+            window.location.reload();
+        }
+    }
+
+    getProfileSelect() {
+        if (sessionStorage.token) {
+            return (
+                <Dropdown.Menu className="">
+                    <MenuItem eventKey="logout">Logout</MenuItem>
+                    <MenuItem divider />
+                    <MenuItem eventKey="collection">Collections</MenuItem>
+                </Dropdown.Menu>
+            )
+        } else {
+            return (
+                <Dropdown.Menu className="">
+                    <MenuItem eventKey="login">Login</MenuItem>
+                </Dropdown.Menu>
+            )
+        }
+    }
+
+    headerClick() {
+        this.props.dispatch(push('/search'));
+    }
+
    /**
      * render method rendering Menu
      * 
@@ -54,7 +86,7 @@ export class Menu extends React.Component {
         return (
             <nav>
                 <div className="navbar">
-                    <span className="header-logo">
+                    <span className="header-logo" onClick={this.headerClick}>
                         WARC-Portal
                     </span>
                     <div className="search-form">
@@ -68,6 +100,28 @@ export class Menu extends React.Component {
                                     </InputGroup>
                             </FormGroup>
                         </form>
+                    </div>
+                    <div className="header-links">
+                        <ButtonToolbar className="analytics-button">
+                            <Dropdown id="dropdown-custom-1" onSelect={this.onVisSelect}>
+                                <Dropdown.Toggle bsStyle="default" title="primary" noCaret id="dropdown-no-caret">
+                                    <i className="fa fa-bar-chart" aria-hidden="true"></i> Visualizations
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu className="">
+                                    <MenuItem eventKey="tfidf">TF-IDF</MenuItem>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </ButtonToolbar>
+                        <div className="profile-button">
+                            <ButtonToolbar id="profile-button">
+                                <Dropdown id="dropdown-custom-1" onSelect={this.onProSelect}>
+                                    <Dropdown.Toggle bsStyle="default" title="primary" noCaret id="dropdown-no-caret">
+                                        <i className="fa fa-user" aria-hidden="true"></i>
+                                    </Dropdown.Toggle>
+                                    {this.getProfileSelect()}
+                                </Dropdown>
+                            </ButtonToolbar>                    
+                        </div>
                     </div>
                 </div>
             </nav>

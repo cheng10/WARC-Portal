@@ -31,10 +31,12 @@
   "dependencies": {
     "aphrodite": "^1.0.0",
     "connect": "3.5.0",
+    "d3": "^3.5.17",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
     "lodash": "4.16.4",
     "moment": "^2.16.0",
+    "rd3": "^0.7.3",
     "react": "15.3.2",
     "react-bootstrap": "^0.30.3",
     "react-day-picker": "^3.1.1",

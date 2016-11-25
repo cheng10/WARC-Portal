@@ -16,7 +16,7 @@ class DocumentsResultsPagination(PageNumberPagination):
     """
         Pagination class for displaying document results
     """
-    page_size = 10
+    page_size = 15
     page_size_query_param = 'page_size'
     max_page_size = 1000
     

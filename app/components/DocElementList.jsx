@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {Button, Glyphicon, ListGroupItem} from 'react-bootstrap';
+import {getWayback} from '../config.js';
 import _ from 'lodash';
 
 /**
@@ -23,7 +24,7 @@ export default class DocElementList extends React.Component {
         const crawlDate = _.replace(cDate, "-", "");
         
         // TODO: set a config.js for domains
-        const link = `http://www.warc.tech:8080/warc_portal/${crawlDate}/${doc.link}`;
+        const link = `${getWayback()}/${crawlDate}/${doc.link}`;
 
         return (
             <ListGroupItem data-id={1} >

@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import URLBuilder from '../helpers/URLBuilder.js';
+import config from '../config.js';
+
 /**
  * Interface for xhr requests to retrieve documents
  * from server
@@ -13,11 +15,9 @@ export default class ApiAuth {
      * @param {object} action contains login properties 
      */
     static login(action) {
-        console.log("action", action);
-        // TODO: UNHARDCODE URLS
         let list = [];
         
-        return fetch('http://warc.tech:8000/api-token-auth/', {
+        return fetch(`${config.HOST}/api-token-auth/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,7 +30,6 @@ export default class ApiAuth {
             }
             return response.json();
         }).then((response) => {
-            console.log("AUTH RESP", response);
             return {
                 response: response
             };

@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import URLBuilder from '../helpers/URLBuilder.js';
+import {getHost} from '../config.js';
+
 /**
  * Interface for xhr requests to retrieve collections
  * from server
@@ -13,9 +15,8 @@ export default class ApiCol {
      * @param {object} action contains keywords/page properties
      */
     static getCollections(action) {
-        console.log("API get collections", action);
         let collections = [];
-        return fetch(`http://warc.tech:8000/collection/`).then((res) => {
+        return fetch(`${getHost()}/collection/`).then((res) => {
             console.log(res);
             return res.json();
         }).then((collections) => {
@@ -32,7 +33,7 @@ export default class ApiCol {
     static getFiles(action) {
         console.log("API get files", action);
         let files = [];
-        return fetch(`http://warc.tech:8000/warcfile/`).then((res) => {
+        return fetch(`${getHost()}/warcfile/`).then((res) => {
             console.log(res);
             return res.json();
         }).then((files) => {
@@ -46,12 +47,9 @@ export default class ApiCol {
      * @param {object} action contains keywords/page properties
      */
 
-    // TODO: fill out. checkout https://github.com/github/fetch#post-json
     static postCollections(action) {
-        console.log("API POST collections", action);
         let collections = {};
         const token = sessionStorage.token;
-        console.log(action['name']);
         collections["name"] = action['name'];
         collections["detail"] = "";
         let files = [];
@@ -59,8 +57,7 @@ export default class ApiCol {
           files[i] = {"name": action['warcFiles'][i]};
         }
         collections["file"] = files;
-        console.log(collections);
-        let data = fetch('http://warc.tech:8000/collection/', {
+        let data = fetch(`${getHost()}/collection/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -69,6 +66,5 @@ export default class ApiCol {
           body: JSON.stringify(collections)
         })
         return data;
-
     }
 }

@@ -15,7 +15,6 @@ export class Images extends React.Component {
      */
     constructor(props) {
         super(props);
-        console.log("inside images", props);
         this.props.dispatch({type: 'imgFetchList', query: props.queryParams});
 
         this.changePage = this.changePage.bind(this);
@@ -28,8 +27,6 @@ export class Images extends React.Component {
      * @param {object} newprops passed down from parent to check if page needs to retrieve new data
      */
     componentWillUpdate(newprops) {
-        console.log("willupdate", this.props, newprops.queryParams.queryParams);
-        console.log(_.isEqual(newprops.queryParams, this.props.queryParams));
         if (!_.isEqual(newprops.queryParams, this.props.queryParams)) {
             this.onChange();
             this.props.dispatch({type: 'imgFetchList', query: newprops.queryParams});
@@ -44,16 +41,34 @@ export class Images extends React.Component {
         if (this.props.images.length === 0) {
             return [{
                 src: "",
-                width: 200,
-                height: 200,
+                width: 400,
+                height: 400,
             }];
         }
         return this.props.images.map(({crawl, detail, file, link, name, url}) => {
+            console.log(file, detail, name);
+            let tags = []
+            if (detail) {
+                tags = detail.split(",").reduce((result, item) => {
+                    if (item === " ") {
+                        // do nothing
+                    } else {
+                        let rObj = {}
+                        rObj["value"] = item;
+                        rObj["title"] = item;
+                        result.push(rObj);
+                    }
+                    return result;
+                }, [])
+            }
+            console.log(tags);
             return {
                 src: link,
                 thumbnail: link,
-                width: 300,
-                height: 200,
+                caption: link,
+                thumbnailWidth: 500,
+                thumbnailHeight: 500,
+                tags: tags
             }
         });
     }
@@ -65,7 +80,6 @@ export class Images extends React.Component {
     changePage(page) {
         let newquery = {page: page};
         let url = _.merge({}, this.props.queryParams, newquery);
-        console.log(this.props.path);
         this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
         this.onChange();
     }
@@ -79,14 +93,16 @@ export class Images extends React.Component {
      *
      */
     render() {
-        console.log("image rerender")
-        const per_page = 9;
+        const per_page = 20;
         const pages = Math.ceil(this.props.count / per_page);
         let start_count = 0;
         return (
             <div className="image-main">
                 <div className="gallery-list-view">
-                    <Gallery images={this.createSet()} />
+                    <Gallery 
+                        images={this.createSet()} 
+                        enableImageSelection={false}
+                    />
                 </div>
                 <div className="image-paginator">
                     <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev

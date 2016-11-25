@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import URLBuilder from '../helpers/URLBuilder.js';
+import {getHost} from '../config.js';
+
 /**
  * Interface for xhr requests to retrieve documents
  * from server
@@ -15,9 +17,8 @@ export default class ApiFilter {
     static getFilters(action) {
         console.log("action", action);
         const url = URLBuilder(action);
-        // TODO: UNHARDCODE URLS
         let list = [];
-        return fetch(`http://warc.tech:8000/filters/`).then((res) => {
+        return fetch(`${getHost()}/filters/`).then((res) => {
             return res.json();
         }).then((list) => {
             return list;

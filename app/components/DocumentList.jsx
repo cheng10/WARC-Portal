@@ -58,7 +58,7 @@ class DocumentList extends React.Component
     render() {
         console.log("Render", this.props);
         // pagination
-        const per_page = 10;
+        const per_page = 15;
         const pages = Math.ceil(this.props.count / per_page);
         let start_count = 0;
 
@@ -74,7 +74,6 @@ class DocumentList extends React.Component
                                 {this.props.documents.map((document, index) => {
                                     start_count++;
                                     return (<DocElementList key={start_count} id={start_count} document={document}/>);
-
                                 })}
                             </ListGroup>
                             <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev

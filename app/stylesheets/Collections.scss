@@ -11,16 +11,30 @@
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         border: 1px solid #ddd;
-        padding: 1em 2em 4em 2em;
+        padding: 2em 2em 2em 2em;
         background-color: white;
+        height: 400px;
     }
 
     .collection-list-container {
-        width: 600px;
+        width: 800px;
+        display: flex;
 
         .create-collection-list {
-            height: 200px;
             overflow-y: auto;
+            border-right: 1px solid #ddd;
+            width: 30%;
+            white-space: normal;
+            height: 100%;
+            min-height: 200px;
+
+            .collections-list {
+                border-bottom: 1px solid #ddd;
+            }
+
+            .collection-list-header {
+                font-size: 2em;
+            }
         }
 
         hr {
@@ -30,25 +44,43 @@
             height:1px;
             width: 70%
         }
-        .files-selector-container {
-            display: flex;
-            z-index: 2000;
 
-            .files-selector {
+        .create-collection-container {
+            padding-left: 2em;
+
+            .create-collection-name {
+                padding-bottom: 1em;
                 width: 400px;
-                padding-right: 2em;
+            }
+
+            .create-collection-header {
+                font-size: 2em;
+                padding-bottom: 0.5em;
+            }
+
+            .create-collection-form {
+                padding-left: 1em;
+            }
+            .files-selector-container {
+                z-index: 2000;
+
+                .files-selector {
+                    width: 430px;
+                    padding-right: 2em;
+                    padding-bottom: 1.5em;
+                }
             }
         }
 
         ul {
             list-style: none;
+            padding-bottom: 0.5em;
+            padding-top: 0.5em;
         }
 
         li {
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            border: 1px solid #ddd;
             line-height: 1em;
+            font-size: 1.3em;
             margin: 0;
             padding: 0.2em;
         }

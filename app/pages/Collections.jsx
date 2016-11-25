@@ -1,11 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-import {ProgressBar, List, Pagination, ListGroup, Button} from 'react-bootstrap';
-import { browserHistory } from 'react-router';
+import { Button, FormControl } from 'react-bootstrap';
 import _ from 'lodash';
 import {Field, reduxForm} from 'redux-form';
-import URLBuilder from '../helpers/URLBuilder.js';
 import Select from 'react-select';
 
 class Collections extends React.Component {
@@ -19,7 +16,7 @@ class Collections extends React.Component {
         this.state = {
           warcFiles: [],
           name: "",
-          value: null
+          value: null,
         }
 
         // Fetching list by calling collectionfetchlist in /sagas/collections
@@ -28,6 +25,8 @@ class Collections extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.createFileList = this.createFileList.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.createFieldText = this.createFieldText.bind(this);
+        this.handleFieldChange = this.handleFieldChange.bind(this);
     }
     /**
      * Handler for submitting of the form included in collection creation.
@@ -49,16 +48,24 @@ class Collections extends React.Component {
          warcFiles: this.state.value ? this.state.value.split(",") : null});
      }
 
-    handleSelectChange (value) {
+    handleSelectChange(value) {
       this.setState({ value });
+    }
+
+    handleFieldChange(e) {
+      console.log("field", field);
+      console.log("CALLING FIELDCHANGE", e.target.value);
+      this.setState({
+        name: "potato"
+      })
     }
 
     createFileList() {
       if (this.props.files) {
       return this.props.files.map((file) => {
         return {
-          value: file.name,
-          label: file.name
+            value: file.name,
+            label: file.name
           }
         })
       } else {
@@ -66,6 +73,15 @@ class Collections extends React.Component {
       }
      }
 
+    createFieldText(field) {
+      return (
+        <FormControl
+          type="text"
+          value={this.state.name}
+          placeholder="Enter name of collection"
+          onChange={this.handleFieldChange.bind(field)}
+        />)}
+    ;
      /**
       * render method to render the collections page
       */
@@ -86,36 +102,38 @@ class Collections extends React.Component {
             <div className="app-body">
               <div className="collection-container">
                 <div className="collection-list-container">
-                    <center> <h1> Collections </h1> </center>
                     <div className="create-collection-list">
-                      <ul id="collections_list">
+                      <div className="collection-list-header"> Collections </div>
+                      <ul id="collections-list">
                         {this.props.collections.map((collection, index) => {
                             return (<li color="white" key={collection.name} id={index}>{collection.name}</li>);
                         })}
                       </ul>
                     </div>
-                  <hr/>
                     <div className="create-collection-container">
-                      <center><h1> Create a Collection </h1></center>
-                      <form onSubmit={this.props.handleSubmit(this.handleSubmit)} id="files_list">
-                        <div>
-                          <label>Collection Name:</label>
-                          <Field name="collectionName" component="input" type="text"/>
-                        </div>
-                        <div className="files-selector-container">
-                          <div className="files-selector">
-                            <Select multi simpleValue 
-                              value={this.state.value} 
-                              placeholder="Select your files" 
-                              options={this.createFileList()} 
-                              onChange={this.handleSelectChange} 
-                            />
+                      <div className="create-collection-header"> Create Collection </div>
+                        <div className="create-collection-form">
+                        <form onSubmit={this.props.handleSubmit(this.handleSubmit)} id="files_list">
+                          <div className="create-collection-name">
+                            Name
+                            <Field name="collectionName" component={this.createFieldText} type="text"/>
                           </div>
-                          <Button bsStyle="success" type="submit">
-                            <i className="fa fa-plus" aria-hidden="true"/>
-                          </Button>
-                        </div>
-                      </form>
+                          <div className="files-selector-container">
+                            Files
+                            <div className="files-selector">
+                              <Select multi simpleValue 
+                                value={this.state.value} 
+                                placeholder="Select your files" 
+                                options={this.createFileList()} 
+                                onChange={this.handleSelectChange} 
+                              />
+                            </div>
+                            <Button bsStyle="success" type="submit">
+                              Add Collection
+                            </Button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>

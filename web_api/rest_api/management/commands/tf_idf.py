@@ -27,7 +27,7 @@ class Command(BaseCommand):
             i = 0
             for doc in docs:
                 # self.stdout.write('adding "%s"' % doc.title)
-                index2id[i] = int(doc.id)
+                index2id[i] = doc.title
                 score_kv[index2id[i]] = {}
                 corpus.append(doc.content)
                 i += 1

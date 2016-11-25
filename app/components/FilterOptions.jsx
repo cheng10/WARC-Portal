@@ -38,26 +38,35 @@ export class FilterOptions extends React.Component {
      */
     filterClick(e) {
         e.preventDefault();
-        const key = e.target.parentNode.parentNode.getAttribute("data-property")
+        let new_state = Object.assign({}, this.state.filterOptions)
         // Toggle checked class
         // Filter already clicked on
+        if (e.target.tagName === "I") {
+            e.target = e.target.parentNode;
+        }
+
+        const key = e.target.parentNode.parentNode.getAttribute("data-property")
+
         if (e.target.getElementsByTagName("i")[0].classList.contains("selected")) {
-            e.target.getElementsByTagName("i")[0].className = "fa fa-check-circle";
-            this.state.filterOptions = _.remove(this.state.filterOptions[key], (item) => item === e.target.parentNode.getAttribute("data-key"));
+            e.target.getElementsByTagName("i")[0].className = "fa fa-check-circle-o";
+
+            _.remove(new_state[key], (item) => item === e.target.parentNode.getAttribute("data-key"));
             this.setState({
-                filterOptions: this.state.filterOptions
+                filterOptions: new_state
             });
 
         // Filter has not yet been selected
         } else {
             e.target.getElementsByTagName("i")[0].className += " " + "selected";
-            let new_state = Object.assign({}, this.state.filterOptions)
+            // Really convulated way to push the selected filter into the array
+            // Some reason Array.push() is setting this.state.filterOptions to 
+            // 1 instead of pushing onto the existing array
             new_state[key] = _.concat(new_state[key], e.target.parentNode.getAttribute("data-key"));
             this.setState({
                 filterOptions: new_state
             });
         }
-        this.buildQueryParams(this.state.filterOptions);
+        this.buildQueryParams(new_state);
     }
 
     /**
@@ -70,11 +79,14 @@ export class FilterOptions extends React.Component {
         const filterParams =  _.reduce(query, (newquery, value, key) => {
             if (value.length > 0) {
                 newquery[key] = value.join();
+            } else {
+                newquery[key] = [];
             }
             return newquery;
         }, {});
 
         const url = _.merge({}, _.omit(this.props.queryParams, ['page']), filterParams);
+        console.log(URLBuilder(url));
         this.props.dispatch(push(this.props.location + URLBuilder(url)));
     }
 
@@ -86,7 +98,7 @@ export class FilterOptions extends React.Component {
      */
     generateFilterList(filters, property) {
         let listItems = filters.map((item) => {
-            let classname = "fa fa-check-circle";
+            let classname = "fa fa-check-circle-o";
             const param = this.props.queryParams[property] ? this.props.queryParams[property].split(',') : [];
 
             if (param.length !== 0 && _.includes(param, item)) {

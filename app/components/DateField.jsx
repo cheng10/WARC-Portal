@@ -90,6 +90,10 @@ class DateField extends Component {
         clearTimeout(this.clickTimeout);
     }
 
+    componentWillRender(newProps) {
+        console.log("New props", newProps)
+    }
+
     /**
      * Stateless component displaying DateField component and the calendar popup
      *

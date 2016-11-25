@@ -75,8 +75,8 @@ class Collections extends React.Component {
             collectionName = this.props.collections[0].name;
         }
         var rows = [];
-  
-        if(!this.props.collections.results || this.props.files.length === 0 || this.props.files.length === undefined){
+        console.log("Collections", this.props, !this.props.collections.results , this.props.files.length === 0 , this.props.files.length === undefined);
+        if(this.props.collections.length === undefined || this.props.files.length === undefined){
           return(
             <div>LOADING</div>
           )
@@ -90,7 +90,7 @@ class Collections extends React.Component {
                     <div className="create-collection-list">
                       <ul id="collections_list">
                         {this.props.collections.map((collection, index) => {
-                            return (<h3 key={index}><li color="white" key={collection.name} id={index}>{collection.name}</li></h3> );
+                            return (<li color="white" key={collection.name} id={index}>{collection.name}</li>);
                         })}
                       </ul>
                     </div>

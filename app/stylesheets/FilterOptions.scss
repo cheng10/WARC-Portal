@@ -54,13 +54,14 @@
         text-decoration:none;
     }
 
-    .fa.fa-check-circle {
+    .fa.fa-check-circle-o {
         padding-right: 0.5em;
         font-size: 1.2em;
     }
 
     .fa.fa-check-circle.selected {
         padding-right: 0.5em;
+        font-size: 1.2em;
         color: green;
     }
 }

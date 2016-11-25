@@ -33,6 +33,7 @@ export default class ApiCol {
         return fetch(`${getHost()}/warcfile/`).then((res) => {
             return res.json();
         }).then((files) => {
+            console.log("API files promise", files);
             return files;
         });
     }

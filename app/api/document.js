@@ -15,7 +15,6 @@ export default class ApiDocs {
      * @param {object} action contains keywords/page properties 
      */
     static getDocs(action) {
-        console.log("action", action);
         const url = URLBuilder(action);
         // TODO: UNHARDCODE URLS
         let list = [];

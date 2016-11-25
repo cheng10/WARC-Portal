@@ -10,3 +10,21 @@
     width: 75%;
     padding-top: 20px;
 }
+
+.doc-empty-view {
+    width: 75%;
+    text-align: center;
+    vertical-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    height: 200px;
+    margin-top: 20px;
+
+    span {
+        margin: auto;
+        font-size: 4em;
+        color: #898989;
+    }
+}

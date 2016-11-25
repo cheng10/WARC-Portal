@@ -5,7 +5,6 @@
  * @return {string} queryparam url
  */
 export default function URLBuilder(query) {
-    console.log("URLBUILDER", query);
     let url = '';
     if (!_.isEmpty(query)) {
         url +='?';
@@ -13,6 +12,5 @@ export default function URLBuilder(query) {
             url+=`&${key}=${value}`
         });
     }
-    console.log(url);
     return url;
 }

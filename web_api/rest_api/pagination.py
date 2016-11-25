@@ -1,7 +1,7 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from .models import Document
-
+import numpy as np
 
 class ImageResultsPagination(PageNumberPagination):
     """
@@ -30,6 +30,7 @@ class DocumentsResultsPagination(PageNumberPagination):
         return Response({
             "count": self.page.paginator.count,
             "size": self.page_size,
+            "pages": np.ceil(self.page.paginator.count/self.page_size),
             'next': self.get_next_link(),
             'previous': self.get_previous_link(),
             'results': data,

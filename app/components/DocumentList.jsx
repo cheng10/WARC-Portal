@@ -51,17 +51,38 @@ class DocumentList extends React.Component
         }
     }
 
+    renderDocList() {
+        let start_count = 0;
+        if (this.props.documents.length === 0) {
+            return (
+                <div className="doc-empty-view">
+                    <span> 
+                        Nothing found <br/>
+                        <i className="fa fa-frown-o" aria-hidden="true"></i>
+                    </span>
+                </div>
+            );
+        } else {
+            return (
+                <div className="doc-list">
+                    <ListGroup>
+                        {this.props.documents.map((document, index) => {
+                            start_count++;
+                            return (<DocElementList key={start_count} id={start_count} document={document}/>);
+                        })}
+                    </ListGroup>
+                    <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
+                        boundaryLinks items={this.props.pages} activePage={this.props.page} onSelect={this.changePage}/>
+                </div>
+            );
+        }
+    }
+
     /**
      * render method rendering App
      * 
      */
     render() {
-        console.log("Render", this.props);
-        // pagination
-        const per_page = 15;
-        const pages = Math.ceil(this.props.count / per_page);
-        let start_count = 0;
-
         // render
         if (!this.props.loading) {
             // show the list of users
@@ -69,16 +90,7 @@ class DocumentList extends React.Component
                 <div className="page-main">
                     <div className="doc-list-view">
                         <FilterOptions />
-                        <div className="doc-list">
-                            <ListGroup>
-                                {this.props.documents.map((document, index) => {
-                                    start_count++;
-                                    return (<DocElementList key={start_count} id={start_count} document={document}/>);
-                                })}
-                            </ListGroup>
-                            <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
-                                boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
-                        </div>
+                        {this.renderDocList()}
                     </div>
                 </div>
             );
@@ -95,7 +107,6 @@ class DocumentList extends React.Component
      * @param {number} page number changing to
      */
     changePage(page) {
-        console.log("changing page");
         let newquery = {page: page};
         let url = _.merge({}, this.props.queryParams, newquery);
         this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
@@ -115,10 +126,14 @@ class DocumentList extends React.Component
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
+    if (state.docs.loading === undefined) {
+        state.docs.loading = true;
+    }
     return {
         documents: state.docs.documents || [],
         count: state.docs.count || 0,
-        loading: state.docs.loading && true,
+        loading: state.docs.loading,
+        pages: state.docs.pages || 0,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
         queryParams: state.routing.locationBeforeTransitions.query || '',
         path: state.routing.locationBeforeTransitions || ''

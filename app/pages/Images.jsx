@@ -37,16 +37,11 @@ export class Images extends React.Component {
      * @returns {object} image object containing link, dimensions, ratio
      */
     createSet() {
-        console.log("fetched images", this.props.images);
         if (this.props.images.length === 0) {
-            return [{
-                src: "",
-                width: 400,
-                height: 400,
-            }];
+            return [];
         }
+
         return this.props.images.map(({crawl, detail, file, link, name, url}) => {
-            console.log(file, detail, name);
             let tags = []
             if (detail) {
                 tags = detail.split(",").reduce((result, item) => {
@@ -61,13 +56,12 @@ export class Images extends React.Component {
                     return result;
                 }, [])
             }
-            console.log(tags);
             return {
                 src: link,
                 thumbnail: link,
                 caption: link,
-                thumbnailWidth: 500,
-                thumbnailHeight: 500,
+                thumbnailWidth: 300,
+                thumbnailHeight: 300,
                 tags: tags
             }
         });
@@ -96,17 +90,29 @@ export class Images extends React.Component {
         const per_page = 20;
         const pages = Math.ceil(this.props.count / per_page);
         let start_count = 0;
+        if (this.props.loading) {
+            return (
+                <ProgressBar active now={100}/>
+            );
+        }
         return (
             <div className="image-main">
                 <div className="gallery-list-view">
+                    <h2> Gallery </h2>
                     <Gallery 
                         images={this.createSet()} 
                         enableImageSelection={false}
                     />
                 </div>
                 <div className="image-paginator">
-                    <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
-                        boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
+                    <Pagination 
+                        className="users-pagination pull-right" 
+                        bsSize="medium" 
+                        maxButtons={10} first last next prev
+                        boundaryLinks items={pages} 
+                        activePage={this.props.page} 
+                        onSelect={this.changePage}
+                    />
                 </div>
             </div>
         );

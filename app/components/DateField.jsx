@@ -141,7 +141,6 @@ class DateField extends Component {
     handleInputChange(e) {
         const { value } = e.target;
         const momentDay = moment(value, 'l', true);
-        console.log(momentDay);
         if (momentDay.isValid()) {
             this.setState({
             selectedDay: momentDay.toDate(),
@@ -165,7 +164,6 @@ class DateField extends Component {
      * @param {string} day passed in from the click
      */
     handleDayClick(e, day) {
-        console.log("DAY CHANGED", day);
         this.setState({
             value: moment(day).format('l'),
             selectedDay: day,
@@ -182,7 +180,6 @@ class DateField extends Component {
     setQueryParams(date) {
         let newquery = {};
         newquery[this.props.param] = date || "";
-        console.log(date);
         let url = _.merge({}, _.omit(this.props.queryParams, ['page']), newquery);
         this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
         this.onChange();

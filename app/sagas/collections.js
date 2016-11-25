@@ -22,7 +22,6 @@ export function* collectionFetchList(action) {
  */
 export function* collectionPost(action) {
     // call the api to get the users list
-    console.log("COLLECTIONS POST LIST", action)
     const cols = yield call(ApiCol.postCollections, action);
 
     // Call action on post list success

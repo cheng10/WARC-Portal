@@ -26,7 +26,6 @@ class reducerClass {
     }
 
     static loginFailure(new_state, action) {
-        console.log('error', action);
         new_state.login = false;
         new_state.loginAttempt = true;
         new_state.error = action;

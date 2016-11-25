@@ -1,5 +1,5 @@
 // Location of Django web server
-const HOST = "http://warc.tech:8000";
+const HOST = "http://192.168.33.10:8000";
 
 // Location of openWayback host for archived webpages
 const WAYBACK = "https://warc.tech:8080/warc_portal";

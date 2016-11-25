@@ -15,7 +15,6 @@ export default class ApiFilter {
      * @param {object} action contains keywords/page properties 
      */
     static getFilters(action) {
-        console.log("action", action);
         const url = URLBuilder(action);
         let list = [];
         return fetch(`${getHost()}/filters/`).then((res) => {

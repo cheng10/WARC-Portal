@@ -40,15 +40,21 @@ export class FilterOptions extends React.Component {
         e.preventDefault();
         const key = e.target.parentNode.parentNode.getAttribute("data-property")
         // Toggle checked class
+        // Filter already clicked on
         if (e.target.getElementsByTagName("i")[0].classList.contains("selected")) {
             e.target.getElementsByTagName("i")[0].className = "fa fa-check-circle";
+            this.state.filterOptions = _.remove(this.state.filterOptions[key], (item) => item === e.target.parentNode.getAttribute("data-key"));
             this.setState({
-                type: _.remove(this.state.filterOptions[key], (item) => item === e.target.parentNode.getAttribute("data-key"))
+                filterOptions: this.state.filterOptions
             });
+
+        // Filter has not yet been selected
         } else {
             e.target.getElementsByTagName("i")[0].className += " " + "selected";
+            let new_state = Object.assign({}, this.state.filterOptions)
+            new_state[key] = _.concat(new_state[key], e.target.parentNode.getAttribute("data-key"));
             this.setState({
-                type: this.state.filterOptions[key].push(e.target.parentNode.getAttribute("data-key"))
+                filterOptions: new_state
             });
         }
         this.buildQueryParams(this.state.filterOptions);
@@ -62,7 +68,6 @@ export class FilterOptions extends React.Component {
     buildQueryParams(query) {
         let newquery = {};
         const filterParams =  _.reduce(query, (newquery, value, key) => {
-            console.log(value);
             if (value.length > 0) {
                 newquery[key] = value.join();
             }
@@ -108,7 +113,6 @@ export class FilterOptions extends React.Component {
      * 
      */
     render() {
-        console.log("this state", this.state);
         return (
             <div className="filter-box">
                 <div className="filter-header">

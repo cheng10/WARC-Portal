@@ -17,10 +17,8 @@ export default class ApiCol {
     static getCollections(action) {
         let collections = [];
         return fetch(`${getHost()}/collection/`).then((res) => {
-            console.log(res);
             return res.json();
         }).then((collections) => {
-            console.log(collections);
             return collections;
         });
 
@@ -31,13 +29,10 @@ export default class ApiCol {
      * @param {object} action contains keywords/page properties
      */
     static getFiles(action) {
-        console.log("API get files", action);
         let files = [];
         return fetch(`${getHost()}/warcfile/`).then((res) => {
-            console.log(res);
             return res.json();
         }).then((files) => {
-            console.log("FILES",files);
             return files;
         });
     }

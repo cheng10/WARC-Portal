@@ -8,7 +8,6 @@ import ApiCol from '../api/collection';
 
 export function* filesFetchList(action) {
     // call the api to get the users list
-    console.log("collections fetch list", action)
     const files = yield call(ApiCol.getFiles);
 
     // dispatch the success action with the collections from /reducers/collections

@@ -21,7 +21,6 @@ class Collections extends React.Component {
           name: "",
           value: null
         }
-        console.log("COLLECTIONSSS");
 
         // Fetching list by calling collectionfetchlist in /sagas/collections
         this.props.dispatch({type: 'collectionFetchList'});
@@ -36,7 +35,6 @@ class Collections extends React.Component {
      * @param {object} form data passed down from the caller
      */
     handleSubmit(form) {
-       console.log("SUBMITTING", form);
        _.omit(form, ["collectionName"])
        let files = [];
        _.forEach(_.omit(form, ["collectionName"]), (value, key) => {
@@ -44,7 +42,6 @@ class Collections extends React.Component {
            files.push(atob(key));
          }
        })
-       console.log(files);
        
        this.props.dispatch({
          type: 'collectionPost', 
@@ -57,7 +54,6 @@ class Collections extends React.Component {
     }
 
     createFileList() {
-    console.log("creating files")
       if (this.props.files) {
       return this.props.files.map((file) => {
         return {
@@ -74,10 +70,9 @@ class Collections extends React.Component {
       * render method to render the collections page
       */
     render() {
-        console.log(this.props.collections);
         let collectionName = "HelloWorld"
-        if (this.props.collections.results) {
-            collectionName = this.props.collections.results[0 ].name;
+        if (this.props.collections[0]) {
+            collectionName = this.props.collections[0].name;
         }
         var rows = [];
   
@@ -94,7 +89,7 @@ class Collections extends React.Component {
                     <center> <h1> Collections </h1> </center>
                     <div className="create-collection-list">
                       <ul id="collections_list">
-                        {this.props.collections.results.map((collection, index) => {
+                        {this.props.collections.map((collection, index) => {
                             return (<h3 key={index}><li color="white" key={collection.name} id={index}>{collection.name}</li></h3> );
                         })}
                       </ul>
@@ -140,7 +135,7 @@ const CollectionForm = reduxForm({form: 'collection'})(Collections);
  */
 function mapStateToProps(state) {
     return {
-        collections: state.collections || [],
+        collections: state.collections || null,
         files: state.files || []
     };
 }

@@ -24,7 +24,6 @@ class reducerClass {
      */
 
     static fetchFilesSuccess(new_state, action) {
-        console.log("fetch files success", action);
         new_state = action.files.results;
         return new_state;
     }

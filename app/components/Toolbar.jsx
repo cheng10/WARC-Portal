@@ -44,8 +44,8 @@ export class Toolbar extends React.Component {
      */
     createCollectionList() {
         let options = [];
-        if (this.props.collections.results) {
-            this.props.collections.results.map(({name}, i) => {
+        if (this.props.collections[0]) {
+            this.props.collections.map(({name}, i) => {
                 options.push({
                     value: i,
                     label: name
@@ -109,9 +109,8 @@ export class Toolbar extends React.Component {
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
-    console.log("Image state", state);
     return {
-        collections: state.collections || [],
+        collections: state.collections || null,
         queryParams: state.routing.locationBeforeTransitions.query || '',
         path: state.routing.locationBeforeTransitions || ''
     };

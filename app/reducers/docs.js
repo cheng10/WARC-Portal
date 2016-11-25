@@ -21,14 +21,12 @@ class reducerClass {
      * 
      */
     static fetchListSuccess(new_state, action) {
-        console.log("fetch list success", action.docs.results);
         new_state.documents = action.docs.results;
         new_state.count = action.docs.count;
         new_state.loading = false;
         new_state.filterOptions = _.merge({}, 
             [action.docs.types, action.docs.domains, action.docs.crawl_years, action.docs.pub_years]
         );
-        console.dir(new_state);
         return new_state;
     }
     /**
@@ -38,11 +36,9 @@ class reducerClass {
      * 
      */
     static fetchImgSuccess(new_state, action) {
-        console.log("fetch images success", action.img);
         new_state.images = action.img.results;
         new_state.img_count = action.img.count;
         new_state.loading = false;
-        console.dir(new_state);
         return new_state;
     }
     /**
@@ -52,7 +48,6 @@ class reducerClass {
      * 
      */
     static onLoad(new_state, action) {
-        console.log("onload");
         new_state.loading = true;
         return new_state;
     }

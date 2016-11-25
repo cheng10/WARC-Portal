@@ -40,9 +40,7 @@ class Visualizations extends React.Component {
      * @param {object} the item clicked on from the dropdown
      */
     handleSelect(value) {
-        console.log(value);
         this.setState({category: value ? value.value : null});
-        console.log(this.state);
     }
 
     /**
@@ -60,7 +58,6 @@ class Visualizations extends React.Component {
      */
     createCollectionList() {
         let options = [];
-        console.log(this.props);
         if (this.props.collections.results) {
             this.props.collections.results.map(({name}, i) => {
                 options.push({
@@ -77,7 +74,6 @@ class Visualizations extends React.Component {
      *
      */
     createDocumentList() {
-        console.log(this.state);
         if (this.state.category) {
             return (
                 <div>

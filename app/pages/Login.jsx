@@ -23,7 +23,6 @@ export class Login extends React.Component {
      * 
      */
     render() {
-        console.log("login", this.props);
         return (
             <div className= "login-content">
                 <div className={(!this.props.status && this.props.loginAttempt ? "elementToFadeIn" : "auth-normal") + " auth-error"}>
@@ -54,7 +53,6 @@ export class Login extends React.Component {
      * @param {object} the form passed in from the user inputs
      */
     formSubmit(form) {
-        console.log(form);
         this.props.dispatch({
             type: "authLogin",
             username: form.username,

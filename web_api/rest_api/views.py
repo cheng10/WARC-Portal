@@ -165,6 +165,9 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WarcFile.objects.all()
     serializer_class = WarcFileSerializer
 
+    def paginate_queryset(self, queryset, view=None):
+        return None
+        
     # @detail_route(methods=['get'])
     # def doc_list(self, request, pk):
     #     docs = WarcFile.objects.get(pk=pk).document_set.all()
@@ -190,6 +193,9 @@ class CollectionViewSet(viewsets.ModelViewSet):
     """
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
+
+    def paginate_queryset(self, queryset, view=None):
+        return None
 
     # def get_queryset(self):
     #     """

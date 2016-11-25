@@ -16,12 +16,19 @@ import ApiAuth from '../api/auth';
 export function* authLogin(action) {
     // call the api to get the users list
     console.log("collections fetch list", action)
-    const response = yield call(ApiAuth.login, action);
-    console.log(response.token);
-    // dispatch the success action with the collections from /reducers/collections
-    yield put({
-        type: 'auth.loginSuccess',
-        response: response.response
-    });
-    setAuthAndRedirect(response.response.token);
+    try {
+        const response = yield call(ApiAuth.login, action);
+        console.log(response.token);
+        // dispatch the success action with the collections from /reducers/collections
+        yield put({
+            type: 'auth.loginSuccess',
+            response: response.response
+        });
+        setAuthAndRedirect(response.response.token);
+    } catch (error) {
+        yield put({
+            type: 'auth.loginFailure',
+            error: error
+        });
+    }
 }

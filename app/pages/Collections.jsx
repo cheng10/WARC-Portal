@@ -139,7 +139,6 @@ const CollectionForm = reduxForm({form: 'collection'})(Collections);
  * to be used in the component
  */
 function mapStateToProps(state) {
-    console.log("Collections state", state);
     return {
         collections: state.collections || [],
         files: state.files || []

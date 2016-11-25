@@ -36,7 +36,7 @@ class Content extends React.Component {
         if (e.target.textContent === 'Images') {
             this.props.dispatch(push('/images'))
             this.setState({tab: "images"});
-        } else if (e.target.textContent === 'Archives'){
+        } else if (e.target.textContent === 'Documents'){
             this.props.dispatch(push('/search'))
             this.setState({tab: "search"});
         }
@@ -53,7 +53,7 @@ class Content extends React.Component {
                     <ul className="links">
                         <li className={this.state.tab === "search" ? "link selected": "link"} data-id="photos">
                             <a href="" onClick={this.onClick}>
-                                <div className="title">Archives</div>
+                                <div className="title">Documents</div>
                             </a>
                         </li>
                         <li className={this.state.tab === "images" ? "link selected": "link"} data-id="people">

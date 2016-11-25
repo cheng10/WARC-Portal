@@ -141,7 +141,6 @@ export class FilterOptions extends React.Component {
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
-    console.log("Filter state", state);
     return {
         typeFilters: state.docs.filterOptions ? state.docs.filterOptions[0] : [],
         domainFilters: state.docs.filterOptions ? state.docs.filterOptions[1] : [],

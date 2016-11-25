@@ -14,7 +14,7 @@ const overlayStyle = {
     boxShadow: '0 2px 5px rgba(0, 0, 0, .15)',
 };
 const currentYear = (new Date()).getFullYear();
-const fromMonth = new Date(currentYear-50, 0, 1, 0, 0);
+const fromMonth = new Date(currentYear-80, 0, 1, 0, 0);
 const toMonth = new Date(currentYear + 10, 11, 31, 23, 59);
 
 /**
@@ -141,6 +141,7 @@ class DateField extends Component {
     handleInputChange(e) {
         const { value } = e.target;
         const momentDay = moment(value, 'l', true);
+        console.log(momentDay);
         if (momentDay.isValid()) {
             this.setState({
             selectedDay: momentDay.toDate(),

@@ -116,7 +116,6 @@ class DocumentList extends React.Component
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
-    console.log('docstate', state);
     return {
         documents: state.docs.documents || [],
         count: state.docs.count || 0,

@@ -24,7 +24,11 @@ export default class ApiAuth {
             },            
             body: JSON.stringify(action)
         }).then((response) => {
-            return response.json()
+            if (!response.ok) {
+                console.log("error", response);
+                throw new Error(response.statusText);
+            }
+            return response.json();
         }).then((response) => {
             console.log("AUTH RESP", response);
             return {

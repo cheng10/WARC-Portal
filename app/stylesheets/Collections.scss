@@ -1,6 +1,7 @@
 .collection-container {
     display: flex;
     flex-direction: column;
+    height: 80vh;
 
     .collection-list-container{
         margin-left: auto;
@@ -31,6 +32,8 @@
         }
         .files-selector-container {
             display: flex;
+            z-index: 2000;
+
             .files-selector {
                 width: 400px;
                 padding-right: 2em;

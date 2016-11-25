@@ -1,51 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import Gallery from 'react-photo-gallery';
+import Gallery from 'react-grid-gallery';
 import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 
 import URLBuilder from '../helpers/URLBuilder.js';
 import DocumentList from '../components/DocumentList.jsx';
-
-const IMAGE='https://images.unsplash.com/photo-1418985991508-e47386d96a71?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=';
-const IMAGE2='http://i.imgur.com/znpXhls.jpg'
-const PHOTO_SET = [
-  {
-    src: IMAGE,
-    width: 300,
-    height: 300,
-    aspectRatio: 1,
-  },
-  {
-    src: IMAGE2,
-    width: 300,
-    height: 300,
-    aspectRatio: 1,
-  },
-  {
-    src: IMAGE,
-    width: 300,
-    height: 300,
-    aspectRatio: 1,
-  },  {
-    src: IMAGE,
-    width: 300,
-    height: 300,
-    aspectRatio: 1,
-  },
-  {
-    src: IMAGE2,
-    width: 300,
-    height: 300,
-    aspectRatio: 1,
-  },
-  {
-    src: IMAGE,
-    width: 300,
-    height: 300,
-    aspectRatio: 1,
-  },
-];
 
 export class Images extends React.Component {
     /**
@@ -56,7 +16,7 @@ export class Images extends React.Component {
     constructor(props) {
         super(props);
         console.log("inside images", props);
-        props.dispatch({type: 'imgFetchList', query: this.props.page});
+        this.props.dispatch({type: 'imgFetchList', query: props.queryParams});
 
         this.changePage = this.changePage.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -84,17 +44,16 @@ export class Images extends React.Component {
         if (this.props.images.length === 0) {
             return [{
                 src: "",
-                width: 300,
-                height: 300,
-                aspectRatio: 1,
+                width: 200,
+                height: 200,
             }];
         }
         return this.props.images.map(({crawl, detail, file, link, name, url}) => {
             return {
                 src: link,
-                width: 200,
+                thumbnail: link,
+                width: 300,
                 height: 200,
-                aspectRatio: 1
             }
         });
     }
@@ -125,13 +84,13 @@ export class Images extends React.Component {
         const pages = Math.ceil(this.props.count / per_page);
         let start_count = 0;
         return (
-            <div className="page-home">
-                <div className="page-main">
-                    <div className="gallery-list-view">
-                        <Gallery disableLightbox={true} photos={this.createSet()} />
-                        <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
-                            boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
-                    </div>
+            <div className="image-main">
+                <div className="gallery-list-view">
+                    <Gallery images={this.createSet()} />
+                </div>
+                <div className="image-paginator">
+                    <Pagination className="users-pagination pull-right" bsSize="medium" maxButtons={10} first last next prev
+                        boundaryLinks items={pages} activePage={this.props.page} onSelect={this.changePage}/>
                 </div>
             </div>
         );
@@ -142,7 +101,6 @@ export class Images extends React.Component {
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
-    console.log("Image state", state);
     return {
         loading: state.docs.loading,
         page: Number(state.routing.locationBeforeTransitions.query.page) || 1,

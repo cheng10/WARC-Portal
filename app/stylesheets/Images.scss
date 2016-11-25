@@ -1,3 +1,8 @@
-#Gallery {
-    width: 80%
+.image-main{
+    display: flex;
+    flex-direction: column;
+    
+    .gallery-list-view {
+        width: 80%;
+    }
 }

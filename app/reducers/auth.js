@@ -20,7 +20,17 @@ class reducerClass {
      *
      */
     static loginSuccess(new_state, action) {
-        console.log(action);
+        new_state.login = true;
+        new_state.loginAttempt = true;
+        return new_state;
+    }
+
+    static loginFailure(new_state, action) {
+        console.log('error', action);
+        new_state.login = false;
+        new_state.loginAttempt = true;
+        new_state.error = action;
+        console.dir(new_state);
         return new_state;
     }
 }

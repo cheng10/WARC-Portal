@@ -13,8 +13,7 @@ export class Login extends React.Component {
      * Constructor for Login component. Initializes state and bind eventlisteners.
      *
      */
-    constructor()
-    {
+    constructor() {
         super();
         this.formSubmit = this.formSubmit.bind(this);
     }
@@ -24,9 +23,13 @@ export class Login extends React.Component {
      * 
      */
     render() {
-        console.log("redner", this.state);
+        console.log("login", this.props);
         return (
             <div className= "login-content">
+                <div className={(!this.props.status && this.props.loginAttempt ? "elementToFadeIn" : "auth-normal") + " auth-error"}>
+                    Username and/or password is invalid. 
+                </div>
+
                 <div className="auth-form">
                     <span className="admin"> <a href="http://warc.tech:8000/admin"> Admin </a> </span>
                     <PageHeader className="text-center"> Log In </PageHeader>
@@ -107,6 +110,8 @@ const LoginForm = reduxForm({
 // export the connected class
 function mapStateToProps(state) {
     return {
+        status: state.auth.login || false,
+        loginAttempt: state.auth.loginAttempt || false,
     }
 }
 

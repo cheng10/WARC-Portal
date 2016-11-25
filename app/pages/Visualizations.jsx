@@ -160,14 +160,13 @@ class Visualizations extends React.Component {
      *
      */
     render() {
-        console.log("RENDER");
         const docOptions = this.createDocumentOptions();
         return (
             <div className="app-content">
                 <div className="tfidf-content">
                     <div className="tfidf-selectors">
                         <div className="category-selector">
-                            Category
+                            Collection
                             <Select
                                 name="category-selector"
                                 placeholder="Please select category first"

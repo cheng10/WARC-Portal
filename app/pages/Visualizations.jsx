@@ -151,7 +151,6 @@ class Visualizations extends React.Component {
      */
     render() {
         const docOptions = this.createDocumentOptions();
-        console.log(this.props);
             if (this.props.collections.length == undefined) {
                 return (
                     <ProgressBar active now={100}/>

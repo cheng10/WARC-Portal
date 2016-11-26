@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { reducerCall } from './index';
+import {browserHistory} from 'react-router';
 
 /**
  * Wrapping reducers to keep reducers pure
@@ -35,6 +36,11 @@ class reducerClass {
      */
     static postColSuccess(new_state, action) {
         new_state.success = true;
+        return new_state;
+    }
+
+    static postColFail(new_state, action) {
+        new_state.success = false;
         return new_state;
     }
 }

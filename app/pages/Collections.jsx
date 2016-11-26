@@ -28,6 +28,13 @@ class Collections extends React.Component {
         this.createFieldText = this.createFieldText.bind(this);
         this.handleFieldChange = this.handleFieldChange.bind(this);
     }
+
+    componentWillReceiveProps(newProps) {
+      if (newProps.success) {
+        window.location.reload();
+      }
+    }
+
     /**
      * Handler for submitting of the form included in collection creation.
      *
@@ -146,6 +153,7 @@ const CollectionForm = reduxForm({form: 'collection'})(Collections);
 function mapStateToProps(state) {
     return {
         collections: state.collections || null,
+        success: state.collections.success || null,
         files: state.files || []
     };
 }

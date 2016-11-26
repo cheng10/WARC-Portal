@@ -21,12 +21,20 @@ export function* collectionFetchList(action) {
  * @param {action} action being dispatched containig the post data
  */
 export function* collectionPost(action) {
-    // call the api to get the users list
-    const cols = yield call(ApiCol.postCollections, action);
+    try {
+        // call the api to get the users list
+        const cols = yield call(ApiCol.postCollections, action);
 
-    // Call action on post list success
-    yield put({
-        type: 'collections.postListSuccess',
-        collections: cols,
-    });
+        // Call action on post list success
+        yield put({
+            type: 'collections.postColSuccess',
+            collections: cols,
+        });
+    } catch(e) {
+        // Call action on post list success
+        yield put({
+            type: 'collections.postColSuccess',
+            error: e,
+        }); 
+    }
 }

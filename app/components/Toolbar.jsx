@@ -34,8 +34,8 @@ export class Toolbar extends React.Component {
      * @param {object} the item clicked on from the dropdown
      */
     handleSelect(value) {
-        this.setState({category: value.value});
-        this.setQueryParams(value.label);
+        this.setState({category: value ? value.value : null});
+        this.setQueryParams(value ? value.label : null);
     }
 
     /**
@@ -78,7 +78,7 @@ export class Toolbar extends React.Component {
                         Collection 
                         <Select
                             name="form-field-name"
-                            placeholder="Categories"
+                            placeholder="Collection"
                             value={this.state.category}
                             options={this.createCollectionList()}
                             onChange={this.handleSelect}

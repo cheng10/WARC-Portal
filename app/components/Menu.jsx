@@ -106,7 +106,7 @@ export class Menu extends React.Component {
                                     <i className="fa fa-bar-chart" aria-hidden="true"></i> Visualizations
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="">
-                                    <MenuItem eventKey="tfidf">TF-IDF</MenuItem>
+                                    <MenuItem eventKey="tfidf">tf-idf</MenuItem>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </ButtonToolbar>

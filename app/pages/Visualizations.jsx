@@ -135,7 +135,7 @@ class Visualizations extends React.Component {
                         width={800}
                         height={400}
                         title="tf-idf Graph"
-                        xAxisLabel="Word"
+                        xAxisLabel="Terms"
                         yAxisLabel="tf-idf score"
                     />
                 </div>
@@ -165,7 +165,7 @@ class Visualizations extends React.Component {
                                     Collection
                                     <Select
                                         name="category-selector"
-                                        placeholder="Please select category first"
+                                        placeholder="Please select collection first"
                                         value={this.state.category}
                                         options={this.createCollectionList()}
                                         onChange={this.handleSelect}

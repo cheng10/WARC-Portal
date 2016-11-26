@@ -15,8 +15,12 @@
         display: flex;
         justify-content: space-around;
 
-        .category-selector, .document-selector {
+        .category-selector {
             width: 250px;
+        }
+        
+        .document-selector {
+            width: 400px;
         }
         padding-bottom: 1em;
         margin: 0 0 0.7em 0;

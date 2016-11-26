@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, FormControl } from 'react-bootstrap';
+import { Button, FormControl, ProgressBar } from 'react-bootstrap';
 import _ from 'lodash';
 import {Field, reduxForm} from 'redux-form';
 import Select from 'react-select';
@@ -82,14 +82,9 @@ class Collections extends React.Component {
       * render method to render the collections page
       */
     render() {
-        let collectionName = "HelloWorld"
-        if (this.props.collections[0]) {
-            collectionName = this.props.collections[0].name;
-        }
-        var rows = [];
         if(this.props.collections.length === undefined || this.props.files.length === undefined){
-          return(
-            <div>LOADING</div>
+          return (
+            <ProgressBar active now={100}/>
           )
         }
         else {

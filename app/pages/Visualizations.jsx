@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import rd3 from 'rd3';
+import {ProgressBar} from 'react-bootstrap';
 
 /**
  * Content component that is rendered
@@ -25,13 +26,6 @@ class Visualizations extends React.Component {
 
         this.handleSelect = this.handleSelect.bind(this);
         this.handleDocumentSelect = this.handleDocumentSelect.bind(this);
-    }
-
-    /**
-     * click event for switching between tabs
-     * @param {object} e event from clicklistener
-     */
-    onClick(e) {
     }
 
     /**
@@ -58,8 +52,8 @@ class Visualizations extends React.Component {
      */
     createCollectionList() {
         let options = [];
-        if (this.props.collections.results) {
-            this.props.collections.results.map(({name}, i) => {
+        if (this.props.collections.length !== undefined) {
+            this.props.collections.map(({name}, i) => {
                 options.push({
                     value: i,
                     label: name
@@ -98,7 +92,7 @@ class Visualizations extends React.Component {
      */
     createDocumentOptions() {
         if (this.state.category) {
-            const scores = JSON.parse(this.props.collections.results[this.state.category]["score_kv"])
+            const scores = JSON.parse(this.props.collections[this.state.category]["score_kv"])
             let options = [];
             _.keys(scores).forEach((value) => {
                 options.push({value: value, label: value});
@@ -117,7 +111,7 @@ class Visualizations extends React.Component {
     renderGraph() {
         if (this.state.document) {
             let listitems = [];
-            const scores = JSON.parse(this.props.collections.results[this.state.category]["score_kv"])
+            const scores = JSON.parse(this.props.collections[this.state.category]["score_kv"])
             const keys = _.keys(scores[this.state.document]);
             const BarChart = rd3.BarChart;
 
@@ -157,36 +151,43 @@ class Visualizations extends React.Component {
      */
     render() {
         const docOptions = this.createDocumentOptions();
-        return (
-            <div className="app-content">
-                <div className="tfidf-content">
-                    <div className="tfidf-selectors">
-                        <div className="category-selector">
-                            Collection
-                            <Select
-                                name="category-selector"
-                                placeholder="Please select category first"
-                                value={this.state.category}
-                                options={this.createCollectionList()}
-                                onChange={this.handleSelect}
-                            />
-                        </div>
-                        <div className="document-selector">
-                            Document
-                            <Select
-                                name="document-selector"
-                                placeholder="Please select document"
-                                value={this.state.document}
-                                options={this.createDocumentOptions()}
-                                onChange={this.handleDocumentSelect}
-                            />
-                        </div>
+        console.log(this.props);
+            if (this.props.collections.length == undefined) {
+                return (
+                    <ProgressBar active now={100}/>
+                )
+            } else {
+                return (
+                    <div className="app-content">
+                        <div className="tfidf-content">
+                            <div className="tfidf-selectors">
+                                <div className="category-selector">
+                                    Collection
+                                    <Select
+                                        name="category-selector"
+                                        placeholder="Please select category first"
+                                        value={this.state.category}
+                                        options={this.createCollectionList()}
+                                        onChange={this.handleSelect}
+                                    />
+                                </div>
+                                <div className="document-selector">
+                                    Document
+                                    <Select
+                                        name="document-selector"
+                                        placeholder="Please select document"
+                                        value={this.state.document}
+                                        options={this.createDocumentOptions()}
+                                        onChange={this.handleDocumentSelect}
+                                    />
+                                </div>
+                            </div>
+                        <hr/>
+                        {this.renderGraph()}
                     </div>
-                    <hr/>
-                    {this.renderGraph()}
                 </div>
-            </div>
-        );
+            )
+        }
     }
 }
 

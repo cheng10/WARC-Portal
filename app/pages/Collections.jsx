@@ -53,8 +53,6 @@ class Collections extends React.Component {
     }
 
     handleFieldChange(e) {
-      console.log("field", field);
-      console.log("CALLING FIELDCHANGE", e.target.value);
       this.setState({
         name: "potato"
       })
@@ -77,9 +75,7 @@ class Collections extends React.Component {
       return (
         <FormControl
           type="text"
-          value={this.state.name}
-          placeholder="Enter name of collection"
-          onChange={this.handleFieldChange.bind(field)}
+          {...field.input}
         />)}
     ;
      /**
@@ -91,7 +87,6 @@ class Collections extends React.Component {
             collectionName = this.props.collections[0].name;
         }
         var rows = [];
-        console.log("Collections", this.props, !this.props.collections.results , this.props.files.length === 0 , this.props.files.length === undefined);
         if(this.props.collections.length === undefined || this.props.files.length === undefined){
           return(
             <div>LOADING</div>
@@ -104,11 +99,13 @@ class Collections extends React.Component {
                 <div className="collection-list-container">
                     <div className="create-collection-list">
                       <div className="collection-list-header"> Collections </div>
-                      <ul id="collections-list">
-                        {this.props.collections.map((collection, index) => {
-                            return (<li color="white" key={collection.name} id={index}>{collection.name}</li>);
-                        })}
-                      </ul>
+                        <div className="collection-list-scroller">
+                          <ul id="collections-list">
+                            {this.props.collections.map((collection, index) => {
+                                return (<li color="white" key={collection.name} id={index}>{collection.name}</li>);
+                            })}
+                          </ul>
+                      </div>
                     </div>
                     <div className="create-collection-container">
                       <div className="create-collection-header"> Create Collection </div>

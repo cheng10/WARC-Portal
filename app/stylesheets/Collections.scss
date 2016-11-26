@@ -20,10 +20,34 @@
         width: 800px;
         display: flex;
 
+        ul {
+            list-style: none;
+            padding-bottom: 0.5em;
+            padding-top: 0.5em;
+            word-wrap: break-word;
+        }
+
+        li:before {
+            content : "";
+            position: absolute;
+            left    : 0;
+            bottom  : 0;
+            height  : 1px;
+            width   : 50%;  /* or 100px */
+            border-bottom:1px solid magenta;
+        }
+
+        li {
+            line-height: 1em;
+            font-size: 1.3em;
+            margin: 0;
+            padding: 0.5em 0 0.5em 0;            
+        }
+
         .create-collection-list {
-            overflow-y: auto;
+            overflow-y: scroll;
             border-right: 1px solid #ddd;
-            width: 30%;
+            width: 40%;
             white-space: normal;
             height: 100%;
             min-height: 200px;
@@ -70,19 +94,6 @@
                     padding-bottom: 1.5em;
                 }
             }
-        }
-
-        ul {
-            list-style: none;
-            padding-bottom: 0.5em;
-            padding-top: 0.5em;
-        }
-
-        li {
-            line-height: 1em;
-            font-size: 1.3em;
-            margin: 0;
-            padding: 0.2em;
         }
     }
     .create-collection-container {

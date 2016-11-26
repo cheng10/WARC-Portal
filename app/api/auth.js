@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import URLBuilder from '../helpers/URLBuilder.js';
-import config from '../config.js';
+import {getHost} from '../config.js';
 
 /**
  * Interface for xhr requests to retrieve documents
@@ -17,7 +17,7 @@ export default class ApiAuth {
     static login(action) {
         let list = [];
         
-        return fetch(`${config.HOST}/api-token-auth/`, {
+        return fetch(`${getHost()}/api-token-auth/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

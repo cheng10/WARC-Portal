@@ -9,7 +9,7 @@ export default function URLBuilder(query) {
     if (!_.isEmpty(query)) {
         url +='?';
         _.forEach(query, (value, key) => {
-            if (!_.isEmpty(value)) {
+            if (_.isNumber(value) || _.isString(value) || Array.isArray(value) && !_.isEmpty(value)) {
                 url+=`&${key}=${value}`
             }
         });

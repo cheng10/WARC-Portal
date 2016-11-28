@@ -253,8 +253,15 @@ class Command(BaseCommand):
                             try:
                                 for cls in r.json()['images'][0]['classifiers'][0]['classes']:
                                     detail = detail + cls['class'] + ', '
-                            except KeyError:
+                            except Exception, e:
+                                print e
                                 detail = ''
+                            # KeyValue: no classification info for current img
+                            # ValueError: IBM BlueMix daily exceeded
+# {
+#   "status": "ERROR",
+#   "statusInfo": "daily-transaction-limit-exceeded"
+# }
 
                             name = link.split('?')[0].split('/')[-1]
                             date = '19700101000000'

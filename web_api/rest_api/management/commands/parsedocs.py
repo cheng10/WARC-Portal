@@ -47,6 +47,8 @@ class Command(BaseCommand):
                             title = title.replace("<title>", "")
                         except AttributeError:
                             title = ''
+                        title = title.replace('\n', '')
+                        title = title.replace('\r', '')
                         title = title[:254]
                         text = soup.get_text()
                         text = re.sub(' +', ' ', text)  # remove spaces

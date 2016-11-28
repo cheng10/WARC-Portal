@@ -48,6 +48,7 @@ class Command(BaseCommand):
                             title = title.replace("<title>", "")
                         except AttributeError:
                             title = ''
+                        title = title.replace('\t', '')
                         title = title.replace('\n', '')
                         title = title.replace('\r', '')
                         title = title[:254]

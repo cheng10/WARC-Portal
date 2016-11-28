@@ -153,13 +153,10 @@ class TfManager(models.Manager):
             # print sorted(phrase_scores, key=lambda t: t[1] * -1)[:5]
             sorted_phrase_scores = sorted(phrase_scores, key=lambda t: t[1] * -1)
             sps = sorted_phrase_scores
-            for phrase, score in [(feature_names[word_id], score) for (word_id, score) in sps][:5]:
+            for phrase, score in [(feature_names[word_id], score) for (word_id, score) in sps][:25]:
                 print('{0: <20} {1}'.format(phrase, score))
                 score_kv[index2id[i]][phrase] = score
 
-        # col = Collection.objects.get(id=collection.id)
-        # col.score_kv = json.dumps(score_kv)
-        # col.save()
         ti.score_kv = json.dumps(score_kv)
         ti.save()
 

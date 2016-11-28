@@ -102,6 +102,8 @@ class CollectionSerializer(serializers.ModelSerializer):
         for file_data in files_data:
             collection.file.add(WarcFile.objects.get(name=file_data['name']))
             collection.save()
+        ti = TfIdf.objects.create_tf(collection.id)
+        ti.save()
 
         return collection
 

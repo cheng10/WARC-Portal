@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
+from sklearn.feature_extraction.text import TfidfVectorizer
+import json
 
 
 # class Snippet(models.Model):
@@ -109,6 +111,61 @@ class Collection(models.Model):
         ordering = ('id',)
 
 
+class TfManager(models.Manager):
+    def create_tf(self, collection_id):
+        ti = self.create(id=collection_id)
+
+        collection = Collection.objects.get(id=collection_id)
+        score_kv = {}
+        index2id = {}
+        corpus = []
+        files = collection.file.all()
+        docs = Document.objects.none()
+        for warc_file in files:
+            # self.stdout.write(warc_file.name)
+            docs = docs | Document.objects.filter(file=warc_file)
+        print docs
+        i = 0
+        for doc in docs:
+            # self.stdout.write('adding "%s"' % doc.title)
+            index2id[i] = doc.title
+            score_kv[index2id[i]] = {}
+            corpus.append(doc.content)
+            i += 1
+        print index2id
+        print score_kv
+        # for item in corpus:
+        #     self.stdout.write(item)
+        tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0, stop_words='english')
+        tfidf_matrix = tf.fit_transform(corpus)
+        feature_names = tf.get_feature_names()
+        dense = tfidf_matrix.todense()
+        print len(feature_names)
+        # print feature_names[100:120]
+        # print len(dense[0].tolist()[0])
+
+        print len(dense)
+        for i in range(len(dense)):
+            # calculate i th document's tf-idf score
+            doc = dense[i].tolist()[0]
+            phrase_scores = [pair for pair in zip(range(0, len(doc)), doc)if pair[1] > 0]
+            print len(phrase_scores)
+            # print sorted(phrase_scores, key=lambda t: t[1] * -1)[:5]
+            sorted_phrase_scores = sorted(phrase_scores, key=lambda t: t[1] * -1)
+            sps = sorted_phrase_scores
+            for phrase, score in [(feature_names[word_id], score) for (word_id, score) in sps][:5]:
+                print('{0: <20} {1}'.format(phrase, score))
+                score_kv[index2id[i]][phrase] = score
+
+        # col = Collection.objects.get(id=collection.id)
+        # col.score_kv = json.dumps(score_kv)
+        # col.save()
+        ti.score_kv = json.dumps(score_kv)
+        ti.save()
+
+        return ti
+
+
 class TfIdf(models.Model):
     """
     Store the dictionary of the highest tf-idf scores given a collection.
@@ -117,6 +174,8 @@ class TfIdf(models.Model):
     # just use the same id as the collection where the tf-idf score is from
     # collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     score_kv = models.TextField(blank=True, default='null:0.00,')
+
+    objects = TfManager()
 
     def __unicode__(self):
         return str(self.id)

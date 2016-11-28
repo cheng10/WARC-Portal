@@ -117,15 +117,15 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ('url', 'name', 'crawl_date', 'detail', 'link', 'file')
 
 
-# class TfIdfSerializer(serializers.ModelSerializer):
-#     """
-#     The serializer for tf-tdf score.
-#     """
-#     collection_id = CollectionSerializer
-#
-#     class Meta:
-#         model = TfIdf
-#         fields = ('url', 'collection_id', 'score_kv')
+class TfIdfSerializer(serializers.ModelSerializer):
+    """
+    The serializer for tf-tdf score.
+    """
+    # collection_id = CollectionSerializer
+
+    class Meta:
+        model = TfIdf
+        fields = ('url', 'score_kv')
 
 
 # class SnippetSerializer(serializers.Serializer):

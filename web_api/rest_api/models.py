@@ -109,16 +109,17 @@ class Collection(models.Model):
         ordering = ('id',)
 
 
-# class TfIdf(models.Model):
-#     """
-#     Store the dictionary of the highest tf-idf scores given a collection.
-#     related to :model:`web_api.Document`.
-#     """
-#     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-#     score_kv = models.TextField(blank=True, default='null:0.00,')
-#
-#     def __unicode__(self):
-#         return self.collection.name
-#
-#     class Meta:
-#         ordering = ('id',)
+class TfIdf(models.Model):
+    """
+    Store the dictionary of the highest tf-idf scores given a collection.
+    related to :model:`web_api.Document`.
+    """
+    # just use the same id as the collection where the tf-idf score is from
+    # collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
+    score_kv = models.TextField(blank=True, default='null:0.00,')
+
+    def __unicode__(self):
+        return self.collection.name
+
+    class Meta:
+        ordering = ('id',)

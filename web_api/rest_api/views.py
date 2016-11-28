@@ -206,15 +206,15 @@ class CollectionViewSet(viewsets.ModelViewSet):
     #     return Collection.objects.filter(warcuser=user)
 
 
-# @permission_classes((AllowAny, ))
-# class TfIdfViewSet(viewsets.ReadOnlyModelViewSet):
-#     """
-#     API endpoint that allows tf-idf scores to be **viewed** by **anyone**.
-#
-#     Returns a list of tf-idf scores of the existing collection.
-#     """
-#     queryset = TfIdf.objects.all()
-#     serializer_class = TfIdfSerializer
+@permission_classes((AllowAny, ))
+class TfIdfViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows tf-idf scores to be **viewed** by **anyone**.
+
+    Returns a list of tf-idf scores of the existing collection.
+    """
+    queryset = TfIdf.objects.all()
+    serializer_class = TfIdfSerializer
 
 
 # class JSONResponse(HttpResponse):

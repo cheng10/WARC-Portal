@@ -122,6 +122,7 @@ class Command(BaseCommand):
                         doc_hash = m.hexdigest()
                         try:
                             Document.objects.get(hash=doc_hash)
+                            print "hash identical skipping"
                             continue
                         except ObjectDoesNotExist:
                             print "adding "+title

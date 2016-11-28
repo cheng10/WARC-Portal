@@ -8,6 +8,7 @@ import urllib
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 import hashlib
+from django.core.exceptions import ObjectDoesNotExist
 
 
 DIR = "/mnt/md0/spark_out/"
@@ -118,8 +119,11 @@ class Command(BaseCommand):
                         m = hashlib.md5()
                         m.update(text+link)
                         doc_hash = m.hexdigest()
-                        if Document.objects.get(hash=doc_hash):
+                        try:
+                            Document.objects.get(hash=doc_hash)
                             continue
+                        except ObjectDoesNotExist:
+                            print "adding "+title
 
                         # store documents
                         Document.objects.create(

@@ -119,7 +119,7 @@ class TfIdf(models.Model):
     score_kv = models.TextField(blank=True, default='null:0.00,')
 
     def __unicode__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         ordering = ('id',)

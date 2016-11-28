@@ -33,9 +33,9 @@
   },
   {
     "model": "rest_api.warcfile",
-    "pk": 4,
+    "pk": 3,
     "fields": {
-      "name": "file4"
+      "name": "file3"
     }
   },
   {
@@ -78,7 +78,7 @@
       "type": "other",
       "detail": "null",
       "link": "some fake link",
-      "file": 4,
+      "file": 3,
       "domain": "www.cheng10.cc",
       "content": "API endpoint that allows tf-idf scores to be viewed by anyone"
     }
@@ -110,15 +110,7 @@
       "name": "collection1",
       "warcuser": 1,
       "detail": "",
-      "file": [1, 2, 4]
-    }
-  },
-  {
-    "model": "rest_api.tfidf",
-    "pk": 1,
-    "fields": {
-      "collection": 1,
-      "score_kv": "boy:0.31,girl:0.25,"
+      "file": [1, 2, 3]
     }
   }
 ]

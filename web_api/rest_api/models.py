@@ -62,7 +62,7 @@ class Document(models.Model):
     hash = models.TextField(blank=True, default='')
 
     def __unicode__(self):
-        return str(self.id)+self.title
+        return self.title
 
     class Meta:
         ordering = ('id',)

@@ -129,7 +129,7 @@ class Command(BaseCommand):
 
                         # store documents
                         Document.objects.create(
-                            title=title,
+                            title=title[:254],
                             domain=domain,
                             file=warc,
                             pub_date=datetime.strptime(date, '%Y%m%d%H%M%S'),

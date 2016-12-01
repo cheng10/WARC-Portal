@@ -45,7 +45,7 @@ class Command(BaseCommand):
                         soup = BeautifulSoup(data[3], "html.parser")
                         try:
                             title = soup.title.string
-                            title = title.replace("<title>", "")
+                            # title = title.replace("<title>", "")
                         except AttributeError:
                             title = ''
                         title = title.replace('\t', '')

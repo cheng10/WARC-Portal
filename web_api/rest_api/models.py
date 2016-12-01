@@ -117,6 +117,7 @@ class TfManager(models.Manager):
 
         collection = Collection.objects.get(id=collection_id)
         score_kv = {}
+        score_kv_ = {}
         index2id = {}
         corpus = []
         files = collection.file.all()
@@ -130,10 +131,12 @@ class TfManager(models.Manager):
             # self.stdout.write('adding "%s"' % doc.title)
             index2id[i] = doc.title
             score_kv[index2id[i]] = {}
+            score_kv_[index2id[i]] = {}
             corpus.append(doc.content)
             i += 1
         print index2id
         print score_kv
+        print score_kv_
         # for item in corpus:
         #     self.stdout.write(item)
         tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0, stop_words='english')
@@ -156,9 +159,15 @@ class TfManager(models.Manager):
             for phrase, score in [(feature_names[word_id], score) for (word_id, score) in sps][:25]:
                 print('{0: <20} {1}'.format(phrase, score))
                 score_kv[index2id[i]][phrase] = score
+            for phrase, score in [(feature_names[word_id], score) for (word_id, score) in sps][:5]:
+                print('{0: <20} {1}'.format(phrase, score))
+                score_kv_[index2id[i]][phrase] = score
 
         ti.score_kv = json.dumps(score_kv)
         ti.save()
+
+        collection.score_kv = json.dumps(score_kv_)
+        collection.save()
 
         return ti
 

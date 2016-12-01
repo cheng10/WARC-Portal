@@ -59,9 +59,9 @@ class Command(BaseCommand):
             col = Collection.objects.get(id=collection.id)
             col.score_kv = json.dumps(score_kv)
             col.save()
-            ti, created = TfIdf.objects.get_or_create(id=collection.id)
-            ti.score_kv = json.dumps(score_kv)
-            ti.save()
+            # ti, created = TfIdf.objects.get_or_create(id=collection.id)
+            # ti.score_kv = json.dumps(score_kv)
+            # ti.save()
 
             self.stdout.write(self.style.SUCCESS('Successfully populated tf-idf score on collection '
                                                  '"%s"' % collection.id))

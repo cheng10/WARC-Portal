@@ -87,6 +87,12 @@ The react class describing the image display gallery.
 ### NotFound.jsx
 Page not found landing component.
 
+### Visualizations.jsx
+Renders the tf-idf graph.
+
+### WordCloud.jsx
+Renders the wordcloud 
+
 ## Reducers
 Reducers handle the connection between the sagas and the API, allowing for
 changes in state based on the returns from the API calls.

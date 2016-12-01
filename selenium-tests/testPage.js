@@ -18,8 +18,9 @@ module.exports = {
     client.expect.element('.list-group-item').to.not.be.present;
     client.refresh();
     // filtering
+    client.waitForElementVisible('.filter-box', 100000);
     client.expect.element('.filter-box').to.be.present;
-    client.waitForElementVisible('li[id="abc.go.com"]', 10000).click('a');
+    client.waitForElementVisible('li[id="calgarylibrary.ca"]', 10000).click('a');
     client.expect.element('.docs-title-font').to.be.present;
     // date range
     client.refresh();
@@ -37,26 +38,27 @@ module.exports = {
     var title1 = "meepmeep"
     client.setValue('input[type=text]', [title1, client.Keys.ENTER]);
     // src should be blank, the query should return nothing.
-    client.expect.element('img').to.be.present;
-    client.getAttribute("img", "src", function(result) {
-      this.assert.equal(result.value, "");});
+    client.expect.element('img').to.not.be.present;
   },
 
   'Test Login & collections' : function(client){
     client.url('http://localhost:5000/login');
     var user = "testuser1";
-    var pass = "djangoadmin";
+    var pass = "cmput401";
     client.setValue('input[id=username]', user);
     client.setValue('input[type=password]', [pass, client.Keys.ENTER]);
     client.expect.element('.docs-title-font').to.be.present;
     //collections
     client.url('http://localhost:5000/collections');
-    client.expect.element('.doc-list').to.be.present;
-    //client.expect.element('.files_list').to.be.present;
-    client.waitForElementVisible('input[id=file1]', 10000).click('input');
-    var coll = "TSTTST";
+    client.expect.element('.create-collection-list').to.be.present;
+    var coll = "TEST COLL";
     client.setValue('input[name=collectionName]', coll);
-    client.waitForElementVisible('button[id=add]', 10000).click('button');
+    var file = "file1";
+    client.setValue('input[role=combobox]', [file, client.Keys.ENTER]);
+    client.click('.Select-arrow');
+    client.expect.element('#submit').to.be.present;
+    client.click('#submit');
+    client.pause(1000);
     client.end();
   }
 };

@@ -24,3 +24,6 @@ nohup.out
 
 # ignore tmp files
 metastore_db
+
+# ignore pid lock file
+*.lck

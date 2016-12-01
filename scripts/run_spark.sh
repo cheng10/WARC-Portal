@@ -2,6 +2,34 @@
 
 PROGNAME=$(basename $0)
 dir='/mnt/md0/warc_tmp'
+PIDFILE="./$PROGNAME.pid"
+
+# avoid duplicated process
+if [ -f $PIDFILE ]
+then
+  PID=$(cat $PIDFILE)
+  ps -p $PID > /dev/null 2>&1
+  if [ $? -eq 0 ]
+  then
+    echo "Process already running"
+    exit 1
+  else
+    ## Process not found assume not running
+    echo $$ > $PIDFILE
+    if [ $? -ne 0 ]
+    then
+      echo "Could not create PID file"
+      exit 1
+    fi
+  fi
+else
+  echo $$ > $PIDFILE
+  if [ $? -ne 0 ]
+  then
+    echo "Could not create PID file"
+    exit 1
+  fi
+fi
 
 function error_exit
 {
@@ -36,7 +64,7 @@ cd /mnt/md0/wayback_collection || error_exit "$LINENO Could not cd to wayback di
 
 for file in "/mnt/md0/warc_tmp"/*
 do
-    echo "adding $file to wayback"
+    info_print "adding $file to wayback"
     # wb-manager add warc_portal $file || error_exit "$LINENO Could not load warc files: $file to wayback, aborting"
     /usr/local/bin/wb-manager add warc_portal $file || error_exit "$LINENO Could not load warc files: $file to wayback, aborting"
 done
@@ -52,4 +80,4 @@ cd /home/ubuntu/WARC-Portal/web_api || error_exit "$LINENO: could not cd to the 
 
 info_print '	loaded data into Django'
 info_print '	run_spark.sh finished'
-
+rm $PIDFILE

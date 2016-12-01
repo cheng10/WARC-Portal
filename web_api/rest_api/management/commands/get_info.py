@@ -48,9 +48,6 @@ class Command(BaseCommand):
                             # title = title.replace("<title>", "")
                         except AttributeError:
                             title = ''
-                        # handle 'NoneType' object error
-                        if title is None:
-                            title = ''
                         title = title.replace('\t', '')
                         title = title.replace('\n', '')
                         title = title.replace('\r', '')

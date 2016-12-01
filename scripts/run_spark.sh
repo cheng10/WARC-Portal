@@ -26,6 +26,8 @@ fi
 
 
 source ~/.bashrc
+source ~/.profile
+export PATH="/home/ubuntu/bin:/home/ubuntu/.local/bin:/home/ubuntu/bin:/home/ubuntu/.local/bin:/home/ubuntu/bin:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/java/jre1.8.0_111/bin:/usr/local/java/jdk1.8.0_111/bin:/usr/local/go/bin:/home/ubuntu/work/bin:/usr/local/go/bin:/home/ubuntu/go_work/bin"
 rm -rf /mnt/md0/spark_out
 /opt/spark-1.6.1-bin-hadoop2.6/bin/spark-shell --driver-memory 4G --jars ~/warcbase/warcbase-core/target/warcbase-core-0.1.0-SNAPSHOT-fatjar.jar -i job.scala || error_exit "$LINENO: could not run spark, aborting"
 info_print '	spark job finished'
@@ -35,7 +37,8 @@ cd /mnt/md0/wayback_collection || error_exit "$LINENO Could not cd to wayback di
 for file in "/mnt/md0/warc_tmp"/*
 do
     echo "adding $file to wayback"
-    wb-manager add warc_portal $file || error_exit "$LINENO Could not load warc files: $file to wayback, aborting"
+    # wb-manager add warc_portal $file || error_exit "$LINENO Could not load warc files: $file to wayback, aborting"
+    /usr/local/bin/wb-manager add warc_portal $file || error_exit "$LINENO Could not load warc files: $file to wayback, aborting"
 done
 
 

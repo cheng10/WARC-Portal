@@ -31,7 +31,14 @@ rm -rf /mnt/md0/spark_out
 info_print '	spark job finished'
 
 cd /mnt/md0/wayback_collection || error_exit "$LINENO Could not cd to wayback dir, aborting"
-wb-manager add warc_portal /mnt/md0/warc_tmp/* || error_exit "$LINENO Could not load warc files to wayback, aborting"
+
+for file in "/mnt/md0/warc_tmp"/*
+do
+    echo "adding $file to wayback"
+    wb-manager add warc_portal $file || error_exit "$LINENO Could not load warc files: $file to wayback, aborting"
+done
+
+
 info_print '	loaded data into wayback'
 
 mv /mnt/md0/warc_tmp/* /mnt/md0/warc_store || error_exit "$LINENO Could not move processed files, aborting"

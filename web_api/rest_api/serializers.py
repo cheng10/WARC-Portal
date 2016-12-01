@@ -69,7 +69,7 @@ class WarcFileSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = WarcFile
-        fields = ('url', 'name')
+        fields = ('url', 'name', 'isInfoGet')
 
 
 class CollectionSerializer(serializers.ModelSerializer):

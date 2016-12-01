@@ -71,9 +71,22 @@ class DocumentTest(APITestCase):
         user = create_user("testUser", "testPass")
         file1 = create_file("file1")
         file2 = create_file("file2")
-        doc1 = create_document("doc1", "html", file1)
+        self.doc1 = create_document("doc1", "html", file1)
         doc2 = create_document("doc2", "other", file2)
         self.user = user
+
+    def test_unicode(self):
+        unicode_file = "unicode.txt"
+        text = ''
+        with open(unicode_file) as f:
+            for line in f:
+                text += line
+
+        self.doc1.title = text
+        self.doc1.save()
+
+        print self.doc1.title
+        self.doc1.save()
 
     def test_query_multi_value_in_type(self):
         response = self.client.get('/documents/?file=1,2')

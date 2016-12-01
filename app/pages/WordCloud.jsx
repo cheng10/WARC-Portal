@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import rd3 from 'rd3';
 import {ProgressBar} from 'react-bootstrap';
+import WordCloud from 'react-d3-cloud';
 
 /**
  * Content component that is rendered
@@ -127,17 +128,35 @@ class Visualizations extends React.Component {
                 "name": this.state.document,
                 "values": values
             }];
+            const data = [
+            { text: 'Hey', value: 1000 },
+            { text: 'lol', value: 200 },
+            { text: 'first impression', value: 800 },
+            { text: 'very cool', value: 1000000 },
+            { text: 'duck', value: 10 },
+            { text: 'lol', value: 200 },
+            { text: 'first impression', value: 2 },
+            { text: 'very', value: 512 },
+            { text: 'asdf', value: 5 },
+            { text: 'lol', value: 412 },
+            { text: 'first impression', value: 2 },
+            { text: 'very', value: 512 },
+            { text: 'asdf', value: 11111 },
+            { text: 'lol', value: 20120 },
+            { text: 'first impression', value: 4131 },
+            { text: 'very', value: 324 },
+            { text: 'asdf', value: 1233 },
+            ];
 
+            const fontSizeMapper = word => Math.log2(word.value) * 5;
+            const rotate = word => word.value % 360;
             return (          
                 <div className="score-graph">
-                   	<BarChart
-                        data={barData}
-                        width={800}
-                        height={400}
-                        title="tf-idf Graph"
-                        xAxisLabel="Terms"
-                        yAxisLabel="tf-idf score"
-                    />
+                    <WordCloud
+                        data={data}
+                        fontSizeMapper={fontSizeMapper}
+                        rotate={rotate}
+                    />,
                 </div>
                 )
         } else {
@@ -195,7 +214,8 @@ class Visualizations extends React.Component {
  */
 function mapStateToProps(state) {
     return {
-        collections: state.collections || []
+        collections: state.collections || [],
+
     };
 }
 

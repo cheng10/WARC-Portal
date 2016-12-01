@@ -39,6 +39,7 @@
     "rd3": "^0.7.3",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.3",
+    "react-d3-cloud": "^0.3.0",
     "react-day-picker": "^3.1.1",
     "react-dom": "^15.3.2",
     "react-grid-gallery": "0.2.7",

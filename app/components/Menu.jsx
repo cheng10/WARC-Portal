@@ -40,6 +40,9 @@ export class Menu extends React.Component {
         if (e === "tfidf") {
             this.props.dispatch(push('/visualizations'));
         }
+        if (e === "wordcloud") {
+            this.props.dispatch(push('/wordcloud'));
+        }
     }
 
     onProSelect(e) {
@@ -107,6 +110,7 @@ export class Menu extends React.Component {
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="">
                                     <MenuItem eventKey="tfidf">tf-idf</MenuItem>
+                                    <MenuItem eventKey="wordcloud">Word Cloud</MenuItem>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </ButtonToolbar>

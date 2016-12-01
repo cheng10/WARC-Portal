@@ -17,6 +17,7 @@ import Collections from './pages/Collections.jsx';
 import Content from './components/Content.jsx'
 import Login from './pages/Login.jsx';
 import Visualizations from './pages/Visualizations.jsx';
+import WordCloud from './pages/WordCloud.jsx';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -45,6 +46,7 @@ ReactDOM.render (
                 <Route path="collections" component={Collections}/>
                 <Route path="login" component={Login} />
                 <Route path="visualizations" component={Visualizations} />
+                <Route path="wordcloud" component={WordCloud} />
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>

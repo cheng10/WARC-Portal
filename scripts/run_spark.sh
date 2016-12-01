@@ -77,6 +77,7 @@ mv /mnt/md0/warc_tmp/* /mnt/md0/warc_store || error_exit "$LINENO Could not move
 source /home/ubuntu/WARC-Portal/venv/bin/activate || error_exit "$LINENO: could not source venv, aborting"
 cd /home/ubuntu/WARC-Portal/web_api || error_exit "$LINENO: could not cd to the web_api dir, aborting"
 ./manage.py parsedocs || error_exit "$LINENO: could not parse doc, aborting"
+./manage.py get_info|| error_exit "$LINENO: could not fetch info, aborting"
 
 info_print '	loaded data into Django'
 info_print '	run_spark.sh finished'

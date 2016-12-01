@@ -24,6 +24,8 @@ class WarcFile(models.Model):
     """
     name = models.CharField(max_length=100, blank=True, default='',
                             help_text='The name of the warc file')
+    isInfoGet = models.BooleanField(default=False,
+                                    help_text='Have fetched info from Waston?')
 
     def __unicode__(self):
         return self.name

@@ -1,8 +1,9 @@
-import os, json, requests, re
+import os
+import json
+import re
 from bs4 import BeautifulSoup
-from pprint import pprint
 from datetime import datetime
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from ...models import Document, WarcFile, Image
 import urllib
 from pdfminer.pdfparser import PDFParser
@@ -35,7 +36,8 @@ class Command(BaseCommand):
                             if len(data) != 5:
                                 print "Did not parse %s" % data[3]
                                 raise
-                        except:
+                        except Exception, e:
+                            print e
                             print "Error parsing JSON"
 
                         # fetch domain
@@ -63,37 +65,41 @@ class Command(BaseCommand):
                         if title == '':
                             title = 'none'
 
-                        # fetch publication date using alchemy api
-                        url = data[2]
-                        payload = {
-                            'url': url,
-                            'apikey': '7f9faed9fb0243ad50831864294e108fe5d49529',
-                            'outputMode': 'json'
-                        }
-                        api_url = "http://gateway-a.watsonplatform.net/calls/url/URLGetPubDate"
-                        r = requests.get(api_url, params=payload)
-                        # print r.url
-                        # pprint(r.json())
-                        if r.json()['status'] == 'OK':
-                            try:
-                                date = r.json()['publicationDate']['date'].replace('T', '')
-                            except KeyError:
-                                date = '19700101000000'
-                            try:
-                                conf_str = r.json()['publicationDate']['confident']
-                            except KeyError:
-                                conf_str = 'no'
-                            if conf_str == 'no':
-                                confident = False
-                            else:
-                                confident = True
-                            if date == '':
-                                date = '19700101000000'
-                        # populate the field with unix zero time when pub_date unavailable
-                        # this may cause by exceeding daily alchemy api query limit
-                        else:
-                            date = '19700101000000'
-                            confident = False
+                        # # fetch publication date using alchemy api
+                        # url = data[2]
+                        # payload = {
+                        #     'url': url,
+                        #     'apikey': '7f9faed9fb0243ad50831864294e108fe5d49529',
+                        #     'outputMode': 'json'
+                        # }
+                        # api_url = "http://gateway-a.watsonplatform.net/calls/url/URLGetPubDate"
+                        # r = requests.get(api_url, params=payload)
+                        # # print r.url
+                        # # pprint(r.json())
+                        # if r.json()['status'] == 'OK':
+                        #     try:
+                        #         date = r.json()['publicationDate']['date'].replace('T', '')
+                        #     except KeyError:
+                        #         date = '19700101000000'
+                        #     try:
+                        #         conf_str = r.json()['publicationDate']['confident']
+                        #     except KeyError:
+                        #         conf_str = 'no'
+                        #     if conf_str == 'no':
+                        #         confident = False
+                        #     else:
+                        #         confident = True
+                        #     if date == '':
+                        #         date = '19700101000000'
+                        # # populate the field with unix zero time when pub_date unavailable
+                        # # this may cause by exceeding daily alchemy api query limit
+                        # else:
+                        #     date = '19700101000000'
+                        #     confident = False
+
+                        # just populate place holding data now
+                        date = '19700101000000'
+                        confident = False
 
                         try:
                             title = title.encode('unicode_escape')
@@ -235,7 +241,8 @@ class Command(BaseCommand):
                     for line in f:
                         try:
                             data = json.loads(line)
-                        except:
+                        except Exception, e:
+                            print e
                             print "Error parsing JSON"
                         # parse and store images
                         if data[0]:
@@ -243,28 +250,32 @@ class Command(BaseCommand):
                                 continue
                             print data[0]
                             link = data[0]
+
                             # fetch classification data using IBM Watson
-                            payload = {
-                                'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
-                                'version': '016-05-20',
-                                'url': link,
-                            }
-                            api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
-                            r = requests.get(api_url, params=payload)
-                            detail = ''
-                            # print r.json()
-                            try:
-                                for cls in r.json()['images'][0]['classifiers'][0]['classes']:
-                                    detail = detail + cls['class'] + ', '
-                            except Exception, e:
-                                print e
-                                detail = ''
+                            # payload = {
+                            #     'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',
+                            #     'version': '016-05-20',
+                            #     'url': link,
+                            # }
+                            # api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify'
+                            # r = requests.get(api_url, params=payload)
+                            # detail = ''
+                            # # print r.json()
+                            # try:
+                            #     for cls in r.json()['images'][0]['classifiers'][0]['classes']:
+                            #         detail = detail + cls['class'] + ', '
+                            # except Exception, e:
+                            #     print e
+                            #     detail = ''
+
                             # KeyValue: no classification info for current img
                             # ValueError: IBM BlueMix daily exceeded
-# {
-#   "status": "ERROR",
-#   "statusInfo": "daily-transaction-limit-exceeded"
-# }
+                            # {
+                            #   "status": "ERROR",
+                            #   "statusInfo": "daily-transaction-limit-exceeded"
+                            # }
+
+                            detail = ''
 
                             name = link.split('?')[0].split('/')[-1]
                             date = '19700101000000'

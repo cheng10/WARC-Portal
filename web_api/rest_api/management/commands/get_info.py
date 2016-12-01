@@ -1,3 +1,5 @@
+# from pprint import pprint
+
 import requests
 from datetime import datetime
 from django.core.management.base import BaseCommand
@@ -8,10 +10,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # fetch pub_date for documents from Alchemy API
-        files = WarcFile.objects.get(isInfoGet=False)
+        files = WarcFile.objects.filter(isInfoGet=False).all()
         for w_file in files:
             print "fetching info in: "+w_file.name
-            docs = Document.objects.get(file=w_file)
+            docs = Document.objects.filter(file=w_file).all()
             for doc in docs:
                 print "fetching doc info"+doc.title
 
@@ -54,7 +56,7 @@ class Command(BaseCommand):
 
             # fetch classification data using IBM Watson
             print "fetching image metadata"
-            imgs = Image.object.get(file=w_file)
+            imgs = Image.objects.filter(file=w_file).all()
             for img in imgs:
                 print "fetching image: "+img.name
                 link = img.link

@@ -11,6 +11,12 @@ class Command(BaseCommand):
 
         # fetch pub_date for documents from Alchemy API
         files = WarcFile.objects.filter(isInfoGet=False).all()
+
+        if len(files) == 0:
+            print "No warc file needs to fetch data."
+        else:
+            print str(len(files))+" file need to fetch data"
+
         for w_file in files:
             print "fetching info in: "+w_file.name
             docs = Document.objects.filter(file=w_file).all()

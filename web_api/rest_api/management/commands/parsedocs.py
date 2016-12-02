@@ -248,11 +248,12 @@ class Command(BaseCommand):
                         if data[0]:
                             if data[0] == '':
                                 continue
+
                             try:
                                 print data[0]
                             except Exception, e:
                                 print e
-                                print data[0].encode('unicode_escape')
+
                             link = data[0]
 
                             # fetch classification data using IBM Watson

@@ -20,7 +20,7 @@ module.exports = {
     // filtering
     client.waitForElementVisible('.filter-box', 100000);
     client.expect.element('.filter-box').to.be.present;
-    client.waitForElementVisible('li[id="calgarylibrary.ca"]', 10000).click('a');
+    client.waitForElementVisible('li[id="amazon.com"]', 10000).click('a');
     client.expect.element('.docs-title-font').to.be.present;
     // date range
     client.refresh();

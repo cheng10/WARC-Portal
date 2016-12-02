@@ -32,6 +32,7 @@ export class Menu extends React.Component {
     onClick(e) {
         e.preventDefault();
         const value = document.getElementsByClassName("form-control form-control-search-header-field")[0].value;
+        console.log(this.props.location);
         this.props.dispatch(replace(`${this.props.location}?search=${value}`));
         return false;
     }

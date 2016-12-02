@@ -5,6 +5,7 @@ import {ProgressBar, List, Pagination, ListGroup} from 'react-bootstrap';
 import _ from 'lodash';
 import { replace } from 'react-router-redux';
 import URLBuilder from '../helpers/URLBuilder.js';
+import ScrollArea from 'react-scrollbar';
 
 /**
  * The list of filters that are clickable
@@ -28,7 +29,8 @@ export class FilterOptions extends React.Component {
             }
         };
 
-        this.filterClick = this.filterClick.bind(this)
+        this.filterClick = this.filterClick.bind(this);
+        this.clearClick = this.clearClick.bind(this);
     }
 
     /**
@@ -75,6 +77,7 @@ export class FilterOptions extends React.Component {
      * @param {query} object made up of filters
      */
     buildQueryParams(query) {
+        console.log("query", query);
         let newquery = {};
         const filterParams =  _.reduce(query, (newquery, value, key) => {
             if (value.length > 0) {
@@ -98,11 +101,11 @@ export class FilterOptions extends React.Component {
      */
     generateFilterList(filters, property) {
         let listItems = filters.map((item) => {
-            let classname = "fa fa-check-circle-o";
+            let classname = "fa fa-plus-square-o";
             const param = this.props.queryParams[property] ? this.props.queryParams[property].split(',') : [];
 
             if (param.length !== 0 && _.includes(param, item)) {
-                classname = "fa fa-check-circle selected";
+                classname = "fa fa-plus-square selected";
             }
 
             return (<li data-key={item} key={item} id={item}>
@@ -118,6 +121,13 @@ export class FilterOptions extends React.Component {
                 {listItems}
             </ul>
         );
+    }
+
+    clearClick(e) {
+        e.preventDefault();
+        let newquery = Object.assign(this.state.filterOptions);
+        newquery.domain=[];
+        this.buildQueryParams(newquery);
     }
 
     /**
@@ -144,8 +154,17 @@ export class FilterOptions extends React.Component {
                         {this.generateFilterList(this.props.pubYearFilters, "pub_date__year")}
                     </div>*/}
                     <div className="domain-filter">
-                        Domain
+                        <div className="domain-filter-title">
+                            <span>Domain</span> 
+                            <a href="#" onClick={this.clearClick} className="clear-date-button">clear</a>
+                        </div>
+                        <ScrollArea
+                            speed={0.8}
+                            className="domain-scroller"
+                            horizontal={false}
+                            >
                         {this.generateFilterList(this.props.domainFilters, "domain")}
+                        </ScrollArea>
                     </div>
                 </div>
             </div>

@@ -107,7 +107,7 @@ class DocumentViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = Document.objects.all()
         collection = self.request.query_params.get('collection', None)
 
-        if collection is not None:
+        if (collection is not None) and (collection != ''):
             col = Collection.objects.get(name=collection)
             files = col.file.all()
             # Create empty qs to add in manually

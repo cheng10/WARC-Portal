@@ -88,6 +88,19 @@ class DocumentTest(APITestCase):
         print self.doc1.title
         self.doc1.save()
 
+    def test_unicode_content(self):
+        unicode_file = "unicode.txt"
+        text = ''
+        with open(unicode_file) as f:
+            for line in f:
+                text += line
+
+        self.doc1.content = text
+        self.doc1.save()
+
+        print self.doc1.title
+        self.doc1.save()
+
     def test_query_multi_value_in_type(self):
         response = self.client.get('/documents/?file=1,2')
         self.assertEqual(response.data["count"], 2)

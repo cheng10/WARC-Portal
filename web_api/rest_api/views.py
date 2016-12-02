@@ -62,7 +62,7 @@ class DocumentFilter(FilterSet):
     domain = ListFilter(name='domain')
     pub_start_date = DateFilter(name='pub_date', lookup_type='gt')
     pub_end_date = DateFilter(name='pub_date', lookup_type='lt')
-    crawl_start_date = DateFilter(name='crawl_date', lookup_type='exact')
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type='gt')
     crawl_end_date = DateFilter(name='crawl_date', lookup_type='lt')
 
     class Meta:

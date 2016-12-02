@@ -17,10 +17,13 @@
     .toolbar-list span:last-child {
         margin-left: auto;
     }
-
+    .date-title {
+        display: flex;
+        justify-content: space-between;
+    }
     .date-input {
         height: 36px;
-        width: 130px;
+        width: 100%;
         border: 1px solid #ccc;
         border-radius: 4px;
         padding-left: 10px;

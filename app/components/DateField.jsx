@@ -79,6 +79,7 @@ class DateField extends Component {
         this.handleInputFocus = this.handleInputFocus.bind(this);
         this.handleInputBlur = this.handleInputBlur.bind(this);
         this.handleContainerMouseDown = this.handleContainerMouseDown.bind(this);
+        this.clearClick = this.clearClick.bind(this);
     }
 
     /**
@@ -188,6 +189,7 @@ class DateField extends Component {
         this.props.dispatch(push(this.props.path.pathname + URLBuilder(url)));
         this.onChange();
     }
+
     /**
      * Clears date
      *
@@ -199,6 +201,16 @@ class DateField extends Component {
         });
     }
 
+    /**
+     * Clears date
+     *
+     */
+    clearClick(e){
+        e.preventDefault();
+        this.clearDate();
+        this.setQueryParams();
+    }
+
     onChange() {
         this.props.dispatch({type: 'docs.onLoad'});
     }
@@ -208,35 +220,41 @@ class DateField extends Component {
      */
     render() {
         return (
-            <div onMouseDown={ this.handleContainerMouseDown }>
-                <input
-                    className="date-input"
-                    type="text"
-                    ref={ el => { this.input = el; } }
-                    placeholder = {this.props.placeholder || "Date"}
-                    value={ this.state.value }
-                    onChange={ this.handleInputChange }
-                    onFocus={ this.handleInputFocus }
-                    onBlur={ this.handleInputBlur }
-                />
-                
-                { this.state.showOverlay &&
-                    <div style={ { position: 'relative', zIndex: 99 } }>
-                    <div style={ overlayStyle }>
-                        <DayPicker
-                            initialMonth={ this.state.initialMonth }
-                            fromMonth={ fromMonth }
-                            toMonth={ toMonth }
-                            ref={ el => { this.daypicker = el; } }
-                            onDayClick={ this.handleDayClick }
-                            selectedDays={ day => DateUtils.isSameDay(this.state.selectedDay, day) }
-                            captionElement={
-                                <YearMonthForm onChange={ initialMonth => this.setState({ initialMonth }) } />
-                            }
-                        />
-                    </div>
+            <div className="category-selector"> 
+                <div className="date-title"> 
+                  <span>{this.props.title}</span>
+                  <a href="#" onClick={this.clearClick} className="clear-date-button">x</a>
                 </div>
-            }
+                  <div className="date-field-cotnainer" onMouseDown={ this.handleContainerMouseDown }>
+                    <input
+                        className="date-input"
+                        type="text"
+                        ref={ el => { this.input = el; } }
+                        placeholder = {this.props.placeholder || "Date"}
+                        value={ this.state.value }
+                        onChange={ this.handleInputChange }
+                        onFocus={ this.handleInputFocus }
+                        onBlur={ this.handleInputBlur }
+                    />
+                    
+                    { this.state.showOverlay &&
+                        <div style={ { position: 'relative', zIndex: 99 } }>
+                        <div style={ overlayStyle }>
+                            <DayPicker
+                                initialMonth={ this.state.initialMonth }
+                                fromMonth={ fromMonth }
+                                toMonth={ toMonth }
+                                ref={ el => { this.daypicker = el; } }
+                                onDayClick={ this.handleDayClick }
+                                selectedDays={ day => DateUtils.isSameDay(this.state.selectedDay, day) }
+                                captionElement={
+                                    <YearMonthForm onChange={ initialMonth => this.setState({ initialMonth }) } />
+                                }
+                            />
+                        </div>
+                    </div>
+                }
+                </div>
             </div>
         );
     }

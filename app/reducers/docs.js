@@ -23,6 +23,7 @@ class reducerClass {
     static fetchListSuccess(new_state, action) {
         new_state.documents = action.docs.results;
         new_state.count = action.docs.count;
+        new_state.pages = action.docs.pages;
         new_state.loading = false;
         new_state.filterOptions = _.merge({}, 
             [action.docs.types, action.docs.domains, action.docs.crawl_years, action.docs.pub_years]

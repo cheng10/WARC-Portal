@@ -85,16 +85,14 @@ export class Toolbar extends React.Component {
                         />                    
                     </div>
                     <div className="publish-date-selector"> 
-                        Publish Date 
                         <div className="date-inputs-container">
-                            <DateField placeholder="From" param="pub_start_date"/>
+                            <DateField placeholder="From" param="pub_start_date" title="Publish Date"/>
                             <DateField placeholder="To" param="pub_end_date"/>
                         </div>
                     </div>
                     <div className="crawl-date-selector"> 
-                        Crawl Date 
                         <div className="date-inputs-container">
-                            <DateField placeholder="From" param="crawl_start_date"/>
+                            <DateField placeholder="From" param="crawl_start_date "title="Crawl Date"/>
                             <DateField placeholder="To" param="crawl_end_date"/>
                         </div>
                     </div>

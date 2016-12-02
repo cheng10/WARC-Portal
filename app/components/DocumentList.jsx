@@ -53,6 +53,7 @@ class DocumentList extends React.Component
 
     renderDocList() {
         let start_count = 0;
+        console.log(this.props.pages);
         if (this.props.documents.length === 0) {
             return (
                 <div className="doc-empty-view">
@@ -126,6 +127,7 @@ class DocumentList extends React.Component
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
+    console.log(state);
     if (state.docs.loading === undefined) {
         state.docs.loading = true;
     }

@@ -55,8 +55,8 @@ class Collections extends React.Component {
       });
 
       this.props.dispatch({
-         type: 'collectionPost', 
-         name: form.collectionName, 
+         type: 'collectionPost',
+         name: form.collectionName,
          warcFiles: this.state.value ? this.state.value.split(",") : null});
      }
 
@@ -134,14 +134,14 @@ class Collections extends React.Component {
                           <div className="files-selector-container">
                             Files
                             <div className="files-selector">
-                              <Select multi simpleValue 
-                                value={this.state.value} 
-                                placeholder="Select your files" 
-                                options={this.createFileList()} 
-                                onChange={this.handleSelectChange} 
+                              <Select multi simpleValue
+                                value={this.state.value}
+                                placeholder="Select your files"
+                                options={this.createFileList()}
+                                onChange={this.handleSelectChange}
                               />
                             </div>
-                            <Button bsStyle="success" type="submit" disabled={this.props.loading}>
+                            <Button id="submit" bsStyle="success" type="submit" disabled={this.props.loading}>
                               {this.props.loading ? 'Analyzing...' : 'Add Collection'}
                             </Button>
                           </div>

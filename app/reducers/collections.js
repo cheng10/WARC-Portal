@@ -35,12 +35,21 @@ class reducerClass {
      *
      */
     static postColSuccess(new_state, action) {
+        console.log("collection success");
+        new_state.loading = false;
         new_state.success = true;
         return new_state;
     }
 
     static postColFail(new_state, action) {
+        console.log("collection fail");
         new_state.success = false;
         return new_state;
+    }
+
+    static collectionLoad(new_state, action) {
+        console.log("collection load");
+        new_state.loading = true;
+        return new_state
     }
 }

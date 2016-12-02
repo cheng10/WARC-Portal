@@ -4,6 +4,7 @@ import { docsFetchList, imgFetchList } from './documents';
 import {collectionFetchList, collectionPost} from './collections';
 import {filesFetchList} from './files';
 import {authLogin} from './auth';
+import {tfidfFetch} from './tfidf';
 
 /**
  * Main saga generator allows several sagas to run at the same time
@@ -19,5 +20,6 @@ export function* sagas() {
         fork(takeLatest, 'filesFetchList', filesFetchList ),
         fork(takeLatest, 'collectionPost', collectionPost),
         fork(takeLatest, 'authLogin', authLogin),
+        fork(takeLatest, 'tfidfFetch', tfidfFetch),
     ];
 }

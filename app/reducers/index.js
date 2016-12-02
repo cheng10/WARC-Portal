@@ -7,7 +7,7 @@ import docs from './docs';
 import collections from './collections';
 import files from './files';
 import auth from './auth';
-
+import tfidf from './tfidf';
 /**
  * function used to combine reducers into a single reducer
  * See: http://redux.js.org/docs/recipes/reducers/UsingCombineReducers.html
@@ -19,6 +19,7 @@ export const reducers = combineReducers({
     collections: collections,
     files: files,
     auth: auth,
+    tfidf: tfidf,
 });
 
 /**

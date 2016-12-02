@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import rd3 from 'rd3';
 import {ProgressBar} from 'react-bootstrap';
+import d3 from 'd3';
+import cloud from 'd3-cloud';
 import WordCloud from 'react-d3-cloud';
 
 /**
@@ -22,6 +24,7 @@ class Visualizations extends React.Component {
         this.state = {
             category: "",
             document: "",
+            scores: null
         }
         this.props.dispatch({type: 'collectionFetchList'});
 
@@ -35,6 +38,7 @@ class Visualizations extends React.Component {
      * @param {object} the item clicked on from the dropdown
      */
     handleSelect(value) {
+        this.props.dispatch({type: 'tfidfFetch', id: value});
         this.setState({category: value ? value.value : null});
     }
 
@@ -44,7 +48,11 @@ class Visualizations extends React.Component {
      * @param {object} the item clicked on from the dropdown
      */
     handleDocumentSelect(value) {
-        this.setState({document: value ? value.value : null});
+        console.log("value", value);
+        this.setState({
+            document: value ? value.value : null,
+            scores: value ? value.scores:null
+        });
     }
 
     /**
@@ -53,10 +61,12 @@ class Visualizations extends React.Component {
      */
     createCollectionList() {
         let options = [];
+        console.log(this.props.collections);
         if (this.props.collections.length !== undefined) {
-            this.props.collections.map(({name}, i) => {
+            this.props.collections.map(({name, url}, i) => {
+                const id = url[url.length-2]
                 options.push({
-                    value: i,
+                    value: id,
                     label: name
                 });
             });
@@ -92,11 +102,12 @@ class Visualizations extends React.Component {
      *
      */
     createDocumentOptions() {
-        if (this.state.category) {
-            const scores = JSON.parse(this.props.collections[this.state.category]["score_kv"])
+        if (this.props.tfidf.score_kv) {
+            const scores = JSON.parse(this.props.tfidf["score_kv"]);
+            console.log(JSON.parse(this.props.tfidf["score_kv"]));
             let options = [];
             _.keys(scores).forEach((value) => {
-                options.push({value: value, label: value});
+                options.push({value: value, label: value, scores: scores[value]});
             });
 
             return options;
@@ -106,50 +117,22 @@ class Visualizations extends React.Component {
     }
 
     /**
-     * Creates a graph of the score
+     * Creates a cloud of the score
      *
      */
     renderGraph() {
-        if (this.state.document) {
-            let listitems = [];
-            const scores = JSON.parse(this.props.collections[this.state.category]["score_kv"])
-            const keys = _.keys(scores[this.state.document]);
-            const BarChart = rd3.BarChart;
-            console.log(scores[this.state.document])
-            const values = _.reduce(scores[this.state.document], (result=[], value, key) => {
-                result.push({
-                    'x': key,
-                    'y': value
-                })
+        if (this.state.scores) {
+            const data = _.reduce(this.state.scores, (result=[], value, key) => {
+                result.push({text: key, value: value});
                 return result;
             }, [])
 
-            let barData = [{
-                "name": this.state.document,
-                "values": values
-            }];
-            const data = [
-            { text: 'Hey', value: 1000 },
-            { text: 'lol', value: 200 },
-            { text: 'first impression', value: 800 },
-            { text: 'very cool', value: 1000000 },
-            { text: 'duck', value: 10 },
-            { text: 'lol', value: 200 },
-            { text: 'first impression', value: 2 },
-            { text: 'very', value: 512 },
-            { text: 'asdf', value: 5 },
-            { text: 'lol', value: 412 },
-            { text: 'first impression', value: 2 },
-            { text: 'very', value: 512 },
-            { text: 'asdf', value: 11111 },
-            { text: 'lol', value: 20120 },
-            { text: 'first impression', value: 4131 },
-            { text: 'very', value: 324 },
-            { text: 'asdf', value: 1233 },
-            ];
-
-            const fontSizeMapper = word => Math.log2(word.value) * 5;
-            const rotate = word => word.value % 360;
+            const fontSizeMapper = word => word.value * 1000;
+            const rotate = word => word.value;
+            console.log(data);
+            if (document.getElementsByTagName('svg')[0]) {
+                document.getElementsByTagName('svg')[0].remove();
+            }
             return (          
                 <div className="score-graph">
                     <WordCloud
@@ -213,9 +196,10 @@ class Visualizations extends React.Component {
  * Mapping props from state received from store
  */
 function mapStateToProps(state) {
+    console.log("wordcloud", state);
     return {
         collections: state.collections || [],
-
+        tfidf: state.tfidf || []
     };
 }
 

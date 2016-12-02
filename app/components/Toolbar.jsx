@@ -92,7 +92,7 @@ export class Toolbar extends React.Component {
                     </div>
                     <div className="crawl-date-selector"> 
                         <div className="date-inputs-container">
-                            <DateField placeholder="From" param="crawl_start_date "title="Crawl Date"/>
+                            <DateField placeholder="From" param="crawl_start_date"title="Crawl Date"/>
                             <DateField placeholder="To" param="crawl_end_date"/>
                         </div>
                     </div>

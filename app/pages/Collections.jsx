@@ -4,6 +4,7 @@ import { Button, FormControl, ProgressBar } from 'react-bootstrap';
 import _ from 'lodash';
 import {Field, reduxForm} from 'redux-form';
 import Select from 'react-select';
+import ScrollArea from 'react-scrollbar';
 
 class Collections extends React.Component {
   /**
@@ -48,8 +49,12 @@ class Collections extends React.Component {
            files.push(atob(key));
          }
        })
-       
-       this.props.dispatch({
+
+      this.props.dispatch({
+        type: 'collections.collectionLoad'
+      });
+
+      this.props.dispatch({
          type: 'collectionPost', 
          name: form.collectionName, 
          warcFiles: this.state.value ? this.state.value.split(",") : null});
@@ -97,15 +102,24 @@ class Collections extends React.Component {
         else {
           return (
             <div className="app-body">
+              <div className={`page-spinner ${this.props.loading ? "visible" : "hidden"}`}>
+                <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+              </div>
               <div className="collection-container">
                 <div className="collection-list-container">
                     <div className="create-collection-list">
                       <div className="collection-list-header"> Collections </div>
                         <div className="collection-list-scroller">
                           <ul id="collections-list">
-                            {this.props.collections.map((collection, index) => {
-                                return (<li color="white" key={collection.name} id={index}>{collection.name}</li>);
-                            })}
+                            <ScrollArea
+                              speed={0.8}
+                              className="collections-scroller"
+                              horizontal={false}
+                              >
+                              {this.props.collections.map((collection, index) => {
+                                  return (<li color="white" key={collection.name} id={index}>{collection.name}</li>);
+                              })}
+                            </ScrollArea>
                           </ul>
                       </div>
                     </div>
@@ -127,8 +141,8 @@ class Collections extends React.Component {
                                 onChange={this.handleSelectChange} 
                               />
                             </div>
-                            <Button bsStyle="success" type="submit">
-                              Add Collection
+                            <Button bsStyle="success" type="submit" disabled={this.props.loading}>
+                              {this.props.loading ? 'Analyzing...' : 'Add Collection'}
                             </Button>
                           </div>
                         </form>
@@ -151,9 +165,11 @@ const CollectionForm = reduxForm({form: 'collection'})(Collections);
  * to be used in the component
  */
 function mapStateToProps(state) {
+    console.log(state);
     return {
         collections: state.collections || null,
         success: state.collections.success || null,
+        loading: state.collections.loading || false,
         files: state.files || []
     };
 }

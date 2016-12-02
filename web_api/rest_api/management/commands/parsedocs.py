@@ -45,6 +45,8 @@ class Command(BaseCommand):
 
                         # fetch web page title and content
                         soup = BeautifulSoup(data[3], "html.parser")
+                        # remove <script> tag
+                        [s.extract() for s in soup('script')]
                         try:
                             title = soup.title.string
                             # title = title.replace("<title>", "")
@@ -65,42 +67,11 @@ class Command(BaseCommand):
                         if title == '':
                             title = 'none'
 
-                        # # fetch publication date using alchemy api
-                        # url = data[2]
-                        # payload = {
-                        #     'url': url,
-                        #     'apikey': '7f9faed9fb0243ad50831864294e108fe5d49529',
-                        #     'outputMode': 'json'
-                        # }
-                        # api_url = "http://gateway-a.watsonplatform.net/calls/url/URLGetPubDate"
-                        # r = requests.get(api_url, params=payload)
-                        # # print r.url
-                        # # pprint(r.json())
-                        # if r.json()['status'] == 'OK':
-                        #     try:
-                        #         date = r.json()['publicationDate']['date'].replace('T', '')
-                        #     except KeyError:
-                        #         date = '19700101000000'
-                        #     try:
-                        #         conf_str = r.json()['publicationDate']['confident']
-                        #     except KeyError:
-                        #         conf_str = 'no'
-                        #     if conf_str == 'no':
-                        #         confident = False
-                        #     else:
-                        #         confident = True
-                        #     if date == '':
-                        #         date = '19700101000000'
-                        # # populate the field with unix zero time when pub_date unavailable
-                        # # this may cause by exceeding daily alchemy api query limit
-                        # else:
-                        #     date = '19700101000000'
-                        #     confident = False
-
-                        # just populate place holding data now
+                        # just populate place holding data now, retrieve info from Waston later
                         date = '19700101000000'
                         confident = False
 
+                        # MySQL has issue with 4 byte unicode character, escape unicode character for now
                         try:
                             title = title.encode('unicode_escape')
                         except Exception, e:
@@ -124,6 +95,9 @@ class Command(BaseCommand):
                         except Exception, e:
                             print e
                             text = 'invalid_encoding'
+
+                        # remove unicode xa0 to avoid bad tf-idf for now
+                        text = text.replace('xa0', '')
 
                         # comparing hash value with existing doc to avoid duplication
                         m = hashlib.md5()

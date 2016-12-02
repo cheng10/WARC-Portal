@@ -10,6 +10,7 @@ from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 import hashlib
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.encoding import python_2_unicode_compatible
 
 
 DIR = "/mnt/md0/spark_out/"
@@ -19,6 +20,7 @@ LINK_DIR = "/mnt/md0/spark_sitelink/"
 PDF_STORE = "/mnt/md0/pdf_store/"
 
 
+@python_2_unicode_compatible
 class Command(BaseCommand):
     def handle(self, *args, **options):
         # parse DIR

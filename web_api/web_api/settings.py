@@ -101,17 +101,29 @@ WSGI_APPLICATION = 'web_api.wsgi.application'
 # }
 
 # use mysql database on warc.tech
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'warcdb',
+#         'USER': 'warcuser',
+#         'PASSWORD': 'mywarcpass',
+#         'HOST': 'warc.tech',  # using our server's DB
+#         'PORT': '3306',
+#     }
+# }
 
+
+# use postgreSQL database on warc.tech
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'warcdb',
-        'USER': 'warcuser',
-        'PASSWORD': 'mywarcpass',
-        'HOST': 'warc.tech',  # using our server's DB
-        'PORT': '3306',
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'warcdb',
+            'USER': 'warcuser',
+            'PASSWORD': 'mywarcpass',
+            'HOST': 'warc.tech',
+            'PORT': '',
+        }
     }
-}
 
 
 # Password validation

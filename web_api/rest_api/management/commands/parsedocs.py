@@ -26,7 +26,7 @@ class Command(BaseCommand):
         for warc_file_name in os.listdir(DIR):
             for outfile in os.listdir(DIR+warc_file_name):
                 if outfile.startswith('part'):
-                    print "Parsing..." + warc_file_name
+                    print "Parsing..." + warc_file_name.encode('unicode_escape')
                     f = open(DIR+warc_file_name+'/'+outfile)
                     # record warc file name
                     warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                         try:
                             data = json.loads(line)
                             if len(data) != 5:
-                                print "Did not parse %s" % data[3]
+                                print "Did not parse %s" % data[3].encode('unicode_escape')
                                 raise
                         except Exception, e:
                             print e
@@ -72,32 +72,39 @@ class Command(BaseCommand):
                         confident = False
 
                         # MySQL has issue with 4 byte unicode character, escape unicode character for now
-                        try:
-                            title = title.encode('unicode_escape')
-                        except Exception, e:
-                            print e
-                            title = 'invalid_encoding'
+                        # try:
+                        #     title = title.encode('unicode_escape')
+                        # except Exception, e:
+                        #     print e
+                        #     title = 'invalid_encoding'
+                        #
+                        #
+                        # try:
+                        #     link = data[2].encode('unicode_escape')
+                        # except Exception, e:
+                        #     print e
+                        #     link = 'invalid_encoding'
+                        #
+                        # try:
+                        #     text = text.encode('unicode_escape')
+                        # except Exception, e:
+                        #     print e
+                        #     text = 'invalid_encoding'
+
+                        # remove unicode xa0 to avoid bad tf-idf for now
+                        # text = text.replace('xa0', '')
 
                         try:
                             _ = datetime.strptime(date, '%Y%m%d%H%M%S'),
                         except Exception, e:
-                            print e
+                            print e, 'Wrong time format'
                             date = '19700101000000'
 
                         try:
-                            link = data[2].encode('unicode_escape')
+                            link = data[2]
                         except Exception, e:
                             print e
-                            link = 'invalid_encoding'
-
-                        try:
-                            text = text.encode('unicode_escape')
-                        except Exception, e:
-                            print e
-                            text = 'invalid_encoding'
-
-                        # remove unicode xa0 to avoid bad tf-idf for now
-                        text = text.replace('xa0', '')
+                            link = 'could not parse link'
 
                         # comparing hash value with existing doc to avoid duplication
                         m = hashlib.md5()
@@ -108,7 +115,7 @@ class Command(BaseCommand):
                             print "hash identical skipping"
                             continue
                         except ObjectDoesNotExist:
-                            print "adding "+title
+                            print "adding "+title.encode('unicode_escape')
 
                         # store documents
                         Document.objects.create(
@@ -129,7 +136,7 @@ class Command(BaseCommand):
         for warc_file_name in os.listdir(PDF_DIR):
             for outfile in os.listdir(PDF_DIR+warc_file_name):
                 if outfile.startswith('part'):
-                    print "Parsing..." + warc_file_name
+                    print "Parsing..." + warc_file_name.encode('unicode_escape')
                     f = open(PDF_DIR+warc_file_name+'/'+outfile)
                     # record warc file name
                     warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
@@ -137,7 +144,8 @@ class Command(BaseCommand):
                         try:
                             data = json.loads(line)
                             crawl_date, mime, domain, url = data
-                            filename = url.split('?')[0].split('/')[-1].encode('unicode_escape')
+                            # filename = url.split('?')[0].split('/')[-1].encode('unicode_escape')
+                            filename = url.split('?')[0].split('/')[-1]
                         except Exception, e:
                             print e
                             continue
@@ -152,7 +160,7 @@ class Command(BaseCommand):
                             title = filename
                             pub_date = '19700101000000'
                             confident = False
-                            print 'using filename as title:' + filename
+                            print 'using filename as title:' + filename.encode('unicode_escape')
                             # store pdf documents
                             Document.objects.create(
                                 title=title,
@@ -182,13 +190,16 @@ class Command(BaseCommand):
                             print e
                             title = 'could not parse title'
 
-                        try:
-                            title = title.encode('unicode_escape')
-                        except Exception, e:
-                            print e
-                            title = 'invalid encoding'
+                        # try:
+                        #     title = title.encode('unicode_escape')
+                        # except Exception, e:
+                        #     print e
+                        #     title = 'invalid encoding'
 
-                        print title
+                        try:
+                            print title
+                        except Exception, e:
+                            print e, 'Could not print image title'
 
                         # store pdf documents
                         Document.objects.create(
@@ -208,7 +219,7 @@ class Command(BaseCommand):
         for warc_file_name in os.listdir(IMG_DIR):
             for outfile in os.listdir(IMG_DIR+warc_file_name):
                 if outfile.startswith('part'):
-                    print "Parsing..." + warc_file_name
+                    print "Parsing..." + warc_file_name.encode('unicode_escape')
                     f = open(IMG_DIR+warc_file_name+'/'+outfile)
                     # record warc file name
                     warc, created = WarcFile.objects.get_or_create(name=warc_file_name)
@@ -259,13 +270,13 @@ class Command(BaseCommand):
                             name = link.split('?')[0].split('/')[-1]
                             date = '19700101000000'
 
-                            try:
-                                name = name.encode('unicode_escape')
-                                link = link.encode('unicode_escape')
-                            except Exception, e:
-                                print e
-                                name = 'invalid_encoding'
-                                link = 'invalid_encoding'
+                            # try:
+                            #     name = name.encode('unicode_escape')
+                            #     link = link.encode('unicode_escape')
+                            # except Exception, e:
+                            #     print e
+                            #     name = 'invalid_encoding'
+                            #     link = 'invalid_encoding'
 
                             Image.objects.create(
                                 crawl_date=datetime.strptime(date, '%Y%m%d%H%M%S'),

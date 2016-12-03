@@ -181,7 +181,7 @@ class WarcFileViewSet(viewsets.ReadOnlyModelViewSet):
     #     return Response(serializer.data)
 
 
-@authentication_classes((JSONWebTokenAuthentication, ))
+@authentication_classes((BasicAuthentication, JSONWebTokenAuthentication))
 @permission_classes((IsAuthenticatedOrReadOnly, ))
 class CollectionViewSet(viewsets.ModelViewSet):
     """

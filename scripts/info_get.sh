@@ -23,6 +23,7 @@ then
     fi
   fi
 else
+  echo "Creating PID file"
   echo $$ > $PIDFILE
   if [ $? -ne 0 ]
   then

@@ -2,7 +2,7 @@
 
 PROGNAME=$(basename $0)
 PIDFILE="./$PROGNAME.pid"
-S_PIDFILE="run_spark.sh.pid"
+S_PIDFILE="./run_spark.sh.pid"
 
 # avoid duplicated process
 if [ -f $PIDFILE ]

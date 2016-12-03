@@ -2,35 +2,7 @@
 
 PROGNAME=$(basename $0)
 dir='/mnt/md0/warc_tmp'
-PIDFILE="./$PROGNAME.pid"
-
-# avoid duplicated process
-if [ -f $PIDFILE ]
-then
-  PID=$(cat $PIDFILE)
-  ps -p $PID > /dev/null 2>&1
-  if [ $? -eq 0 ]
-  then
-    echo "Process already running"
-    exit 1
-  else
-    ## Process not found assume not running
-    echo $$ > $PIDFILE
-    if [ $? -ne 0 ]
-    then
-      echo "Could not create PID file"
-      exit 1
-    fi
-  fi
-else
-  echo "Creating PID file"
-  echo $$ > $PIDFILE
-  if [ $? -ne 0 ]
-  then
-    echo "Could not create PID file"
-    exit 1
-  fi
-fi
+PIDFILE="/home/ubuntu/$PROGNAME.pid"
 
 function error_exit
 {
@@ -43,6 +15,35 @@ function info_print
 {
 	echo `date` "${PROGNAME}: ${1:-"default info"}" 2>&1
 }
+
+# avoid duplicated process
+if [ -f $PIDFILE ]
+then
+  PID=$(cat $PIDFILE)
+  ps -p $PID > /dev/null 2>&1
+  if [ $? -eq 0 ]
+  then
+    info_print "Process already running"
+    exit 1
+  else
+    ## Process not found assume not running
+    echo $$ > $PIDFILE
+    if [ $? -ne 0 ]
+    then
+      info_print "Could not create PID file"
+      exit 1
+    fi
+  fi
+else
+  info_print "Creating $PROGNAME PID file"
+  echo $$ > $PIDFILE
+  if [ $? -ne 0 ]
+  then
+    info_print "Could not create PID file"
+    exit 1
+  fi
+fi
+
 
 info_print '	run_spark.sh started'
 

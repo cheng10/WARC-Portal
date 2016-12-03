@@ -67,6 +67,7 @@ export PATH="/home/ubuntu/bin:/home/ubuntu/.local/bin:/home/ubuntu/bin:/home/ubu
 source /home/ubuntu/WARC-Portal/venv/bin/activate || error_exit "$LINENO: could not source venv, aborting"
 cd /home/ubuntu/WARC-Portal/web_api || error_exit "$LINENO: could not cd to the web_api dir, aborting"
 ./manage.py get_info|| error_exit "$LINENO: could not fetch info, aborting"
+./manage.py tf_idf|| error_exit "$LINENO: could not calculate tf-idf score, aborting"
 
 info_print '	finished'
 rm $PIDFILE

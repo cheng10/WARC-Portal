@@ -2,7 +2,6 @@
 
 PROGNAME=$(basename $0)
 PIDFILE="/home/ubuntu/$PROGNAME.pid"
-S_PIDFILE="/home/ubuntu/run_spark.sh.pid"
 
 function error_exit
 {
@@ -44,29 +43,16 @@ else
   fi
 fi
 
-# not run when run_spark.sh is running
-if [ -f $S_PIDFILE ]
-then
-  PID=$(cat $S_PIDFILE)
-  ps -p $PID > /dev/null 2>&1
-  if [ $? -eq 0 ]
-  then
-    error_exit "run_spark.sh already running"
-  fi
-fi
-
 
 info_print '    started'
-
 
 source ~/.bashrc
 source ~/.profile
 export PATH="/home/ubuntu/bin:/home/ubuntu/.local/bin:/home/ubuntu/bin:/home/ubuntu/.local/bin:/home/ubuntu/bin:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/java/jre1.8.0_111/bin:/usr/local/java/jdk1.8.0_111/bin:/usr/local/go/bin:/home/ubuntu/work/bin:/usr/local/go/bin:/home/ubuntu/go_work/bin"
 
-
 source /home/ubuntu/WARC-Portal/venv/bin/activate || error_exit "$LINENO: could not source venv, aborting"
 cd /home/ubuntu/WARC-Portal/web_api || error_exit "$LINENO: could not cd to the web_api dir, aborting"
-./manage.py get_info|| error_exit "$LINENO: could not fetch info, aborting"
+./manage.py tf_idf|| error_exit "$LINENO: could not calculate tf-idf score, aborting"
 
 info_print '	finished'
 rm $PIDFILE

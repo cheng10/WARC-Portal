@@ -18,10 +18,10 @@ class Command(BaseCommand):
             print str(len(files))+" file need to fetch data"
 
         for w_file in files:
-            print "fetching info in: "+w_file.name
+            print "fetching info in: "+w_file.name.encode('unicode_escape')
             docs = Document.objects.filter(file=w_file).all()
             for doc in docs:
-                print "fetching doc info"+doc.title
+                print "fetching doc info"+doc.title.encode('unicode_escape')
 
                 # fetch publication date using alchemy api
                 url = doc.link
@@ -64,7 +64,7 @@ class Command(BaseCommand):
             print "fetching image metadata"
             imgs = Image.objects.filter(file=w_file).all()
             for img in imgs:
-                print "fetching image: "+img.name
+                print "fetching image: "+img.name.encode('unicode_escape')
                 link = img.link
                 payload = {
                     'api_key': '7aebad6ade1e483d6b9252f42bdefa0210f7e9d7',

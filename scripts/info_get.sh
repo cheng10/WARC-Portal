@@ -1,8 +1,8 @@
 #!/bin/bash
 
 PROGNAME=$(basename $0)
-PIDFILE="./$PROGNAME.pid"
-S_PIDFILE="./run_spark.sh.pid"
+PIDFILE="$PROGNAME.pid"
+S_PIDFILE="run_spark.sh.pid"
 
 # avoid duplicated process
 if [ -f $PIDFILE ]
@@ -47,6 +47,7 @@ fi
 function error_exit
 {
 	echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
+    rm $PIDFILE
 	exit 1
 }
 

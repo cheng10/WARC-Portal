@@ -35,6 +35,7 @@ fi
 function error_exit
 {
 	echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
+    rm $PIDFILE
 	exit 1
 }
 
@@ -50,6 +51,7 @@ then
 	info_print '	dir not clean, running spark'
 else
 	info_print '	dir clean, exit'
+    rm $PIDFILE
 	exit 0
 fi
 

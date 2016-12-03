@@ -109,7 +109,7 @@ class Command(BaseCommand):
 
                         # comparing hash value with existing doc to avoid duplication
                         m = hashlib.md5()
-                        m.update(text+link)
+                        m.update((text+link).encode('unicode_escape'))
                         doc_hash = m.hexdigest()
                         try:
                             Document.objects.get(hash=doc_hash)

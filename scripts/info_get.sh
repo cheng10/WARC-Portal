@@ -2,6 +2,7 @@
 
 PROGNAME=$(basename $0)
 PIDFILE="./$PROGNAME.pid"
+S_PIDFILE="run_spark.sh.pid"
 
 # avoid duplicated process
 if [ -f $PIDFILE ]
@@ -26,6 +27,18 @@ else
   if [ $? -ne 0 ]
   then
     echo "Could not create PID file"
+    exit 1
+  fi
+fi
+
+# not run when run_spark.sh is running
+if [ -f $S_PIDFILE ]
+then
+  PID=$(cat $S_PIDFILE)
+  ps -p $PID > /dev/null 2>&1
+  if [ $? -eq 0 ]
+  then
+    echo "run_spark.sh already running"
     exit 1
   fi
 fi

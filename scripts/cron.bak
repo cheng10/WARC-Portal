@@ -22,5 +22,6 @@
 # m h  dom mon dow   command
 
 */1 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./run_spark.sh >> /home/ubuntu/WARC-Portal/scripts/job.log 2>&1
-*/1 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./info_get.sh >> /home/ubuntu/WARC-Portal/scripts/job.log 2>&1
-*/1 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./tf_get.sh >> /home/ubuntu/WARC-Portal/scripts/job.log 2>&1
+*/1 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./info_get.sh >> /home/ubuntu/WARC-Portal/scripts/info_get.log 2>&1
+*/1 * * * * cd /home/ubuntu/WARC-Portal/scripts; ./tf_get.sh >> /home/ubuntu/WARC-Portal/scripts/tf_get.log 2>&1
+* * * * 1 cd /home/ubuntu/WARC-Portal/scripts; ./clean.sh

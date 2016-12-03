@@ -51,8 +51,7 @@ then
   ps -p $PID > /dev/null 2>&1
   if [ $? -eq 0 ]
   then
-    info_print "run_spark.sh already running"
-    exit 1
+    error_exit "run_spark.sh already running"
   fi
 fi
 

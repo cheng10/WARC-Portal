@@ -60,6 +60,7 @@ class Visualizations extends React.Component {
                 });
             });
         }
+        console.log(options);
         return options;
     }
 
@@ -68,7 +69,7 @@ class Visualizations extends React.Component {
      *
      */
     createDocumentList() {
-        if (this.state.category) {
+        if (this.state.category || this.state.category === 0) {
             return (
                 <div>
                     Document
@@ -91,9 +92,12 @@ class Visualizations extends React.Component {
      *
      */
     createDocumentOptions() {
-        if (this.state.category) {
+        if (this.state.category || this.state.category === 0) {
+            console.log("DUCOMUETNS")
+            console.log(this.props.collections[this.state.category])
             const scores = JSON.parse(this.props.collections[this.state.category]["score_kv"])
             let options = [];
+            console.log(scores);
             _.keys(scores).forEach((value) => {
                 options.push({value: value, label: value});
             });

@@ -5,7 +5,6 @@ import Select from 'react-select';
 import rd3 from 'rd3';
 import {ProgressBar} from 'react-bootstrap';
 import d3 from 'd3';
-import cloud from 'd3-cloud';
 import WordCloud from 'react-d3-cloud';
 
 /**
@@ -38,6 +37,7 @@ class Visualizations extends React.Component {
      * @param {object} the item clicked on from the dropdown
      */
     handleSelect(value) {
+        console.log("value", value);
         this.props.dispatch({type: 'tfidfFetch', id: value});
         this.setState({category: value ? value.value : null});
     }
@@ -61,10 +61,8 @@ class Visualizations extends React.Component {
      */
     createCollectionList() {
         let options = [];
-        console.log(this.props.collections);
         if (this.props.collections.length !== undefined) {
-            this.props.collections.map(({name, url}, i) => {
-                const id = url[url.length-2]
+            this.props.collections.map(({name, id}, i) => {
                 options.push({
                     value: id,
                     label: name
@@ -79,7 +77,7 @@ class Visualizations extends React.Component {
      *
      */
     createDocumentList() {
-        if (this.state.category) {
+        if (this.state.category || this.state.category === 0) {
             return (
                 <div>
                     Document

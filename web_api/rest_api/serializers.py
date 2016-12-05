@@ -81,7 +81,7 @@ class CollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Collection
-        fields = ('url', 'warcuser', 'name', 'score_kv', 'detail', 'file')
+        fields = ('url', 'id', 'warcuser', 'name', 'score_kv', 'detail', 'file')
 
     def create(self, validated_data):
         """

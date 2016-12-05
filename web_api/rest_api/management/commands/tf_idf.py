@@ -42,7 +42,7 @@ class Command(BaseCommand):
                 # print score_kv
                 # for item in corpus:
                 #     self.stdout.write(item)
-                tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0, stop_words='english')
+                tf = TfidfVectorizer(analyzer='word', ngram_range=(1, 1), min_df=0, stop_words='english')
                 tfidf_matrix = tf.fit_transform(corpus)
                 feature_names = tf.get_feature_names()
                 dense = tfidf_matrix.todense()

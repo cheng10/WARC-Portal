@@ -60,10 +60,10 @@ class DocumentFilter(FilterSet):
     type = ListFilter(name='type')
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
-    pub_start_date = DateFilter(name='pub_date', lookup_type='gt')
-    pub_end_date = DateFilter(name='pub_date', lookup_type='lt')
-    crawl_start_date = DateFilter(name='crawl_date', lookup_type='gt')
-    crawl_end_date = DateFilter(name='crawl_date', lookup_type='lt')
+    pub_start_date = DateFilter(name='pub_date', lookup_type='gte')
+    pub_end_date = DateFilter(name='pub_date', lookup_type='lte')
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type='gte')
+    crawl_end_date = DateFilter(name='crawl_date', lookup_type='lte')
 
     class Meta:
         model = Document
@@ -79,8 +79,8 @@ class DocumentFilter(FilterSet):
 class ImageFilter(FilterSet):
     file = ListFilter(name='file')
     domain = ListFilter(name='domain')
-    crawl_start_date = DateFilter(name='crawl_date', lookup_type='gt')
-    crawl_end_date = DateFilter(name='crawl_date', lookup_type='lt')
+    crawl_start_date = DateFilter(name='crawl_date', lookup_type='gte')
+    crawl_end_date = DateFilter(name='crawl_date', lookup_type='lte')
 
     class Meta:
         model = Image
